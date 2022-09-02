@@ -1,0 +1,92 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="79">
+            <item index="0" class="java.lang.String" itemvalue="psycogreen" />
+            <item index="1" class="java.lang.String" itemvalue="django-celery-beat" />
+            <item index="2" class="java.lang.String" itemvalue="django-celery-results" />
+            <item index="3" class="java.lang.String" itemvalue="PyYAML" />
+            <item index="4" class="java.lang.String" itemvalue="python-dateutil" />
+            <item index="5" class="java.lang.String" itemvalue="uWSGI" />
+            <item index="6" class="java.lang.String" itemvalue="requests" />
+            <item index="7" class="java.lang.String" itemvalue="redis" />
+            <item index="8" class="java.lang.String" itemvalue="sqlparse" />
+            <item index="9" class="java.lang.String" itemvalue="django-guardian" />
+            <item index="10" class="java.lang.String" itemvalue="Django" />
+            <item index="11" class="java.lang.String" itemvalue="zipp" />
+            <item index="12" class="java.lang.String" itemvalue="django-redis" />
+            <item index="13" class="java.lang.String" itemvalue="virtualenv" />
+            <item index="14" class="java.lang.String" itemvalue="django-db-geventpool" />
+            <item index="15" class="java.lang.String" itemvalue="django-ratelimit" />
+            <item index="16" class="java.lang.String" itemvalue="pycryptodome" />
+            <item index="17" class="java.lang.String" itemvalue="PyMySQL" />
+            <item index="18" class="java.lang.String" itemvalue="pytz" />
+            <item index="19" class="java.lang.String" itemvalue="urllib3" />
+            <item index="20" class="java.lang.String" itemvalue="DjangoUeditor" />
+            <item index="21" class="java.lang.String" itemvalue="vine" />
+            <item index="22" class="java.lang.String" itemvalue="psycopg2-binary" />
+            <item index="23" class="java.lang.String" itemvalue="django-basicauth" />
+            <item index="24" class="java.lang.String" itemvalue="django-ranged-response" />
+            <item index="25" class="java.lang.String" itemvalue="django-grpc" />
+            <item index="26" class="java.lang.String" itemvalue="django-simple-captcha" />
+            <item index="27" class="java.lang.String" itemvalue="django-cors-headers" />
+            <item index="28" class="java.lang.String" itemvalue="varint" />
+            <item index="29" class="java.lang.String" itemvalue="protobuf" />
+            <item index="30" class="java.lang.String" itemvalue="hexbytes" />
+            <item index="31" class="java.lang.String" itemvalue="kombu" />
+            <item index="32" class="java.lang.String" itemvalue="pycparser" />
+            <item index="33" class="java.lang.String" itemvalue="eth-hash" />
+            <item index="34" class="java.lang.String" itemvalue="frozenlist" />
+            <item index="35" class="java.lang.String" itemvalue="eth-typing" />
+            <item index="36" class="java.lang.String" itemvalue="certifi" />
+            <item index="37" class="java.lang.String" itemvalue="pyparsing" />
+            <item index="38" class="java.lang.String" itemvalue="jsonschema" />
+            <item index="39" class="java.lang.String" itemvalue="eth-abi" />
+            <item index="40" class="java.lang.String" itemvalue="wrapt" />
+            <item index="41" class="java.lang.String" itemvalue="attrs" />
+            <item index="42" class="java.lang.String" itemvalue="cytoolz" />
+            <item index="43" class="java.lang.String" itemvalue="charset-normalizer" />
+            <item index="44" class="java.lang.String" itemvalue="idna" />
+            <item index="45" class="java.lang.String" itemvalue="multiaddr" />
+            <item index="46" class="java.lang.String" itemvalue="lru-dict" />
+            <item index="47" class="java.lang.String" itemvalue="async-timeout" />
+            <item index="48" class="java.lang.String" itemvalue="cffi" />
+            <item index="49" class="java.lang.String" itemvalue="bitarray" />
+            <item index="50" class="java.lang.String" itemvalue="eth-account" />
+            <item index="51" class="java.lang.String" itemvalue="pyrsistent" />
+            <item index="52" class="java.lang.String" itemvalue="secp256k1" />
+            <item index="53" class="java.lang.String" itemvalue="celery" />
+            <item index="54" class="java.lang.String" itemvalue="Deprecated" />
+            <item index="55" class="java.lang.String" itemvalue="eth-rlp" />
+            <item index="56" class="java.lang.String" itemvalue="netaddr" />
+            <item index="57" class="java.lang.String" itemvalue="billiard" />
+            <item index="58" class="java.lang.String" itemvalue="websockets" />
+            <item index="59" class="java.lang.String" itemvalue="six" />
+            <item index="60" class="java.lang.String" itemvalue="eth-keys" />
+            <item index="61" class="java.lang.String" itemvalue="amqp" />
+            <item index="62" class="java.lang.String" itemvalue="parsimonious" />
+            <item index="63" class="java.lang.String" itemvalue="web3" />
+            <item index="64" class="java.lang.String" itemvalue="packaging" />
+            <item index="65" class="java.lang.String" itemvalue="importlib-resources" />
+            <item index="66" class="java.lang.String" itemvalue="base58" />
+            <item index="67" class="java.lang.String" itemvalue="toolz" />
+            <item index="68" class="java.lang.String" itemvalue="eth-keyfile" />
+            <item index="69" class="java.lang.String" itemvalue="rlp" />
+            <item index="70" class="java.lang.String" itemvalue="aiohttp" />
+            <item index="71" class="java.lang.String" itemvalue="multidict" />
+            <item index="72" class="java.lang.String" itemvalue="yarl" />
+            <item index="73" class="java.lang.String" itemvalue="ipfshttpclient" />
+            <item index="74" class="java.lang.String" itemvalue="eth-utils" />
+            <item index="75" class="java.lang.String" itemvalue="aiosignal" />
+            <item index="76" class="java.lang.String" itemvalue="Pillow" />
+            <item index="77" class="java.lang.String" itemvalue="grpcio" />
+            <item index="78" class="java.lang.String" itemvalue="grpcio-tools" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
