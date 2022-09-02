@@ -19,7 +19,8 @@ INSTALLED_APPS = [
     "circle",
     "common",
     "market",
-    "wallet"
+    "wallet",
+    "services"
 ]
 
 MIDDLEWARE = [
@@ -31,7 +32,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "columbus.urls"
+ROOT_URLCONF = "hailstone.urls"
 
 TEMPLATES = [
     {
@@ -50,7 +51,7 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "columbus.wsgi.application"
+WSGI_APPLICATION = "hailstone.wsgi.application"
 
 DATABASES = {
     "default": {

@@ -5,7 +5,6 @@ from decimal import Decimal
 import pytz
 from django import template
 from django.conf import settings
-from common.models import Asset
 from common.helpers import d0, dec
 
 

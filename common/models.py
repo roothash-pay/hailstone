@@ -1,19 +1,12 @@
 # encoding=utf-8
 
 import uuid
-
 from django.db import models
 
-BoolYesOrNoSelect = [
-    (x, x) for x in ["Yes", "No"]
-]
-PayWaySelect = [
-    (x, x) for x in ["All", "ETH", "USDT"]
-]
-AdminOrUser = [
-    (x, x) for x in ["Admin", "User"]
-]
 
+BoolYesOrNoSelect = [
+    (x, x) for x in ["yes", "no"]
+]
 
 class BaseModel(models.Model):
     uuid = models.CharField(
@@ -60,34 +53,42 @@ class IdField(models.CharField):
         super(IdField, self).__init__(**kwargs)
 
 
-class Asset(BaseModel):
+class ApiAuth(BaseModel):
+    STATUS_CHOICES = [(x, x) for x in ['UnVerify', 'Verifing', 'Verified']]
     name = models.CharField(
-        max_length=100,
-        unique=True,
-        verbose_name="资产名称",
+        max_length=64,
+        default='',
+        verbose_name="接入名称"
     )
-    chain_name = models.CharField(
-        max_length=100, verbose_name="链名称"
+    api_token = models.CharField(
+        max_length=128,
+        default='unknown',
+        verbose_name="接入 api Token"
     )
-    usd_price = DecField(
-        max_length=100, verbose_name="美元价格"
+    is_expire = models.CharField(
+        max_length=128,
+        default="no",
+        choices=BoolYesOrNoSelect,
+        verbose_name="Token是否过期"
     )
-    cny_price = DecField(
-        max_length=100, verbose_name="人民币价格"
-    )
-    unit = models.CharField(
-        max_length=100, verbose_name="币种精度"
-    )
-    is_active = models.BooleanField(
-        default=True, verbose_name="是否是有效"
+    status = models.CharField(
+        max_length=32,
+        choices=STATUS_CHOICES,
+        default='checking',
+        verbose_name="API 审核状态"
     )
 
     class Meta:
-        verbose_name = "资产表"
-        verbose_name_plural = "资产表"
+        verbose_name = "API 授权表"
+        verbose_name_plural = "API 授权表"
 
     def __str__(self):
         return self.name
 
-    def as_dict(self):
-        return {"id": self.id}
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "api_token": self.api_token,
+            "is_expire": self.is_expire,
+            "status":self.status,
+        }
