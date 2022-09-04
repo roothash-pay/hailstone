@@ -79,6 +79,7 @@ class Address(BaseModel):
         verbose_name="主网测试网"
     )
     device_id = models.CharField(max_length=70, verbose_name='设备ID')
+    wallet_uuid = models.CharField(max_length=70, verbose_name='wallet_uuid')
     wallet_name = models.CharField(max_length=70, verbose_name='钱包名称')
     address = models.CharField(max_length=70, verbose_name='钱包地址')
     contract_addr = models.CharField(max_length=70, verbose_name='合约地址')

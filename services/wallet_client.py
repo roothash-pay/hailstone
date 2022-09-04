@@ -28,7 +28,7 @@ class WalletClient:
 
     def get_nonce(self, chain: str, coin: str, network: str, address: str, consumer_token: str = None):
         return self.stub.getNonce(
-            wallet_pb2.NonceResponse(
+            wallet_pb2.NonceRequest(
                 consumer_token=consumer_token,
                 chain=chain,
                 coin=coin,

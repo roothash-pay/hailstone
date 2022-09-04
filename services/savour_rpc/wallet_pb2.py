@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'\n\024com.savourrpc.walletZ2git.savour.io/savour/savourrpc/go-savourrpc/wallet',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x16savourrpc/wallet.proto\x12\x10savourrpc.wallet\x1a\x16savourrpc/common.proto\"M\n\x13SupportCoinsRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0f\n\x07network\x18\x03 \x01(\t\"H\n\x14SupportCoinsResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\x0f\n\x07support\x18\x02 \x01(\x08\"e\n\x0cNonceRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x04 \x01(\t\x12\x0f\n\x07network\x18\x05 \x01(\t\"?\n\rNonceResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\r\n\x05nonce\x18\x02 \x01(\t\"W\n\x0fGasPriceRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\"@\n\x10GasPriceResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\x0b\n\x03gas\x18\x02 \x01(\t\"e\n\rSendTxRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0e\n\x06raw_tx\x18\x05 \x01(\t\"B\n\x0eSendTxResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\x0f\n\x07tx_hash\x18\x02 \x01(\t\"\x81\x01\n\x0e\x42\x61lanceRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\x12\x18\n\x10\x63ontract_address\x18\x06 \x01(\t\"C\n\x0f\x42\x61lanceResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\t\"\x1a\n\x07\x41\x64\x64ress\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"\x16\n\x05Value\x12\r\n\x05value\x18\x01 \x01(\t\"\xf5\x01\n\tTxMessage\x12\x0c\n\x04hash\x18\x01 \x01(\t\x12\r\n\x05index\x18\x02 \x01(\r\x12\'\n\x04\x66rom\x18\x03 \x03(\x0b\x32\x19.savourrpc.wallet.Address\x12%\n\x02to\x18\x04 \x03(\x0b\x32\x19.savourrpc.wallet.Address\x12&\n\x05value\x18\x07 \x03(\x0b\x32\x17.savourrpc.wallet.Value\x12\x0b\n\x03\x66\x65\x65\x18\x05 \x01(\t\x12\x0e\n\x06status\x18\x06 \x01(\x08\x12\x0c\n\x04type\x18\x08 \x01(\x05\x12\x0e\n\x06height\x18\t \x01(\t\x12\x18\n\x10\x63ontract_address\x18\n \x01(\t\"\xa3\x01\n\x10TxAddressRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\x12\x18\n\x10\x63ontract_address\x18\x06 \x01(\t\x12\x0c\n\x04page\x18\x07 \x01(\r\x12\x10\n\x08pagesize\x18\x08 \x01(\r\"]\n\x11TxAddressResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\'\n\x02tx\x18\x02 \x03(\x0b\x32\x1b.savourrpc.wallet.TxMessage\"c\n\rTxHashRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0c\n\x04hash\x18\x05 \x01(\t\"Z\n\x0eTxHashResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\'\n\x02tx\x18\x02 \x01(\x0b\x32\x1b.savourrpc.wallet.TxMessage\"g\n\x0e\x41\x63\x63ountRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"m\n\x0f\x41\x63\x63ountResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\x16\n\x0e\x61\x63\x63ount_number\x18\x02 \x01(\t\x12\x10\n\x08sequence\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\"C\n\x03Vin\x12\x0c\n\x04hash\x18\x01 \x01(\t\x12\r\n\x05index\x18\x02 \x01(\r\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x03\x12\x0f\n\x07\x61\x64\x64ress\x18\x04 \x01(\t\"6\n\x04Vout\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x03\x12\r\n\x05index\x18\x03 \x01(\r\"d\n\x0bUtxoRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"\x97\x01\n\x0cUtxoResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12#\n\x04vins\x18\x03 \x03(\x0b\x32\x15.savourrpc.wallet.Vin\x12%\n\x05vouts\x18\x04 \x03(\x0b\x32\x16.savourrpc.wallet.Vout\x12\x0b\n\x03\x66\x65\x65\x18\x05 \x01(\t\"g\n\x0eMinRentRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"A\n\x0fMinRentResponse\x12\x1f\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x10.savourrpc.Error\x12\r\n\x05value\x18\x02 \x01(\t2\xe5\x06\n\rWalletService\x12\x62\n\x0fgetSupportCoins\x12%.savourrpc.wallet.SupportCoinsRequest\x1a&.savourrpc.wallet.SupportCoinsResponse\"\x00\x12M\n\x08getNonce\x12\x1e.savourrpc.wallet.NonceRequest\x1a\x1f.savourrpc.wallet.NonceResponse\"\x00\x12V\n\x0bgetGasPrice\x12!.savourrpc.wallet.GasPriceRequest\x1a\".savourrpc.wallet.GasPriceResponse\"\x00\x12M\n\x06SendTx\x12\x1f.savourrpc.wallet.SendTxRequest\x1a .savourrpc.wallet.SendTxResponse\"\x00\x12S\n\ngetBalance\x12 .savourrpc.wallet.BalanceRequest\x1a!.savourrpc.wallet.BalanceResponse\"\x00\x12[\n\x0egetTxByAddress\x12\".savourrpc.wallet.TxAddressRequest\x1a#.savourrpc.wallet.TxAddressResponse\"\x00\x12R\n\x0bgetTxByHash\x12\x1f.savourrpc.wallet.TxHashRequest\x1a .savourrpc.wallet.TxHashResponse\"\x00\x12S\n\ngetAccount\x12 .savourrpc.wallet.AccountRequest\x1a!.savourrpc.wallet.AccountResponse\"\x00\x12J\n\x07getUtxo\x12\x1d.savourrpc.wallet.UtxoRequest\x1a\x1e.savourrpc.wallet.UtxoResponse\"\x00\x12S\n\ngetMinRent\x12 .savourrpc.wallet.MinRentRequest\x1a!.savourrpc.wallet.MinRentResponse\"\x00\x42J\n\x14\x63om.savourrpc.walletZ2git.savour.io/savour/savourrpc/go-savourrpc/walletb\x06proto3'
+  serialized_pb=b'\n\x16savourrpc/wallet.proto\x12\x10savourrpc.wallet\x1a\x16savourrpc/common.proto\"M\n\x13SupportCoinsRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0f\n\x07network\x18\x03 \x01(\t\"Y\n\x14SupportCoinsResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\x0f\n\x07support\x18\x03 \x01(\x08\"e\n\x0cNonceRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x04 \x01(\t\x12\x0f\n\x07network\x18\x05 \x01(\t\"P\n\rNonceResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\r\n\x05nonce\x18\x03 \x01(\t\"W\n\x0fGasPriceRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\"Q\n\x10GasPriceResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\x0b\n\x03gas\x18\x03 \x01(\t\"e\n\rSendTxRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0e\n\x06raw_tx\x18\x05 \x01(\t\"S\n\x0eSendTxResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\x0f\n\x07tx_hash\x18\x03 \x01(\t\"\x81\x01\n\x0e\x42\x61lanceRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\x12\x18\n\x10\x63ontract_address\x18\x06 \x01(\t\"T\n\x0f\x42\x61lanceResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\x0f\n\x07\x62\x61lance\x18\x03 \x01(\t\"\x1a\n\x07\x41\x64\x64ress\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"\x16\n\x05Value\x12\r\n\x05value\x18\x01 \x01(\t\"\xf5\x01\n\tTxMessage\x12\x0c\n\x04hash\x18\x01 \x01(\t\x12\r\n\x05index\x18\x02 \x01(\r\x12\'\n\x04\x66rom\x18\x03 \x03(\x0b\x32\x19.savourrpc.wallet.Address\x12%\n\x02to\x18\x04 \x03(\x0b\x32\x19.savourrpc.wallet.Address\x12&\n\x05value\x18\x07 \x03(\x0b\x32\x17.savourrpc.wallet.Value\x12\x0b\n\x03\x66\x65\x65\x18\x05 \x01(\t\x12\x0e\n\x06status\x18\x06 \x01(\x08\x12\x0c\n\x04type\x18\x08 \x01(\x05\x12\x0e\n\x06height\x18\t \x01(\t\x12\x18\n\x10\x63ontract_address\x18\n \x01(\t\"\xa3\x01\n\x10TxAddressRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\x12\x18\n\x10\x63ontract_address\x18\x06 \x01(\t\x12\x0c\n\x04page\x18\x07 \x01(\r\x12\x10\n\x08pagesize\x18\x08 \x01(\r\"n\n\x11TxAddressResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\'\n\x02tx\x18\x03 \x03(\x0b\x32\x1b.savourrpc.wallet.TxMessage\"c\n\rTxHashRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0c\n\x04hash\x18\x05 \x01(\t\"k\n\x0eTxHashResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\'\n\x02tx\x18\x03 \x01(\x0b\x32\x1b.savourrpc.wallet.TxMessage\"g\n\x0e\x41\x63\x63ountRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"~\n\x0f\x41\x63\x63ountResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\x16\n\x0e\x61\x63\x63ount_number\x18\x03 \x01(\t\x12\x10\n\x08sequence\x18\x04 \x01(\t\x12\x0f\n\x07network\x18\x05 \x01(\t\"C\n\x03Vin\x12\x0c\n\x04hash\x18\x01 \x01(\t\x12\r\n\x05index\x18\x02 \x01(\r\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x03\x12\x0f\n\x07\x61\x64\x64ress\x18\x04 \x01(\t\"6\n\x04Vout\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x03\x12\r\n\x05index\x18\x03 \x01(\r\"d\n\x0bUtxoRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"\xa8\x01\n\x0cUtxoResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\r\n\x05\x63hain\x18\x03 \x01(\t\x12#\n\x04vins\x18\x04 \x03(\x0b\x32\x15.savourrpc.wallet.Vin\x12%\n\x05vouts\x18\x05 \x03(\x0b\x32\x16.savourrpc.wallet.Vout\x12\x0b\n\x03\x66\x65\x65\x18\x06 \x01(\t\"g\n\x0eMinRentRequest\x12\x16\n\x0e\x63onsumer_token\x18\x01 \x01(\t\x12\r\n\x05\x63hain\x18\x02 \x01(\t\x12\x0c\n\x04\x63oin\x18\x03 \x01(\t\x12\x0f\n\x07network\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"R\n\x0fMinRentResponse\x12#\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x15.savourrpc.ReturnCode\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t2\xe5\x06\n\rWalletService\x12\x62\n\x0fgetSupportCoins\x12%.savourrpc.wallet.SupportCoinsRequest\x1a&.savourrpc.wallet.SupportCoinsResponse\"\x00\x12M\n\x08getNonce\x12\x1e.savourrpc.wallet.NonceRequest\x1a\x1f.savourrpc.wallet.NonceResponse\"\x00\x12V\n\x0bgetGasPrice\x12!.savourrpc.wallet.GasPriceRequest\x1a\".savourrpc.wallet.GasPriceResponse\"\x00\x12M\n\x06SendTx\x12\x1f.savourrpc.wallet.SendTxRequest\x1a .savourrpc.wallet.SendTxResponse\"\x00\x12S\n\ngetBalance\x12 .savourrpc.wallet.BalanceRequest\x1a!.savourrpc.wallet.BalanceResponse\"\x00\x12[\n\x0egetTxByAddress\x12\".savourrpc.wallet.TxAddressRequest\x1a#.savourrpc.wallet.TxAddressResponse\"\x00\x12R\n\x0bgetTxByHash\x12\x1f.savourrpc.wallet.TxHashRequest\x1a .savourrpc.wallet.TxHashResponse\"\x00\x12S\n\ngetAccount\x12 .savourrpc.wallet.AccountRequest\x1a!.savourrpc.wallet.AccountResponse\"\x00\x12J\n\x07getUtxo\x12\x1d.savourrpc.wallet.UtxoRequest\x1a\x1e.savourrpc.wallet.UtxoResponse\"\x00\x12S\n\ngetMinRent\x12 .savourrpc.wallet.MinRentRequest\x1a!.savourrpc.wallet.MinRentResponse\"\x00\x42J\n\x14\x63om.savourrpc.walletZ2git.savour.io/savour/savourrpc/go-savourrpc/walletb\x06proto3'
   ,
   dependencies=[savourrpc_dot_common__pb2.DESCRIPTOR,])
 
@@ -82,15 +82,22 @@ _SUPPORTCOINSRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.SupportCoinsResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.SupportCoinsResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='support', full_name='savourrpc.wallet.SupportCoinsResponse.support', index=1,
-      number=2, type=8, cpp_type=7, label=1,
+      name='msg', full_name='savourrpc.wallet.SupportCoinsResponse.msg', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='support', full_name='savourrpc.wallet.SupportCoinsResponse.support', index=2,
+      number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -108,7 +115,7 @@ _SUPPORTCOINSRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=147,
-  serialized_end=219,
+  serialized_end=236,
 )
 
 
@@ -167,8 +174,8 @@ _NONCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=221,
-  serialized_end=322,
+  serialized_start=238,
+  serialized_end=339,
 )
 
 
@@ -181,15 +188,22 @@ _NONCERESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.NonceResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.NonceResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='nonce', full_name='savourrpc.wallet.NonceResponse.nonce', index=1,
+      name='msg', full_name='savourrpc.wallet.NonceResponse.msg', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='nonce', full_name='savourrpc.wallet.NonceResponse.nonce', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -206,8 +220,8 @@ _NONCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=324,
-  serialized_end=387,
+  serialized_start=341,
+  serialized_end=421,
 )
 
 
@@ -259,8 +273,8 @@ _GASPRICEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=389,
-  serialized_end=476,
+  serialized_start=423,
+  serialized_end=510,
 )
 
 
@@ -273,15 +287,22 @@ _GASPRICERESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.GasPriceResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.GasPriceResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='gas', full_name='savourrpc.wallet.GasPriceResponse.gas', index=1,
+      name='msg', full_name='savourrpc.wallet.GasPriceResponse.msg', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='gas', full_name='savourrpc.wallet.GasPriceResponse.gas', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -298,8 +319,8 @@ _GASPRICERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=478,
-  serialized_end=542,
+  serialized_start=512,
+  serialized_end=593,
 )
 
 
@@ -358,8 +379,8 @@ _SENDTXREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=544,
-  serialized_end=645,
+  serialized_start=595,
+  serialized_end=696,
 )
 
 
@@ -372,15 +393,22 @@ _SENDTXRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.SendTxResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.SendTxResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='tx_hash', full_name='savourrpc.wallet.SendTxResponse.tx_hash', index=1,
+      name='msg', full_name='savourrpc.wallet.SendTxResponse.msg', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='tx_hash', full_name='savourrpc.wallet.SendTxResponse.tx_hash', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -397,8 +425,8 @@ _SENDTXRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=647,
-  serialized_end=713,
+  serialized_start=698,
+  serialized_end=781,
 )
 
 
@@ -464,8 +492,8 @@ _BALANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=716,
-  serialized_end=845,
+  serialized_start=784,
+  serialized_end=913,
 )
 
 
@@ -478,15 +506,22 @@ _BALANCERESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.BalanceResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.BalanceResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='balance', full_name='savourrpc.wallet.BalanceResponse.balance', index=1,
+      name='msg', full_name='savourrpc.wallet.BalanceResponse.msg', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='balance', full_name='savourrpc.wallet.BalanceResponse.balance', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -503,8 +538,8 @@ _BALANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=847,
-  serialized_end=914,
+  serialized_start=915,
+  serialized_end=999,
 )
 
 
@@ -535,8 +570,8 @@ _ADDRESS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=916,
-  serialized_end=942,
+  serialized_start=1001,
+  serialized_end=1027,
 )
 
 
@@ -567,8 +602,8 @@ _VALUE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=944,
-  serialized_end=966,
+  serialized_start=1029,
+  serialized_end=1051,
 )
 
 
@@ -662,8 +697,8 @@ _TXMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=969,
-  serialized_end=1214,
+  serialized_start=1054,
+  serialized_end=1299,
 )
 
 
@@ -743,8 +778,8 @@ _TXADDRESSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1217,
-  serialized_end=1380,
+  serialized_start=1302,
+  serialized_end=1465,
 )
 
 
@@ -757,15 +792,22 @@ _TXADDRESSRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.TxAddressResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.TxAddressResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='tx', full_name='savourrpc.wallet.TxAddressResponse.tx', index=1,
-      number=2, type=11, cpp_type=10, label=3,
+      name='msg', full_name='savourrpc.wallet.TxAddressResponse.msg', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='tx', full_name='savourrpc.wallet.TxAddressResponse.tx', index=2,
+      number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -782,8 +824,8 @@ _TXADDRESSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1382,
-  serialized_end=1475,
+  serialized_start=1467,
+  serialized_end=1577,
 )
 
 
@@ -842,8 +884,8 @@ _TXHASHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1477,
-  serialized_end=1576,
+  serialized_start=1579,
+  serialized_end=1678,
 )
 
 
@@ -856,15 +898,22 @@ _TXHASHRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.TxHashResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.TxHashResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='tx', full_name='savourrpc.wallet.TxHashResponse.tx', index=1,
-      number=2, type=11, cpp_type=10, label=1,
+      name='msg', full_name='savourrpc.wallet.TxHashResponse.msg', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='tx', full_name='savourrpc.wallet.TxHashResponse.tx', index=2,
+      number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -881,8 +930,8 @@ _TXHASHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1578,
-  serialized_end=1668,
+  serialized_start=1680,
+  serialized_end=1787,
 )
 
 
@@ -941,8 +990,8 @@ _ACCOUNTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1670,
-  serialized_end=1773,
+  serialized_start=1789,
+  serialized_end=1892,
 )
 
 
@@ -955,29 +1004,36 @@ _ACCOUNTRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.AccountResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.AccountResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='account_number', full_name='savourrpc.wallet.AccountResponse.account_number', index=1,
+      name='msg', full_name='savourrpc.wallet.AccountResponse.msg', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sequence', full_name='savourrpc.wallet.AccountResponse.sequence', index=2,
+      name='account_number', full_name='savourrpc.wallet.AccountResponse.account_number', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='network', full_name='savourrpc.wallet.AccountResponse.network', index=3,
+      name='sequence', full_name='savourrpc.wallet.AccountResponse.sequence', index=3,
       number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='network', full_name='savourrpc.wallet.AccountResponse.network', index=4,
+      number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -994,8 +1050,8 @@ _ACCOUNTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1775,
-  serialized_end=1884,
+  serialized_start=1894,
+  serialized_end=2020,
 )
 
 
@@ -1047,8 +1103,8 @@ _VIN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1886,
-  serialized_end=1953,
+  serialized_start=2022,
+  serialized_end=2089,
 )
 
 
@@ -1093,8 +1149,8 @@ _VOUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1955,
-  serialized_end=2009,
+  serialized_start=2091,
+  serialized_end=2145,
 )
 
 
@@ -1153,8 +1209,8 @@ _UTXOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2011,
-  serialized_end=2111,
+  serialized_start=2147,
+  serialized_end=2247,
 )
 
 
@@ -1167,36 +1223,43 @@ _UTXORESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.UtxoResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.UtxoResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='chain', full_name='savourrpc.wallet.UtxoResponse.chain', index=1,
+      name='msg', full_name='savourrpc.wallet.UtxoResponse.msg', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='vins', full_name='savourrpc.wallet.UtxoResponse.vins', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      name='chain', full_name='savourrpc.wallet.UtxoResponse.chain', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='vouts', full_name='savourrpc.wallet.UtxoResponse.vouts', index=3,
+      name='vins', full_name='savourrpc.wallet.UtxoResponse.vins', index=3,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='fee', full_name='savourrpc.wallet.UtxoResponse.fee', index=4,
-      number=5, type=9, cpp_type=9, label=1,
+      name='vouts', full_name='savourrpc.wallet.UtxoResponse.vouts', index=4,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='fee', full_name='savourrpc.wallet.UtxoResponse.fee', index=5,
+      number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -1213,8 +1276,8 @@ _UTXORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2114,
-  serialized_end=2265,
+  serialized_start=2250,
+  serialized_end=2418,
 )
 
 
@@ -1273,8 +1336,8 @@ _MINRENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2267,
-  serialized_end=2370,
+  serialized_start=2420,
+  serialized_end=2523,
 )
 
 
@@ -1287,15 +1350,22 @@ _MINRENTRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='error', full_name='savourrpc.wallet.MinRentResponse.error', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='code', full_name='savourrpc.wallet.MinRentResponse.code', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='value', full_name='savourrpc.wallet.MinRentResponse.value', index=1,
+      name='msg', full_name='savourrpc.wallet.MinRentResponse.msg', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='savourrpc.wallet.MinRentResponse.value', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -1312,27 +1382,27 @@ _MINRENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2372,
-  serialized_end=2437,
+  serialized_start=2525,
+  serialized_end=2607,
 )
 
-_SUPPORTCOINSRESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
-_NONCERESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
-_GASPRICERESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
-_SENDTXRESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
-_BALANCERESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
+_SUPPORTCOINSRESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
+_NONCERESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
+_GASPRICERESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
+_SENDTXRESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
+_BALANCERESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
 _TXMESSAGE.fields_by_name['from'].message_type = _ADDRESS
 _TXMESSAGE.fields_by_name['to'].message_type = _ADDRESS
 _TXMESSAGE.fields_by_name['value'].message_type = _VALUE
-_TXADDRESSRESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
+_TXADDRESSRESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
 _TXADDRESSRESPONSE.fields_by_name['tx'].message_type = _TXMESSAGE
-_TXHASHRESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
+_TXHASHRESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
 _TXHASHRESPONSE.fields_by_name['tx'].message_type = _TXMESSAGE
-_ACCOUNTRESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
-_UTXORESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
+_ACCOUNTRESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
+_UTXORESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
 _UTXORESPONSE.fields_by_name['vins'].message_type = _VIN
 _UTXORESPONSE.fields_by_name['vouts'].message_type = _VOUT
-_MINRENTRESPONSE.fields_by_name['error'].message_type = savourrpc_dot_common__pb2._ERROR
+_MINRENTRESPONSE.fields_by_name['code'].enum_type = savourrpc_dot_common__pb2._RETURNCODE
 DESCRIPTOR.message_types_by_name['SupportCoinsRequest'] = _SUPPORTCOINSREQUEST
 DESCRIPTOR.message_types_by_name['SupportCoinsResponse'] = _SUPPORTCOINSRESPONSE
 DESCRIPTOR.message_types_by_name['NonceRequest'] = _NONCEREQUEST
@@ -1545,8 +1615,8 @@ _WALLETSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=2440,
-  serialized_end=3309,
+  serialized_start=2610,
+  serialized_end=3479,
   methods=[
   _descriptor.MethodDescriptor(
     name='getSupportCoins',

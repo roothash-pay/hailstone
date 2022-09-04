@@ -44,8 +44,7 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-                "frontend.views.global_var.global_variable",
+                "django.contrib.messages.context_processors.messages"
             ]
         },
     }
@@ -97,7 +96,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
 GRPC_MAX_MESSAGE_LENGTH = 50 * 1024 * 1024
-WALLET_GRPC_CHANNEL_URL = '127.0.0.1:50011'
+WALLET_GRPC_CHANNEL_URL = '127.0.0.1:8089'
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
