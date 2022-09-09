@@ -190,5 +190,10 @@ class AddresNote(BaseModel):
 
     def list_to_dict(self):
         return {
-            "id": self.id
+            "id": self.id,
+            "chain": self.chain.name,
+            "asset": self.asset.name,
+            "device_id": self.device_id,
+            "memo": self.memo,
+            "address": self.address
         }

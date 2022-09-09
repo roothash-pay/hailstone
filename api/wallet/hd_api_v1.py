@@ -6,7 +6,7 @@ from common.helpers import (
     error_json
 )
 from common.api_auth import check_api_token
-from wallet.models import Chain, Asset, Address
+from wallet.models import Chain, Asset, Address, AddresNote
 from common.helpers import d0, dec
 from services.wallet_client import WalletClient
 from services.savour_rpc import common_pb2
@@ -189,7 +189,8 @@ def send_transaction(request):
     else:
         return error_json("rpc server fail")
 
-@check_api_token
+
+# @check_api_token
 def get_address_transaction(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
@@ -225,7 +226,7 @@ def get_address_transaction(request):
         return error_json("rpc server fail")
 
 
-@check_api_token
+# @check_api_token
 def get_hash_transaction(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
@@ -255,7 +256,7 @@ def get_hash_transaction(request):
         return error_json("rpc server fail")
 
 
-@check_api_token
+# @check_api_token
 def submit_wallet_info(request):
     params = json.loads(request.body.decode())
     chain = params.get('chain', "eth")
@@ -304,7 +305,7 @@ def submit_wallet_info(request):
     return ok_json("submit wallet success")
 
 
-@check_api_token
+# @check_api_token
 def batch_submit_wallet(request):
     params = json.loads(request.body.decode())
     batch_wallet = params.get('batch_wallet', None)
@@ -346,29 +347,79 @@ def delete_wallet(request):
 @check_api_token
 def get_unspend_list(request):
     params = json.loads(request.body.decode())
-    network = params.get('network', "mainnet")
-    chain = params.get('chain', "eth")
-    symbol = params.get('symbol', "eth")
     return ok_json("ok")
 
 
 @check_api_token
 def get_note_book(request):
-    return ok_json("get node book success")
+    params = json.loads(request.body.decode())
+    device_id = params.get('device_id')
+    page = params.get('page')
+    page_size = params.get('page')
+    start = page * page_size
+    end = start + page_size
+    address_list = AddresNote.objects.filter(device_id=device_id).order_by("-id")[start:end]
+    total = AddresNote.objects.filter(device_id=device_id).order_by("-id").count()
+    ret_address_data = []
+    for address in address_list:
+        ret_address_data.append(address.list_to_dict())
+    data = {
+        "total": total,
+        "data": ret_address_data
+    }
+    return ok_json(data)
 
 
 @check_api_token
 def add_note_book(request):
-    return ok_json("add note book success")
+    params = json.loads(request.body.decode())
+    device_id = params.get('device_id')
+    chain = params.get('chain')
+    asset = params.get('asset')
+    memo = params.get('memo')
+    address = params.get('address')
+    db_chain = Chain.objects.filter(name=chain).first()
+    if db_chain is None:
+        return error_json("Do not support chain", 4000)
+    db_asset = Asset.objects.filter(name=asset).first()
+    if db_asset is None:
+        return error_json("Do not support symbol", 4000)
+    address_db = AddresNote.object.filter(
+        chain=db_chain,
+        asset=db_asset,
+        device_id=device_id,
+        memo=memo,
+        address=address
+    ).first()
+    if address_db is not None:
+        return error_json("this address exist", 4000)
+    else:
+        AddresNote.objects.create(
+            chain=db_chain,
+            asset=db_asset,
+            device_id=device_id,
+            memo=memo,
+            address=address
+        )
+        return ok_json("add note book success")
 
 
 @check_api_token
 def upd_note_book(request):
     params = json.loads(request.body.decode())
+    addr_note_id = int(params.get('addr_note_id'))
+    memo = params.get('memo')
+    address = params.get('address')
+    AddresNote.object.filter(id=addr_note_id).update(
+        memo=memo,
+        address=address
+    )
     return ok_json("update note book success")
 
 
 @check_api_token
 def del_note_book(request):
     params = json.loads(request.body.decode())
+    addr_note_id = int(params.get('addr_note_id'))
+    AddresNote.objects.filter(id=addr_note_id).delete()
     return ok_json("delete note book success")
