@@ -14,6 +14,11 @@ parent:
   <a href="https://github.com/SavourDao/hailstone/blob/main/LICENSE">
     <img alt="License: Apache-2.0" src="https://img.shields.io/github/license/SavourDao/savour-core.svg" />
   </a>
+   <a href="https://github.com/SavourDao/hailstone">
+    <img alt="License: Apache-2.0" src="http://img.shields.io/badge/Python3.*-ff3366.svg"/>
+  </a>
+  
+ 
 </div>
 
 This project is written in python Django, the dependency version is above python3, python3.8.* is recommended
