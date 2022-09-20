@@ -4,8 +4,7 @@ parent:
 -->
 
 <div align="center">
-  <h1> Hailstone Repo </h1>
-  <h3> savour backend service </h3>
+  <h1> Hailstone Repo(savour backend service) </h1>
 </div>
 
 <div align="center">
