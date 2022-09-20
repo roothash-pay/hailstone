@@ -1,18 +1,18 @@
-## Savour 钱包后端服务
+## Savour backend service
 
-本项目使用 python Django 编写, 依赖版本为 python3 以上，推荐 python3.8.*
+This project is written in python Django, the dependency version is above python3, python3.8.* is recommended
 
-## 项目部署
+## Project deployment
 
-### 1. 安装依赖
+### 1.install dependencies
 
 `pip3 install -r requirements.txt`
 
-### 2.生成数据库
+### 2.migrate database
 
 `python3 manager migrations`
 
-### 3.运行开发
+### 3. run dev
 
 `python3 manager runserver`
 
