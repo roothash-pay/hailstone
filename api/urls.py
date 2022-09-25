@@ -19,6 +19,8 @@ from api.wallet.hd_api_v1 import (
     upd_note_book
 )
 
+import api.market.api_v1 as market
+
 urlpatterns = [
     # Hd wallet module
     path(r'get_balance', get_balance, name='get_balance'),
@@ -36,4 +38,12 @@ urlpatterns = [
     path(r'add_note_book', add_note_book, name='add_note_book'),
     path(r'upd_note_book', upd_note_book, name='upd_note_book'),
     path(r'del_note_book', del_note_book, name='del_note_book'),
+
+    # market module
+    path(r'get_exchanges', market.get_exchanges, name='get_exchanges'),
+    path(r'get_assets', market.get_assets, name='get_assets'),
+    path(r'get_stable_coins', market.get_stable_coins, name='get_stable_coins'),
+    path(r'get_stable_coin_price', market.get_stable_coin_price, name='get_stable_coin_price'),
+    path(r'get_symbols', market.get_symbols, name='get_symbols'),
+    path(r'get_symbol_prices', market.get_symbol_prices, name='get_symbol_prices'),
 ]
