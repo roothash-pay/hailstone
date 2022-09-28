@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from savourrpc import chaineye_pb2 as savourrpc_dot_chaineye__pb2
+from services.savour_rpc import chaineye_pb2 as savourrpc_dot_chaineye__pb2
 
 
 class ChaineyeServiceStub(object):

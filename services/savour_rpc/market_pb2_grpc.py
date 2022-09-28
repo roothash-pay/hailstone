@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from savourrpc import market_pb2 as savourrpc_dot_market__pb2
+from services.savour_rpc import market_pb2 as savourrpc_dot_market__pb2
 
 
 class PriceServiceStub(object):

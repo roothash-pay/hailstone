@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from savourrpc import wallet_pb2 as savourrpc_dot_wallet__pb2
+from services.savour_rpc import wallet_pb2 as savourrpc_dot_wallet__pb2
 
 
 class WalletServiceStub(object):
