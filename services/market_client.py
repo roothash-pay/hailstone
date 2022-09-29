@@ -11,7 +11,7 @@ class MarketClient:
         options = [
             ('grpc.max_receive_message_length', settings.GRPC_MAX_MESSAGE_LENGTH),
         ]
-        channel = grpc.insecure_channel(settings.WALLET_GRPC_CHANNEL_URL, options=options)
+        channel = grpc.insecure_channel(settings.MARKET_GRPC_CHANNEL_URL, options=options)
         self.stub = market_pb2_grpc.PriceServiceStub(channel)
 
     def get_symbols(self, exchange_id: str, consumer_token: str = None) -> market_pb2.SymbolResponse:

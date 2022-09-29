@@ -46,4 +46,7 @@ urlpatterns = [
     path(r'get_stable_coin_price', market.get_stable_coin_price, name='get_stable_coin_price'),
     path(r'get_symbols', market.get_symbols, name='get_symbols'),
     path(r'get_symbol_prices', market.get_symbol_prices, name='get_symbol_prices'),
+
+    # chaineye module
+
 ]
