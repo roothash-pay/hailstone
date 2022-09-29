@@ -97,6 +97,9 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 GRPC_MAX_MESSAGE_LENGTH = 50 * 1024 * 1024
 WALLET_GRPC_CHANNEL_URL = '127.0.0.1:8089'
+MARKET_GRPC_CHANNEL_URL = '127.0.0.1:8089'
+CHAINEYE_GRPC_CHANNEL_URL = '127.0.0.1:8089'
+
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
@@ -110,3 +113,5 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+# usSszPkH
