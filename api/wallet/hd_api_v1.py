@@ -55,6 +55,26 @@ def get_balance(request):
 
 
 # @check_api_token
+def get_wallet_balance(request):
+    params = json.loads(request.body.decode())
+    device_id = params.get('device_id', "")
+    wallet_uuid = params.get('wallet_uuid', "")
+    chain = params.get('chain', "eth")
+    db_chain = Chain.objects.filter(name=chain).first()
+    if db_chain is None:
+        return error_json("Do not support chain", 4000)
+    address_list = Address.objects.filter(
+        chain=db_chain,
+        device_id=device_id,
+        wallet_uuid=wallet_uuid
+    ).order_by("id")
+    wallet_balance_return = []
+    for address in address_list:
+        wallet_balance_return.append(address.list_to_dict())
+    return ok_json(wallet_balance_return)
+
+
+# @check_api_token
 def get_nonce(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
@@ -330,6 +350,8 @@ def batch_submit_wallet(request):
                     contract_addr=wallet.get("contract_addr"),
                     balance=d0,
                 )
+            else:
+                return error_json("db_chain or db_asset is npne", 4000)
     return ok_json("batch submit wallet success")
 
 
