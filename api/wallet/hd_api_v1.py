@@ -71,7 +71,11 @@ def get_wallet_balance(request):
     wallet_balance_return = []
     for address in address_list:
         wallet_balance_return.append(address.list_to_dict())
-    return ok_json(wallet_balance_return)
+    data = {
+        "total_asset": 1000000,
+        "coin_asset": wallet_balance_return,
+    }
+    return ok_json(data)
 
 
 # @check_api_token
