@@ -3,6 +3,7 @@
 from django.urls import path
 from api.wallet.hd_api_v1 import (
     get_balance,
+    get_wallet_balance,
     get_nonce,
     get_account_info,
     get_fee,
@@ -24,6 +25,7 @@ import api.market.api_v1 as market
 urlpatterns = [
     # Hd wallet module
     path(r'get_balance', get_balance, name='get_balance'),
+    path(r'get_wallet_balance', get_wallet_balance, name='get_wallet_balance'),
     path(r'get_nonce', get_nonce, name='get_nonce'),
     path(r'get_account_info', get_account_info, name='get_account_info'),
     path(r'get_fee', get_fee, name='get_fee'),

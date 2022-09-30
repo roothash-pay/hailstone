@@ -94,7 +94,16 @@ class Address(BaseModel):
 
     def list_to_dict(self):
         return {
-            "id": self.id
+            "id": self.id,
+            "chain": self.chain.name,
+            "asset": self.asset.name,
+            "network": self.network,
+            "device_id": self.device_id,
+            "wallet_uuid": self.wallet_uuid,
+            "wallet_name": self.wallet_name,
+            "address": self.address,
+            "contract_addr": self.contract_addr,
+            "balance": "{:f}".format(self.balance),
         }
 
 
