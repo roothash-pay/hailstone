@@ -15,6 +15,4 @@ class Command(BaseCommand):
         if symbol_result.code != common_pb2.SUCCESS:
             logging.warning(symbol_result)
             return
-        if len(symbol_result.coin_prices) == 0:
-            return
         print(symbol_result)
