@@ -6,6 +6,8 @@ from common.helpers import d0, dec, sleep
 from services.market_client import MarketClient
 from market.models import StablePrice, Asset
 from services.savour_rpc import common_pb2
+from services.savour_rpc import market_pb2_grpc
+from services.savour_rpc import market_pb2
 
 
 class Command(BaseCommand):
@@ -16,16 +18,29 @@ class Command(BaseCommand):
             logging.warning(stable_result)
             return
         if len(stable_result.coin_prices) == 0:
+            logging.warning(stable_result)
             return
+
+        asset_name_list = []
+        for coin_price in stable_result.coin_prices:
+            asset_name_list.append(coin_price.name)
+
+        asset_list = Asset.objects.filter(name__in=asset_name_list).first()
+
+        asset_dict = {}
+        for asset_item in asset_list:
+            asset_dict[asset_item.name] = asset_item
 
         price_list = []
         for coin_price in stable_result.coin_prices:
-            asset = Asset.objects.filter(name=coin_price.name).first()
-            if asset is not None:
-                price_list.append(
-                    StablePrice(
-                        usd_price=coin_price.usd_price,
-                        cny_price=coin_price.cny_price,
-                        asset=asset
-                    ))
-        StablePrice.objects.bulk_create(price_list)
+            if coin_price.name not in asset_dict:
+                continue
+            price_list.append(
+                StablePrice(
+                    usd_price=coin_price.usd_price,
+                    cny_price=coin_price.cny_price,
+                    asset=asset_dict[coin_price.name]
+                ))
+
+        if len(price_list) > 0:
+            StablePrice.objects.bulk_update(price_list)
