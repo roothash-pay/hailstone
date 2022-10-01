@@ -14,7 +14,7 @@ class MarketClient:
         channel = grpc.insecure_channel(settings.MARKET_GRPC_CHANNEL_URL, options=options)
         self.stub = market_pb2_grpc.PriceServiceStub(channel)
 
-    def get_symbols(self, exchange_id: str, consumer_token: str = None) -> market_pb2.SymbolResponse:
+    def get_symbols(self, exchange_id: str = "0", consumer_token: str = None) -> market_pb2.SymbolResponse:
         return self.stub.getSymbols(
             market_pb2.SymbolRequest(
                 consumer_token=consumer_token,
@@ -22,7 +22,7 @@ class MarketClient:
             )
         )
 
-    def get_symbol_prices(self, exchange_id: str, symbol_id: str, consumer_token: str = None):
+    def get_symbol_prices(self, exchange_id: str = "0", symbol_id: str = "0", consumer_token: str = None):
         return self.stub.getSymbolPrices(
             market_pb2.SymbolPriceRequest(
                 consumer_token=consumer_token,
@@ -54,7 +54,7 @@ class MarketClient:
             )
         )
 
-    def get_stable_coin_price(self, coin_id: str, consumer_token: str = None):
+    def get_stable_coin_price(self, coin_id: str = "0", consumer_token: str = None):
         return self.stub.getStableCoinPrice(
             market_pb2.StableCoinPriceRequest(
                 consumer_token=consumer_token,
