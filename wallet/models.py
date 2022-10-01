@@ -103,7 +103,7 @@ class Address(BaseModel):
             "wallet_name": self.wallet_name,
             "address": self.address,
             "contract_addr": self.contract_addr,
-            "balance": "{:f}".format(self.balance),
+            "balance": 100.00,
         }
 
 

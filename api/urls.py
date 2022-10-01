@@ -20,7 +20,21 @@ from api.wallet.hd_api_v1 import (
     upd_note_book
 )
 
-import api.market.api_v1 as market
+from api.market.api_v1 import (
+    get_exchanges,
+    get_exchange_market,
+    get_market_detail,
+    add_favorite_market,
+    remove_favorite_market
+)
+
+from api.circle.api_v1 import (
+    get_like_address,
+    get_comment_list,
+    get_arcticle_list,
+    get_arcticle_detail,
+    like_article
+)
 
 urlpatterns = [
     # Hd wallet module
@@ -42,13 +56,16 @@ urlpatterns = [
     path(r'del_note_book', del_note_book, name='del_note_book'),
 
     # market module
-    path(r'get_exchanges', market.get_exchanges, name='get_exchanges'),
-    path(r'get_assets', market.get_assets, name='get_assets'),
-    path(r'get_stable_coins', market.get_stable_coins, name='get_stable_coins'),
-    path(r'get_stable_coin_price', market.get_stable_coin_price, name='get_stable_coin_price'),
-    path(r'get_symbols', market.get_symbols, name='get_symbols'),
-    path(r'get_symbol_prices', market.get_symbol_prices, name='get_symbol_prices'),
+    path(r'get_exchanges', get_exchanges, name='get_exchanges'),
+    path(r'get_exchange_market', get_exchange_market, name='get_exchange_market'),
+    path(r'get_market_detail', get_market_detail, name='get_market_detail'),
+    path(r'add_favorite_market', add_favorite_market, name='add_favorite_market'),
+    path(r'remove_favorite_market', remove_favorite_market, name='remove_favorite_market'),
 
     # chaineye module
-
+    path(r'get_like_address', get_like_address, name='get_like_address'),
+    path(r'get_comment_list', get_comment_list, name='get_comment_list'),
+    path(r'get_arcticle_list', get_arcticle_list, name='get_arcticle_list'),
+    path(r'get_arcticle_detail', get_arcticle_detail, name='get_arcticle_detail'),
+    path(r'like_article', like_article, name='like_article'),
 ]
