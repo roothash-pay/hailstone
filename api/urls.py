@@ -29,6 +29,7 @@ from api.market.api_v1 import (
 )
 
 from api.circle.api_v1 import (
+    get_cat_list,
     get_like_address,
     get_comment_list,
     get_arcticle_list,
@@ -63,6 +64,7 @@ urlpatterns = [
     path(r'remove_favorite_market', remove_favorite_market, name='remove_favorite_market'),
 
     # chaineye module
+    path(r'get_cat_list', get_cat_list, name='get_cat_list'),
     path(r'get_like_address', get_like_address, name='get_like_address'),
     path(r'get_comment_list', get_comment_list, name='get_comment_list'),
     path(r'get_arcticle_list', get_arcticle_list, name='get_arcticle_list'),
