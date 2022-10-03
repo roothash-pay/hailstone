@@ -92,3 +92,54 @@ class ApiAuth(BaseModel):
             "is_expire": self.is_expire,
             "status":self.status,
         }
+
+
+class Chain(BaseModel):
+    name = models.CharField(max_length=70, verbose_name='链名称', db_index=True)
+    mark = models.CharField(max_length=70, verbose_name='链名标识')
+    icon = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
+
+    class Meta:
+        verbose_name = '链表'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+
+    def list_to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "mark": self.user.mark,
+            "icon": str(self.icon),
+        }
+
+
+class Asset(BaseModel):
+    name = models.CharField(max_length=70, verbose_name='资产名称', db_index=True)
+    mark = models.CharField(max_length=70, verbose_name='资产标识')
+    icon = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
+    unit = models.CharField(max_length=10, verbose_name='资产精度', db_index=True)
+    chain = models.ForeignKey(
+        Chain, on_delete=models.CASCADE,
+        null=True, blank=True,
+        verbose_name='链名称'
+    )
+
+    class Meta:
+        verbose_name = '资产表'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+    def list_to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "mark": self.user.mark,
+            "icon": str(self.icon),
+            "unit": self.user.unit,
+            "chain": self.chain
+        }

@@ -17,7 +17,11 @@ from api.wallet.hd_api_v1 import (
     get_note_book,
     add_note_book,
     del_note_book,
-    upd_note_book
+    upd_note_book,
+    hot_token_list,
+    sourch_add_token,
+    get_wallet_asset,
+    get_sign_tx_info
 )
 
 from api.market.api_v1 import (
@@ -55,6 +59,11 @@ urlpatterns = [
     path(r'add_note_book', add_note_book, name='add_note_book'),
     path(r'upd_note_book', upd_note_book, name='upd_note_book'),
     path(r'del_note_book', del_note_book, name='del_note_book'),
+    path(r'hot_token_list', hot_token_list, name='hot_token_list'),
+    path(r'sourch_add_token', sourch_add_token, name='sourch_add_token'),
+    path(r'get_wallet_asset', get_wallet_asset, name='get_wallet_asset'),
+    path(r'get_sign_tx_info', get_sign_tx_info, name='get_sign_tx_info'),
+
 
     # market module
     path(r'get_exchanges', get_exchanges, name='get_exchanges'),

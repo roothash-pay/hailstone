@@ -21,6 +21,7 @@ class Command(BaseCommand):
             logging.warning(stable_result)
             return
         for coin_price in stable_result.coin_prices:
+            print(coin_price.name)
             asset = Asset.objects.filter(
                 name=coin_price.name
             ).first()

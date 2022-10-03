@@ -7,8 +7,13 @@ from wallet.models import (
     Address,
     TxRecord,
     TokenConfig,
-    AddresNote
+    AddresNote,
+    AddressAmountStat
 )
+
+@admin.register(AddressAmountStat)
+class AddressAmountStatAdmin(admin.ModelAdmin):
+    list_display = ('id', 'address', 'amount')
 
 
 @admin.register(Chain)

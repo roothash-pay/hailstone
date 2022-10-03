@@ -2,62 +2,14 @@
 
 import pytz
 from django.db import models
-from common.models import DecField, BaseModel, BoolYesOrNoSelect
+from common.models import DecField, BaseModel, BoolYesOrNoSelect, Chain, Asset
 from django.conf import settings
 from common.helpers import d0, dec, d1
+from market.models import MarketPrice, StablePrice
+from decimal import Decimal
+
 
 tz = pytz.timezone(settings.TIME_ZONE)
-
-
-class Chain(BaseModel):
-    name = models.CharField(max_length=70, verbose_name='链名称', db_index=True)
-    mark = models.CharField(max_length=70, verbose_name='链名标识')
-    icon = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
-
-    class Meta:
-        verbose_name = '链表'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.name
-
-
-    def list_to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "mark": self.user.mark,
-            "icon": str(self.icon),
-        }
-
-
-class Asset(BaseModel):
-    name = models.CharField(max_length=70, verbose_name='链名称', db_index=True)
-    mark = models.CharField(max_length=70, verbose_name='链名标识')
-    icon = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
-    unit = models.CharField(max_length=10, verbose_name='资产精度', db_index=True)
-    chain = models.ForeignKey(
-        Chain, on_delete=models.CASCADE,
-        null=True, blank=True,
-        verbose_name='链名称'
-    )
-
-    class Meta:
-        verbose_name = '资产表'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.name
-
-    def list_to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "mark": self.user.mark,
-            "icon": str(self.icon),
-            "unit": self.user.unit,
-            "chain": self.chain
-        }
 
 
 class Address(BaseModel):
@@ -92,18 +44,59 @@ class Address(BaseModel):
     def __str__(self):
         return self.address
 
+    def get_symbol_price(self):
+        balance = Decimal(self.balance) / Decimal(10 ** int(self.asset.unit))
+        if self.asset.name not in ["USDT", "USDC", "DAI"]:
+            market_price = MarketPrice.objects.filter(
+                qoute_asset=self.asset,
+                exchange__name="binance"
+            ).order_by("-id").first()
+            return market_price.usd_price * balance, market_price.cny_price * balance
+        else:
+            stable_price = StablePrice.objects.filter(
+                asset=self.asset,
+            ).order_by("-id").first()
+            return stable_price.usd_price * balance, stable_price.cny_price * balance
+
     def list_to_dict(self):
+        usd_price, cny_price = self.get_symbol_price()
         return {
             "id": self.id,
             "chain": self.chain.name,
-            "asset": self.asset.name,
+            "symbol": self.asset.name,
+            "icon": str(self.asset.icon),
             "network": self.network,
             "device_id": self.device_id,
             "wallet_uuid": self.wallet_uuid,
             "wallet_name": self.wallet_name,
             "address": self.address,
             "contract_addr": self.contract_addr,
-            "balance": 100.00,
+            "usdt_price": format(usd_price, ".2f"),
+            "cny_price": format(cny_price, ".2f"),
+            "balance": format(Decimal(self.balance) / Decimal(10 ** int(self.asset.unit)), ".4f"),
+        }
+
+
+class AddressAmountStat(BaseModel):
+    address = models.ForeignKey(
+        Address, on_delete=models.CASCADE,
+        null=True, blank=True,
+        verbose_name='address'
+    )
+    amount = DecField(default=d0, verbose_name="amount")
+    timedate = models.CharField(max_length=70, verbose_name='timedate')
+
+    class Meta:
+        verbose_name = 'AddressAmountStat'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.address.address
+
+    def to_dict(self):
+        return {
+            "amount":format(self.amount, ".2f"),
+            "time": self.timedate,
         }
 
 
@@ -139,7 +132,13 @@ class TokenConfig(BaseModel):
 
     def list_to_dict(self):
         return {
-            "id": self.id
+            "id": self.id,
+            "asset_id": self.asset.id,
+            "token_name": self.token_name,
+            "icon": str(self.icon),
+            "token_symbol": self.token_symbol,
+            "contract_addr": self.contract_addr,
+            "decimal": self.decimal,
         }
 
 
