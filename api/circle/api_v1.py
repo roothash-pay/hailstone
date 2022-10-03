@@ -39,7 +39,7 @@ def get_arcticle_list(request):
     type = params.get('type')
     cat_id = params.get('cat_id', 0)
     page = params.get('page', 1)
-    page_size = params.get('page_size', 10)
+    page_size = params.get('pageSize', 10)
     wallet_client = ChaineyeClient()
     result = wallet_client.get_arcticle_list(
         type=type,
@@ -51,8 +51,12 @@ def get_arcticle_list(request):
         article_list_ret = []
         for item in result.articles:
             arctle = Article(item)
-            article_list_ret.append(arctle.as_json())
-        return ok_json(article_list_ret)
+            article_list_ret.append(arctle.as_json(type))
+        data = {
+            "total": result.total,
+            "gds_lst": article_list_ret,
+        }
+        return ok_json(data)
     else:
         return error_json("get chaineye arcticle list fail", 400)
 

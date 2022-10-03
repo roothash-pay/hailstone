@@ -11,10 +11,13 @@ class Article:
     def __init__(self, article):
         self.article = article
 
-    def as_json(self)-> Dict[str, Any]:
+    def as_json(self, type)-> Dict[str, Any]:
         return {
             "id": self.article.id,
             "title": self.article.title,
+            "type": type,
+            "image": self.article.cover,
+            "abstract": self.article.abstract,
             "author": self.article.author,
             "add_time": self.article.add_time,
             "upd_time": self.article.upd_time,
