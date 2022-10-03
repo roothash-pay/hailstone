@@ -326,24 +326,27 @@ def get_address_transaction(request):
         return error_json("Do not support network", 4000)
     if address is None:
         return error_json("address is empty", 4000)
-    wallet_client = WalletClient()
-    result = wallet_client.get_tx_by_address(
-        chain=chain,
-        coin=symbol,
-        address=address,
-        contract_address=contract_address,
-        page=int(page),
-        pagesize=int(page_size),
-    )
-    if result.code == common_pb2.SUCCESS:
-        print(result)
-        tx_data_return = []
-        for item in result.tx:
-            addr_tx = AddressTransaction(item)
-            tx_data_return.append(addr_tx.as_json(symbol, address, contract_address))
-        return ok_json(tx_data_return)
-    else:
-        return error_json("rpc server fail")
+    try:
+        wallet_client = WalletClient()
+        result = wallet_client.get_tx_by_address(
+            chain=chain,
+            coin=symbol,
+            address=address,
+            contract_address=contract_address,
+            page=int(page),
+            pagesize=int(page_size),
+        )
+        if result.code == common_pb2.SUCCESS:
+            print(result)
+            tx_data_return = []
+            for item in result.tx:
+                addr_tx = AddressTransaction(item)
+                tx_data_return.append(addr_tx.as_json(symbol, address, contract_address))
+            return ok_json(tx_data_return)
+        else:
+            return error_json("rpc server fail")
+    except:
+        return ok_json([])
 
 
 # @check_api_token
