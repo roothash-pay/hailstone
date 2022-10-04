@@ -1,7 +1,6 @@
 from django.db import models
 from common.model_fields import DecField
-from common.models import BaseModel
-from wallet.models import Asset
+from common.models import BaseModel, Asset
 
 CommonStatus = [(x, x) for x in ['Active', 'Down']]
 ExchangeCate = [(x, x) for x in ['Cex', 'Dex']]

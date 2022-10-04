@@ -6,18 +6,22 @@ from common.helpers import (
     error_json
 )
 from common.api_auth import check_api_token
-from wallet.models import Chain, Asset, Address, AddresNote
+from wallet.models import Chain, Asset, Address, AddresNote, TokenConfig, AddressAmountStat
 from common.helpers import d0, dec
 from services.wallet_client import WalletClient
 from services.savour_rpc import common_pb2
+from market.models import StablePrice, MarketPrice
+from decimal import Decimal
+from api.wallet.types import AddressTransaction
+
 
 
 # @check_api_token
 def get_balance(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
-    chain = params.get('chain', "eth")
-    symbol = params.get('symbol', "eth")
+    chain = params.get('chain', "Ethereum")
+    symbol = params.get('symbol', "ETH")
     address = params.get('address', "")
     contract_address = params.get('contract_address', "")
     db_chain = Chain.objects.filter(name=chain).first()
@@ -38,18 +42,49 @@ def get_balance(request):
         address=address,
         contract_address=contract_address
     )
+    if symbol not in ["USDT", "USDC", "DAI"]:
+        market_price = MarketPrice.objects.filter(
+            qoute_asset__id=db_asset.id,
+            exchange__name="binance"
+        ).order_by("-id").first()
+        usd_price = market_price.usd_price
+        cny_price = market_price.cny_price
+    else:
+        stable_price = StablePrice.objects.filter(
+            asset__id=db_asset.id,
+        ).order_by("-id").first()
+        usd_price = stable_price.usd_price
+        cny_price = stable_price.cny_price
+
     if result.code == common_pb2.SUCCESS:
-        Address.objects.filter(chain=db_chain, address=address, asset=db_asset).update(
-            balance=dec(result.balance) / dec(db_asset.unit),
-        )
+        address_db = Address.objects.filter(chain=db_chain, address=address, asset=db_asset).first()
+        if address_db is not None:
+            address_db.balance = Decimal(result.balance)
+            address_db.save()
+        address_datastats = AddressAmountStat.objects.filter(address=address_db).order_by("-id")
+        data_stat = []
+        for item in address_datastats:
+            data_stat.append(item.to_dict())
+        balance = Decimal(result.balance) / Decimal(10 ** int(db_asset.unit))
         data = {
-            "balance": dec(result.balance) / dec(db_asset.unit),
+            "balance": format(balance, ".4f"),
+            "usdt_price": format(usd_price * balance, ".4f"),
+            "cny_price": format(cny_price * balance, ".4f"),
+            "data_stat": data_stat,
         }
         return ok_json(data)
     else:
         address_db = Address.objects.filter(chain=db_chain, address=address, asset=db_asset).first()
+        balance = Decimal(address_db.balance) / Decimal(10 ** int(db_asset.unit))
+        address_datastats = AddressAmountStat.objects.filter(address=address_db).order_by("-id")
+        data_stat = []
+        for item in address_datastats:
+            data_stat.append(item.to_dict())
         data = {
-            "balance": address_db.balance,
+            "balance": format(balance, ".4f"),
+            "usdt_price": format(usd_price * balance, ".4f"),
+            "cny_price": format(cny_price * balance, ".4f"),
+            "data_stat": data_stat
         }
         return ok_json(data)
 
@@ -59,20 +94,23 @@ def get_wallet_balance(request):
     params = json.loads(request.body.decode())
     device_id = params.get('device_id', "")
     wallet_uuid = params.get('wallet_uuid', "")
-    chain = params.get('chain', "eth")
+    chain = params.get('chain', "Ethereum")
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
         return error_json("Do not support chain", 4000)
     address_list = Address.objects.filter(
-        chain=db_chain,
+        chain__id=db_chain.id,
         device_id=device_id,
         wallet_uuid=wallet_uuid
     ).order_by("id")
     wallet_balance_return = []
+    total_asset_stat = d0
     for address in address_list:
+        usd_total, _ = address.get_symbol_price()
+        total_asset_stat += usd_total
         wallet_balance_return.append(address.list_to_dict())
     data = {
-        "total_asset": 1000000,
+        "total_asset": format(total_asset_stat, ".4f"),
         "coin_asset": wallet_balance_return,
     }
     return ok_json(data)
@@ -82,8 +120,8 @@ def get_wallet_balance(request):
 def get_nonce(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
-    chain = params.get('chain', "eth")
-    symbol = params.get('symbol', "eth")
+    chain = params.get('chain', "Ethereum")
+    symbol = params.get('symbol', "ETH")
     address = params.get('address', "")
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
@@ -115,8 +153,8 @@ def get_nonce(request):
 def get_account_info(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
-    chain = params.get('chain', "sol")
-    symbol = params.get('symbol', "sol")
+    chain = params.get('chain', "Solana")
+    symbol = params.get('symbol', "Sol")
     address = params.get('address', "")
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
@@ -149,8 +187,8 @@ def get_account_info(request):
 def get_fee(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
-    chain = params.get('chain', "eth")
-    symbol = params.get('symbol', "eth")
+    chain = params.get('chain', "Ethereum")
+    symbol = params.get('symbol', "ETH")
     fee_way = params.get('fee_way', "low")   # low medium high
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
@@ -182,11 +220,65 @@ def get_fee(request):
 
 
 # @check_api_token
+def get_sign_tx_info(request):
+    params = json.loads(request.body.decode())
+    network = params.get('network', "mainnet")
+    chain = params.get('chain', "Ethereum")
+    symbol = params.get('symbol', "ETH")
+    address = params.get('address')
+    db_asset = Asset.objects.filter(name=symbol).first()
+    wallet_client = WalletClient()
+    gas_result = wallet_client.get_gasPrice(
+        chain=chain,
+        coin=symbol,
+        network=network,
+    )
+    gaslst = [
+        {
+            "index": 0,
+            "gas_price": format(Decimal(gas_result.gas), ".4f"),
+        },
+        {
+            "index": 1,
+            "gas_price": format(Decimal(gas_result.gas) * Decimal(5), ".4f"),
+        },
+        {
+            "index": 2,
+            "gas_price": format(Decimal(gas_result.gas) * Decimal(10), ".4f"),
+        }
+    ]
+    result = wallet_client.get_nonce(
+        chain=chain,
+        coin=symbol,
+        network=network,
+        address=address
+    )
+    if symbol not in ["USDT", "USDC", "DAI"]:
+        market_price = MarketPrice.objects.filter(
+            qoute_asset__id=db_asset.id,
+            exchange__name="binance"
+        ).order_by("-id").first()
+        usd_price = market_price.usd_price
+    else:
+        stable_price = StablePrice.objects.filter(
+            asset__id=db_asset.id,
+        ).order_by("-id").first()
+        usd_price = stable_price.usd_price
+    data = {
+        "usdt_pirce": usd_price,
+        "nonce": result.nonce,
+        "gas_limit": 91000,
+        "gas_list": gaslst,
+    }
+    return ok_json(data)
+
+
+# @check_api_token
 def send_transaction(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
-    chain = params.get('chain', "eth")
-    symbol = params.get('symbol', "eth")
+    chain = params.get('chain', "Ethereum")
+    symbol = params.get('symbol', "ETH")
     rawtx = params.get('rawtx', None)
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
@@ -218,8 +310,8 @@ def send_transaction(request):
 def get_address_transaction(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
-    chain = params.get('chain', "eth")
-    symbol = params.get('symbol', "eth")
+    chain = params.get('chain', "Ethereum")
+    symbol = params.get('symbol', "ETH")
     address = params.get('address', "")
     contract_address = params.get('contract_address', "")
     page = params.get('page', "")
@@ -234,28 +326,35 @@ def get_address_transaction(request):
         return error_json("Do not support network", 4000)
     if address is None:
         return error_json("address is empty", 4000)
-    wallet_client = WalletClient()
-    result = wallet_client.get_tx_by_address(
-        chain=chain,
-        coin=symbol,
-        network=network,
-        address=address,
-        contract_address=contract_address,
-        page=page,
-        pagesize=page_size,
-    )
-    if result.code == common_pb2.SUCCESS:
-        return ok_json(result)
-    else:
-        return error_json("rpc server fail")
+    try:
+        wallet_client = WalletClient()
+        result = wallet_client.get_tx_by_address(
+            chain=chain,
+            coin=symbol,
+            address=address,
+            contract_address=contract_address,
+            page=int(page),
+            pagesize=int(page_size),
+        )
+        if result.code == common_pb2.SUCCESS:
+            print(result)
+            tx_data_return = []
+            for item in result.tx:
+                addr_tx = AddressTransaction(item)
+                tx_data_return.append(addr_tx.as_json(symbol, address, contract_address))
+            return ok_json(tx_data_return)
+        else:
+            return error_json("rpc server fail")
+    except:
+        return ok_json([])
 
 
 # @check_api_token
 def get_hash_transaction(request):
     params = json.loads(request.body.decode())
     network = params.get('network', "mainnet")
-    chain = params.get('chain', "eth")
-    symbol = params.get('symbol', "eth")
+    chain = params.get('chain', "Ethereum")
+    symbol = params.get('symbol', "ETH")
     hash = params.get('hash', "")
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
@@ -283,8 +382,8 @@ def get_hash_transaction(request):
 # @check_api_token
 def submit_wallet_info(request):
     params = json.loads(request.body.decode())
-    chain = params.get('chain', "eth")
-    symbol = params.get('symbol', "eth")
+    chain = params.get('chain', "Ethereum")
+    symbol = params.get('symbol', "ETH")
     network = params.get('network', "mainnet")
     device_id = params.get('device_id', "")
     wallet_uuid = params.get('wallet_uuid', "")
@@ -449,3 +548,61 @@ def del_note_book(request):
     addr_note_id = int(params.get('addr_note_id'))
     AddresNote.objects.filter(id=addr_note_id).delete()
     return ok_json("delete note book success")
+
+# @check_api_token
+def hot_token_list(request):
+    token_config_list = TokenConfig.objects.filter(
+        is_hot="yes"
+    ).order_by("id")
+    token_config_data = []
+    for token_config in token_config_list:
+        token_config_data.append(token_config.list_to_dict())
+    return ok_json(token_config_data)
+
+
+# @check_api_token
+def sourch_add_token(request):
+    params = json.loads(request.body.decode())
+    token_name = params.get('token_name')
+    token_config_list = TokenConfig.objects.filter(
+        token_name__icontains=token_name,
+    ).order_by("id")
+    token_config_data = []
+    for token_config in token_config_list:
+        token_config_data.append(token_config.list_to_dict())
+    return ok_json(token_config_data)
+
+
+# @check_api_token
+def get_wallet_asset(request):
+    params = json.loads(request.body.decode())
+    device_id = params.get('device_id')
+    address_list = Address.objects.filter(
+        device_id=device_id,
+    ).order_by("id")
+    coin_asset_return = []
+    wallet_name_list = []
+    total_asset_stat = d0
+    for address in address_list:
+        usd_total, _ = address.get_symbol_price()
+        total_asset_stat += usd_total
+        if address.wallet_name not in wallet_name_list:
+            wallet_name_list.append(address.wallet_name)
+    for wallet_name in wallet_name_list:
+        address_lists = Address.objects.filter(
+            wallet_name=wallet_name,
+            device_id=device_id,
+        ).order_by("id")
+        wallet_balance_list = []
+        for item in address_lists:
+            wallet_balance_list.append(item.list_to_dict())
+        wallet_balance_data = {
+            "wallet_name": wallet_name,
+            "wallet_balance": wallet_balance_list
+        }
+        coin_asset_return.append(wallet_balance_data)
+    data = {
+        "total_asset": format(total_asset_stat, ".4f"),
+        "coin_asset": coin_asset_return,
+    }
+    return ok_json(data)

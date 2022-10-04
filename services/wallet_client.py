@@ -58,7 +58,7 @@ class WalletClient:
             )
         )
 
-    def get_tx_by_address(self, chain: str, coin: str, network: str, address: str, contract_address: str, page: int, pagesize: int,  consumer_token: str = None):
+    def get_tx_by_address(self, chain: str, coin: str, address: str, contract_address: str, page: int, pagesize: int, network: str = "mainnet", consumer_token: str = None):
         return self.stub.getTxByAddress(
             wallet_pb2.TxAddressRequest(
                 consumer_token=consumer_token,

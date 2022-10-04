@@ -17,7 +17,11 @@ from api.wallet.hd_api_v1 import (
     get_note_book,
     add_note_book,
     del_note_book,
-    upd_note_book
+    upd_note_book,
+    hot_token_list,
+    sourch_add_token,
+    get_wallet_asset,
+    get_sign_tx_info
 )
 
 from api.market.api_v1 import (
@@ -29,6 +33,7 @@ from api.market.api_v1 import (
 )
 
 from api.circle.api_v1 import (
+    get_cat_list,
     get_like_address,
     get_comment_list,
     get_arcticle_list,
@@ -54,6 +59,11 @@ urlpatterns = [
     path(r'add_note_book', add_note_book, name='add_note_book'),
     path(r'upd_note_book', upd_note_book, name='upd_note_book'),
     path(r'del_note_book', del_note_book, name='del_note_book'),
+    path(r'hot_token_list', hot_token_list, name='hot_token_list'),
+    path(r'sourch_add_token', sourch_add_token, name='sourch_add_token'),
+    path(r'get_wallet_asset', get_wallet_asset, name='get_wallet_asset'),
+    path(r'get_sign_tx_info', get_sign_tx_info, name='get_sign_tx_info'),
+
 
     # market module
     path(r'get_exchanges', get_exchanges, name='get_exchanges'),
@@ -63,6 +73,7 @@ urlpatterns = [
     path(r'remove_favorite_market', remove_favorite_market, name='remove_favorite_market'),
 
     # chaineye module
+    path(r'get_cat_list', get_cat_list, name='get_cat_list'),
     path(r'get_like_address', get_like_address, name='get_like_address'),
     path(r'get_comment_list', get_comment_list, name='get_comment_list'),
     path(r'get_arcticle_list', get_arcticle_list, name='get_arcticle_list'),

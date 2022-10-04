@@ -13,17 +13,26 @@ class ChaineyeClient:
         channel = grpc.insecure_channel(settings.CHAINEYE_GRPC_CHANNEL_URL, options=options)
         self.stub = chaineye_pb2_grpc.ChaineyeServiceStub(channel)
 
-    def get_arcticle_list(self, type: str, page:int, page_size:int, consumer_token: str = None)-> chaineye_pb2.ArticleListRep:
+    def get_cat_list(self, type: str, consumer_token: str = None) -> chaineye_pb2.ArticleCatRep:
+        return self.stub.getArticleCat(
+            chaineye_pb2.ArticleCatReq(
+                consumer_token=consumer_token,
+                type=type
+            )
+        )
+
+    def get_arcticle_list(self, type: str, page:int, page_size:int, cat_id: str = "0", consumer_token: str = None)-> chaineye_pb2.ArticleListRep:
         return self.stub.getArticleList(
-            chaineye_pb2.ArticleListRep(
+            chaineye_pb2.ArticleListReq(
                 consumer_token=consumer_token,
                 type=type,
+                cat_id=cat_id,
                 page=page,
                 pagesize=page_size,
             )
         )
 
-    def get_arcticle_detail(self, type:str, id:int, consumer_token: str = None) -> chaineye_pb2.ArticleDetailRep:
+    def get_arcticle_detail(self, type: int, id: str, consumer_token: str = None) -> chaineye_pb2.ArticleDetailRep:
         return self.stub.getArticleDetail(
             chaineye_pb2.ArticleDetailReq(
                 consumer_token=consumer_token,
@@ -42,7 +51,7 @@ class ChaineyeClient:
             )
         )
 
-    def get_like_address(self, author_id:int, consumer_token: str = None)->chaineye_pb2.AddressRep:
+    def get_like_address(self, author_id: str, consumer_token: str = None)->chaineye_pb2.AddressRep:
         return self.stub.getLikeAddress(
             chaineye_pb2.AddressReq(
                 consumer_token=consumer_token,
@@ -58,6 +67,7 @@ class ChaineyeClient:
             amount:str,
             asset_name: str,
             token_address: str,
+            author_id: str,
             consumer_token: str = None
     )->chaineye_pb2.LikeRep:
         return self.stub.likeArticle(
@@ -68,6 +78,7 @@ class ChaineyeClient:
                 like_to=like_to,
                 amount=amount,
                 asset_name=asset_name,
-                token_address=token_address
+                token_address=token_address,
+                author_id=author_id
             )
         )

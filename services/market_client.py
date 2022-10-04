@@ -22,7 +22,7 @@ class MarketClient:
             )
         )
 
-    def get_symbol_prices(self, exchange_id: str = "0", symbol_id: str = "0", consumer_token: str = None):
+    def get_symbol_prices(self, exchange_id: str = "0", symbol_id: str = "0", consumer_token: str = None) -> market_pb2.SymbolPriceResponse:
         return self.stub.getSymbolPrices(
             market_pb2.SymbolPriceRequest(
                 consumer_token=consumer_token,

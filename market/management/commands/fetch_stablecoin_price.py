@@ -20,27 +20,16 @@ class Command(BaseCommand):
         if len(stable_result.coin_prices) == 0:
             logging.warning(stable_result)
             return
-
-        asset_name_list = []
         for coin_price in stable_result.coin_prices:
-            asset_name_list.append(coin_price.name)
-
-        asset_list = Asset.objects.filter(name__in=asset_name_list).first()
-
-        asset_dict = {}
-        for asset_item in asset_list:
-            asset_dict[asset_item.name] = asset_item
-
-        price_list = []
-        for coin_price in stable_result.coin_prices:
-            if coin_price.name not in asset_dict:
-                continue
-            price_list.append(
-                StablePrice(
-                    usd_price=coin_price.usd_price,
-                    cny_price=coin_price.cny_price,
-                    asset=asset_dict[coin_price.name]
-                ))
-
-        if len(price_list) > 0:
-            StablePrice.objects.bulk_update(price_list)
+            print(coin_price.name)
+            asset = Asset.objects.filter(
+                name=coin_price.name
+            ).first()
+            if asset is not None:
+                StablePrice.objects.update_or_create(
+                    asset=asset,
+                    defaults={
+                        "usd_price": coin_price.usd_price,
+                        "cny_price": coin_price.cny_price
+                    }
+                )
