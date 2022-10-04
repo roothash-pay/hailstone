@@ -20,7 +20,8 @@ INSTALLED_APPS = [
     "common",
     "market",
     "wallet",
-    "services"
+    "services",
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -57,8 +58,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "hailstone",
         "USER": "root",
-        "PASSWORD": "Wenwo2020!",
-        "HOST": "127.0.0.1",
+        "PASSWORD": "768f952daae626d9",
+        "HOST": "82.157.143.55",
         "PORT": "3306",
         "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
     }
@@ -113,4 +114,5 @@ try:
 except ImportError:
     pass
 
+ASGI_APPLICATION = 'hailstone.wsgi.application'
 # usSszPkH
