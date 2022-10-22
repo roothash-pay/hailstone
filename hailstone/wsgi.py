@@ -13,7 +13,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 
 from django.core.wsgi import get_wsgi_application
-# import api.routings
+import api.routings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hailstone.settings')
 
