@@ -60,6 +60,7 @@ class Symbol(BaseModel):
         unique=True,
         verbose_name='交易对名称'
     )
+    icon = models.ImageField(upload_to='symbol/%Y/%m/%d/', blank=True, null=True)
     base_asset = models.ForeignKey(
         Asset, blank=True,
         related_name='base_symbols',
@@ -130,6 +131,7 @@ class MarketPrice(BaseModel):
         return {
             'id': self.id,
             'symbol': self.symbol.name,
+            'icon': str(self.symbol.icon),
             'base_asset': self.base_asset.name,
             'qoute_asset': self.qoute_asset.name,
             'sell_price': format(self.sell_price, ".4f"),
