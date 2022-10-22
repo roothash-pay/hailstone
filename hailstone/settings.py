@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     "market",
     "wallet",
     "services",
-    "channels",
+    # "channels",
 ]
 
 MIDDLEWARE = [
@@ -99,8 +99,6 @@ GRPC_MAX_MESSAGE_LENGTH = 50 * 1024 * 1024
 WALLET_GRPC_CHANNEL_URL = '127.0.0.1:8089'
 MARKET_GRPC_CHANNEL_URL = '127.0.0.1:8089'
 CHAINEYE_GRPC_CHANNEL_URL = '127.0.0.1:8089'
-
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
