@@ -34,11 +34,11 @@ def get_exchange_market(request):
         exchange = Exchange.objects.filter(id=exchange_id).first()
         if exchange is None:
             return error_json("unsport exchange", 4000)
-        market_price_list = MarketPrice.objects.filter(exchange=exchange).order_by("id")
+        market_price_list = MarketPrice.objects.filter(exchange=exchange).order_by("-id")
         for market_price in market_price_list:
             return_market_price_data.append(market_price.as_dict())
     else:
-        fm_list = FavoriteMarket.objects.filter(device_id=device_id).order_by("id")
+        fm_list = FavoriteMarket.objects.filter(device_id=device_id).order_by("-id")
         for fm in fm_list:
             return_market_price_data.append(fm.market_price.as_dict())
     return ok_json(return_market_price_data)
