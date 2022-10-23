@@ -1,6 +1,7 @@
 from django.db import models
 from common.model_fields import DecField
 from common.models import BaseModel, Asset
+from common.helpers import d0
 
 CommonStatus = [(x, x) for x in ['Active', 'Down']]
 ExchangeCate = [(x, x) for x in ['Cex', 'Dex']]
@@ -128,6 +129,10 @@ class MarketPrice(BaseModel):
         verbose_name_plural = verbose_name
 
     def as_dict(self):
+        if self.margin >= d0:
+            margin = '+' + str(format(self.margin, ".2f")) + '%'
+        else:
+            margin = '-' + str(format(self.margin, ".2f")) + '%'
         return {
             'id': self.id,
             'symbol': self.symbol.name,
@@ -140,7 +145,7 @@ class MarketPrice(BaseModel):
             'avg_price': format(self.avg_price, ".4f"),
             'usd_price': format(self.usd_price, ".4f"),
             'cny_price': format(self.cny_price, ".4f"),
-            'margin': format(self.margin, ".2f"),
+            'margin': margin,
         }
 
 
