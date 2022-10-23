@@ -47,15 +47,20 @@ def get_balance(request):
             qoute_asset__id=db_asset.id,
             exchange__name="binance"
         ).order_by("-id").first()
-        usd_price = market_price.get("usd_price", 1)
-        cny_price = market_price.get("cny_price", 7)
+        if market_price is not None:
+            usd_price = market_price.usd_price
+            cny_price = market_price.cny_price
+        else:
+            usd_price, cny_price = 1, 7
     else:
         stable_price = StablePrice.objects.filter(
             asset__id=db_asset.id,
         ).order_by("-id").first()
-        usd_price = stable_price.get("usd_price", 1)
-        cny_price = stable_price.get("cny_price", 7)
-
+        if stable_price is not None:
+            usd_price = stable_price.usd_price
+            cny_price = stable_price.cny_price
+        else:
+            usd_price, cny_price = 1, 7
     if result.code == common_pb2.SUCCESS:
         address_db = Address.objects.filter(chain=db_chain, address=address, asset=db_asset).first()
         if address_db is not None:
