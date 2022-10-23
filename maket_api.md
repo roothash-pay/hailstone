@@ -77,3 +77,45 @@ response example
     ]
 }
 ```
+
+### 3. add favorite market
+- request way: post
+- api name: api/add_favorite_market
+- request example
+```
+{
+   "device_id": "00000",
+   "market_id": 2
+}
+```
+
+response example
+
+```
+{
+    "ok": false,
+    "code": 4000,
+    "msg": "no this market_price"
+}
+```
+
+### 4. remove favorite market
+- request way: post
+- api name: api/remove_favorite_market
+- request example
+```
+{
+   "device_id": "00000",
+   "market_id": 2
+}
+```
+
+response example
+
+```
+{
+    "ok": false,
+    "code": 4000,
+    "msg": "no this market_price"
+}
+```
