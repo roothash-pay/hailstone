@@ -131,6 +131,7 @@ class MarketPrice(BaseModel):
         return {
             'id': self.id,
             'symbol': self.symbol.name,
+            'exchange': self.exchange.name,
             'icon': str(self.symbol.icon),
             'base_asset': self.base_asset.name,
             'qoute_asset': self.qoute_asset.name,
