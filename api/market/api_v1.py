@@ -30,7 +30,7 @@ def get_exchange_market(request):
     exchange_id = int(params.get('exchange_id', 0))
     device_id = params.get('device_id', None)
     return_market_price_data = []
-    if device_id in [None, "", "None", 0]:
+    if device_id in [None, "0", "", "None", 0,]:
         if exchange_id == 0:
             return error_json("Invalid param exchange_id", 4000)
         exchange = Exchange.objects.filter(id=exchange_id).first()
