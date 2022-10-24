@@ -51,7 +51,10 @@ class Address(BaseModel):
                 qoute_asset=self.asset,
                 exchange__name="binance"
             ).order_by("-id").first()
-            return market_price.usd_price * balance, market_price.cny_price * balance
+            if market_price is not None:
+                return market_price.usd_price * balance, market_price.cny_price * balance
+            else:
+                return 0, 0
         else:
             stable_price = StablePrice.objects.filter(
                 asset=self.asset,
