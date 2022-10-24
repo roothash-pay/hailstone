@@ -412,7 +412,7 @@ def submit_wallet_info(request):
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
         return error_json("Do not support chain", 4000)
-    db_asset = Asset.objects.filter(name=symbol).first()
+    db_asset = Asset.objects.filter(name=symbol, chain=db_chain).first()
     if db_asset is None:
         return error_json("Do not support symbol", 4000)
     db_address = Address.objects.filter(device_id=device_id, wallet_uuid=wallet_uuid).first()
@@ -445,7 +445,7 @@ def batch_submit_wallet(request):
             db_chain = Chain.objects.filter(name=wallet.get("chain")).first()
             if db_chain is None:
                 return error_json("Do not support chain", 4000)
-            db_asset = Asset.objects.filter(name=wallet.get("symbol")).first()
+            db_asset = Asset.objects.filter(name=wallet.get("symbol"), chain=db_chain).first()
             if db_chain and db_asset is not None:
                 Address.objects.create(
                     chain=db_chain,
