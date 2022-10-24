@@ -44,11 +44,18 @@ class Address(BaseModel):
     def __str__(self):
         return self.address
 
-    def get_symbol_price(self):
+    def get_symbol_price(self, chain: str):
         balance = Decimal(self.balance) / Decimal(10 ** int(self.asset.unit))
         if self.asset.name not in ["USDT", "USDC", "DAI"]:
+            if chain in ["Ethereum", "Arbitrum"]:
+                db_asset = Asset.objects.filter(
+                    name=self.asset.name,
+                    chain__name="Ethereum"
+                ).first()
+            else:
+                db_asset = self.asset
             market_price = MarketPrice.objects.filter(
-                qoute_asset=self.asset,
+                qoute_asset=db_asset,
                 exchange__name="binance"
             ).order_by("-id").first()
             if market_price is not None:
