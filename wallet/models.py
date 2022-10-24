@@ -44,7 +44,7 @@ class Address(BaseModel):
     def __str__(self):
         return self.address
 
-    def get_symbol_price(self, chain: str):
+    def get_symbol_price(self, chain: str="Ethereum"):
         balance = Decimal(self.balance) / Decimal(10 ** int(self.asset.unit))
         if self.asset.name not in ["USDT", "USDC", "DAI"]:
             if chain in ["Ethereum", "Arbitrum"]:
@@ -68,8 +68,8 @@ class Address(BaseModel):
             ).order_by("-id").first()
             return stable_price.usd_price * balance, stable_price.cny_price * balance
 
-    def list_to_dict(self):
-        usd_price, cny_price = self.get_symbol_price()
+    def list_to_dict(self,  chain: str="Ethereum"):
+        usd_price, cny_price = self.get_symbol_price(chain)
         return {
             "id": self.id,
             "chain": self.chain.name,
