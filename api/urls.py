@@ -1,6 +1,8 @@
 # encoding=utf-8
 
 from django.urls import path
+
+from api.wallethead.api_v1 import get_head, save_head
 from api.wallet.hd_api_v1 import (
     get_balance,
     get_wallet_balance,
@@ -79,4 +81,8 @@ urlpatterns = [
     path(r'get_arcticle_list', get_arcticle_list, name='get_arcticle_list'),
     path(r'get_arcticle_detail', get_arcticle_detail, name='get_arcticle_detail'),
     path(r'like_article', like_article, name='like_article'),
+
+    # wallethead module
+    path(r'get_head', get_head, name='get_head'),
+    path(r'save_head', save_head, name='save_head'),
 ]
