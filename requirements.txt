@@ -8,6 +8,7 @@ async-timeout==4.0.2
 attrs==22.1.0
 autobahn==22.7.1
 Automat==20.2.0
+backports.zoneinfo==0.2.1
 billiard==3.6.1.0
 cbor==1.0.0
 celery==4.3.0
@@ -53,8 +54,7 @@ py-solc==3.2.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
-pycrypto==2.6.1
-pycryptodome==3.9.6
+pycryptodome==3.15.0
 PyMySQL==0.9.3
 pyOpenSSL==22.1.0
 pyparsing==3.0.9
