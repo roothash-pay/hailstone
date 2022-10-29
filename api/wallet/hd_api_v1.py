@@ -611,3 +611,4 @@ def get_wallet_asset(request):
         "coin_asset": coin_asset_return,
     }
     return ok_json(data)
+

@@ -66,7 +66,10 @@ class Address(BaseModel):
             stable_price = StablePrice.objects.filter(
                 asset=self.asset,
             ).order_by("-id").first()
-            return stable_price.usd_price * balance, stable_price.cny_price * balance
+            if stable_price is not None:
+                return stable_price.usd_price * balance, stable_price.cny_price * balance
+            else:
+                return 0, 0
 
     def list_to_dict(self,  chain: str="Ethereum"):
         usd_price, cny_price = self.get_symbol_price(chain)
