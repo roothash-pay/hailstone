@@ -416,20 +416,20 @@ def submit_wallet_info(request):
     if db_asset is None:
         return error_json("Do not support symbol", 4000)
     db_address = Address.objects.filter(device_id=device_id, wallet_uuid=wallet_uuid).first()
-    if db_address is not None:
-        return error_json("this wallet is exist", 4000)
-    else:
-        Address.objects.create(
-            chain=db_chain,
-            asset=db_asset,
-            network=network,
-            device_id=device_id,
-            wallet_uuid=wallet_uuid,
-            wallet_name=wallet_name,
-            address=address,
-            contract_addr=contract_addr,
-            balance=d0,
-        )
+    # if db_address is not None:
+    #     return error_json("this wallet is exist", 4000)
+    # else:
+    Address.objects.create(
+        chain=db_chain,
+        asset=db_asset,
+        network=network,
+        device_id=device_id,
+        wallet_uuid=wallet_uuid,
+        wallet_name=wallet_name,
+        address=address,
+        contract_addr=contract_addr,
+        balance=d0,
+    )
     return ok_json("submit wallet success")
 
 
