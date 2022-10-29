@@ -2,17 +2,19 @@
 
 import hashlib
 import json
-import logging
 import time
-from datetime import date, datetime, timedelta
-from decimal import ROUND_UP
+import base64
+from datetime import date, datetime
 from decimal import Context as DecimalContext
 from decimal import Decimal, InvalidOperation
+from decimal import ROUND_UP
 from typing import Any, Dict
 from urllib.parse import urlencode
 
 import pytz
-import requests
+from Crypto import Random
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_v1_5 as PKCS1_cipher
 from dateutil import parser
 from django.conf import settings
 from django.core.paginator import EmptyPage
@@ -93,7 +95,7 @@ PAGE_SIZE = 10
 
 
 def paged_items(
-    request: HttpRequest, qs, pagesize=PAGE_SIZE, page_cls=MyPaginator
+        request: HttpRequest, qs, pagesize=PAGE_SIZE, page_cls=MyPaginator
 ):
     paginator = page_cls(qs, pagesize, adjacent_pages=3)
     page = get_page(request)
@@ -167,3 +169,25 @@ class JsonEncoder(json.JSONEncoder):
         if isinstance(obj, bytes):
             return str(obj, encoding="utf-8")
         return json.JSONEncoder.default(self, obj)
+
+
+def gen_rsa_crypto_key() -> (str, str):
+    random_generator = Random.new().read
+    key = RSA.generate(1024, random_generator)
+    private_key = key.exportKey()
+    public_key = key.publickey().exportKey()
+    return private_key.decode("utf8"), public_key.decode("utf8")
+
+
+def encrypt_data(data: str, public_key: str) -> str:
+    key = RSA.importKey(public_key)
+    cipher = PKCS1_cipher.new(key)
+    encrypt_text = base64.b64encode(cipher.encrypt(bytes(data.encode("utf8"))))
+    return encrypt_text.decode('utf-8')
+
+
+def decrypt_data(data: str, private_key: str) -> str:
+    key = RSA.importKey(private_key)
+    cipher = PKCS1_cipher.new(key)
+    back_text = cipher.decrypt(base64.b64decode(data), 0)
+    return back_text.decode('utf-8')
