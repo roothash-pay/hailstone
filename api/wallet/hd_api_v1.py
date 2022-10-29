@@ -109,14 +109,17 @@ def get_wallet_balance(request):
         wallet_uuid=wallet_uuid
     ).order_by("id")
     wallet_balance_return = []
-    total_asset_stat = d0
+    total_asset_usd = d0
+    total_asset_cny = d0
     for address in address_list:
-        usd_total, _ = address.get_symbol_price(chain)
-        total_asset_stat += usd_total
+        usd_total, cyn_total = address.get_symbol_price(chain)
+        total_asset_usd += usd_total
+        total_asset_cny += cyn_total
         wallet_balance_return.append(address.list_to_dict(chain))
     data = {
-        "total_asset": format(total_asset_stat, ".4f"),
-        "coin_asset": wallet_balance_return,
+        "total_asset_usd": format(total_asset_usd, ".4f"),
+        "total_asset_cny": format(total_asset_cny, ".4f"),
+        "token_list": wallet_balance_return,
     }
     return ok_json(data)
 
