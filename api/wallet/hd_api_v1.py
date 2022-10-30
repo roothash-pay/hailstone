@@ -397,7 +397,7 @@ def submit_wallet_info(request):
     wallet_uuid = params.get('wallet_uuid', "")
     wallet_name = params.get('wallet_name', "")
     address = params.get('address', "")
-    contract_addr = params.get('address', "")
+    contract_addr = params.get('contract_addr', "")
     if chain in ["", None]:
         return error_json("chain is empty", 4000)
     if symbol in ["", None]:
