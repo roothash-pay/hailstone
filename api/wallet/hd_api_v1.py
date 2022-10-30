@@ -466,7 +466,7 @@ def batch_submit_wallet(request):
     return ok_json("batch submit wallet success")
 
 
-@check_api_token
+#  @check_api_token
 def delete_wallet(request):
     params = json.loads(request.body.decode())
     device_id = params.get('device_id')
@@ -477,13 +477,27 @@ def delete_wallet(request):
     return ok_json("delete wallet success")
 
 
-@check_api_token
+# @check_api_token
+def delete_wallet_token(request):
+    params = json.loads(request.body.decode())
+    device_id = params.get('device_id')
+    wallet_uuid = params.get('wallet_uuid')
+    contract_addr = params.get('contract_addr')
+    Address.objects.filter(
+        device_id=device_id,
+        wallet_uuid=wallet_uuid,
+        contract_addr=contract_addr
+    ).delete()
+    return ok_json("delete wallet success")
+
+
+#  @check_api_token
 def get_unspend_list(request):
     params = json.loads(request.body.decode())
     return ok_json("ok")
 
 
-@check_api_token
+# @check_api_token
 def get_note_book(request):
     params = json.loads(request.body.decode())
     device_id = params.get('device_id')
@@ -503,7 +517,7 @@ def get_note_book(request):
     return ok_json(data)
 
 
-@check_api_token
+# @check_api_token
 def add_note_book(request):
     params = json.loads(request.body.decode())
     device_id = params.get('device_id')
@@ -537,7 +551,7 @@ def add_note_book(request):
         return ok_json("add note book success")
 
 
-@check_api_token
+# @check_api_token
 def upd_note_book(request):
     params = json.loads(request.body.decode())
     addr_note_id = int(params.get('addr_note_id'))
@@ -550,7 +564,7 @@ def upd_note_book(request):
     return ok_json("update note book success")
 
 
-@check_api_token
+# @check_api_token
 def del_note_book(request):
     params = json.loads(request.body.decode())
     addr_note_id = int(params.get('addr_note_id'))
