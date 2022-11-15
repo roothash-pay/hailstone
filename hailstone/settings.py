@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     "wallet",
     "services",
     "channels",
-    "wallethead",
 ]
 
 MIDDLEWARE = [
