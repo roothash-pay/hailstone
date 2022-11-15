@@ -12,81 +12,188 @@ from decimal import Decimal
 tz = pytz.timezone(settings.TIME_ZONE)
 
 
-class Address(BaseModel):
-    NETWORK_CHOICES = [(x, x) for x in ['mainnet', 'testnet']]
+class Wallet(BaseModel):
     chain = models.ForeignKey(
         Chain, on_delete=models.CASCADE,
+        related_name="wallet_chain",
         null=True, blank=True,
-        verbose_name='链名称'
+        verbose_name='chain'
+    )
+    device_id = models.CharField(max_length=70, verbose_name='device id')
+    wallet_uuid = models.CharField(max_length=70, verbose_name='wallet uuid')
+    wallet_name = models.CharField(max_length=70, verbose_name='wallet name')
+    asset_usd = DecField(default=d0, verbose_name="total usd")
+    asset_cny = DecField(default=d0, verbose_name="total cny")
+
+    class Meta:
+        verbose_name = 'wallet'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.wallet_name
+
+    def create_wallet_asset(
+            self, asset: Asset, contract_addr: str, **kw
+    )->"WalletAsset":
+        kw["wallet"] = self
+        kw["asset"] = asset
+        kw["contract_addr"] = contract_addr
+        kw["asset_usd"] = d0
+        kw["asset_cny"] = d0
+        kw["balance"] = d0
+        wallet_asset = WalletAsset.objects.create(**kw)
+        return wallet_asset
+
+    def create_address(
+            self, index: str, address: str, **kw
+    ) -> "Address":
+        kw["wallet"] = self
+        kw["index"] = index
+        kw["address"] = address
+        address = Address.objects.create(**kw)
+        return address
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "chain": self.chain.name,
+            "device_id": self.device_id,
+            "wallet_uuid": self.wallet_uuid,
+            "wallet_name": self.wallet_name,
+            "asset_usd": format(self.asset_usd, ".2f"),
+            "asset_cny": format(self.asset_cny, ".2f")
+        }
+
+
+class WalletAsset(BaseModel):
+    wallet = models.ForeignKey(
+        Wallet, on_delete=models.CASCADE,
+        related_name="wallet_asset_wallet",
+        null=True, blank=True,
+        verbose_name='wallet'
     )
     asset = models.ForeignKey(
         Asset, on_delete=models.CASCADE,
         null=True, blank=True,
-        verbose_name='资产名称'
+        related_name="wallet_asset_asset",
+        verbose_name='asset'
     )
-    network = models.CharField(
-        max_length=32,
-        choices=NETWORK_CHOICES,
-        default='mainnet',
-        verbose_name="主网测试网"
-    )
-    device_id = models.CharField(max_length=70, verbose_name='设备ID')
-    wallet_uuid = models.CharField(max_length=70, verbose_name='wallet_uuid')
-    wallet_name = models.CharField(max_length=70, verbose_name='钱包名称')
-    address = models.CharField(max_length=70, verbose_name='钱包地址')
-    contract_addr = models.CharField(max_length=70, verbose_name='合约地址')
-    balance = DecField(default=d0, verbose_name="钱包余额")
+    contract_addr = models.CharField(max_length=70, verbose_name='contract address')
+    asset_usd = DecField(default=d0, verbose_name="wallet usd")
+    asset_cny = DecField(default=d0, verbose_name="wallet cny")
+    balance = DecField(default=d0, verbose_name="wallet balance")
 
     class Meta:
-        verbose_name = '地址表'
+        verbose_name = 'wallet_asset'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.contract_addr
+
+    def to_dict(self):
+        address_list_dict = []
+        address_list = Address.objects.filter(wallet=self.wallet).order_by("id")
+        for address in address_list:
+            address_list_dict.append(address.to_dict(self.asset))
+        return {
+            "id": self.id,
+            "symbol": self.asset.name,
+            "logo": str(self.asset.logo),
+            "contract_addr": self.contract_addr,
+            "balance": format(self.balance, ".4f"),
+            "asset_usd": format(self.asset_usd, ".2f"),
+            "asset_cny": format(self.asset_cny, ".2f"),
+            "address_list": address_list_dict,
+        }
+
+
+class Address(BaseModel):
+    wallet = models.ForeignKey(
+        Wallet, on_delete=models.CASCADE,
+        null=True, blank=True,
+        related_name="wallet_address",
+        verbose_name='wallet'
+    )
+    index = models.CharField(max_length=10, verbose_name='address index', db_index=True)
+    address = models.CharField(max_length=70, verbose_name='address')
+
+    class Meta:
+        verbose_name = 'address'
         verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.address
 
-    def get_symbol_price(self, chain: str="Ethereum"):
-        balance = Decimal(self.balance) / Decimal(10 ** int(self.asset.unit))
-        if self.asset.name not in ["USDT", "USDC", "DAI"]:
-            if chain in ["Ethereum", "Arbitrum"]:
-                db_asset = Asset.objects.filter(
-                    name=self.asset.name,
-                    chain__name="Ethereum"
-                ).first()
-            else:
-                db_asset = self.asset
-            market_price = MarketPrice.objects.filter(
-                qoute_asset=db_asset,
-                exchange__name="binance"
-            ).order_by("-id").first()
-            if market_price is not None:
-                return market_price.usd_price * balance, market_price.cny_price * balance
-            else:
-                return 0, 0
-        else:
-            stable_price = StablePrice.objects.filter(
-                asset=self.asset,
-            ).order_by("-id").first()
-            if stable_price is not None:
-                return stable_price.usd_price * balance, stable_price.cny_price * balance
-            else:
-                return 0, 0
+    def create_address_asset(
+            self, asset: Asset, **kw
+    ):
+        kw["wallet"] = self.wallet
+        kw["asset"] = asset
+        kw["address"] = self
+        kw["asset_usd"] = d0
+        kw["asset_cny"] = d0
+        kw["balance"] = d0
+        address_asset = AddressAsset.objects.create(**kw)
+        return address_asset
 
-    def list_to_dict(self,  chain: str="Ethereum"):
-        usd_price, cny_price = self.get_symbol_price(chain)
+    def to_dict(self, asset: Asset):
+        address_asset = AddressAsset.objects.filter(
+            wallet=self.wallet,
+            asset=asset,
+            address=self).first()
+        if address_asset is not None:
+            balance = address_asset.balance
+            asset_usd = address_asset.asset_usd
+            asset_cny = address_asset.asset_cny
+        else:
+            balance = d0
+            asset_usd = d0
+            asset_cny = d0
         return {
             "id": self.id,
-            "chain": self.chain.name,
-            "symbol": self.asset.name,
-            "icon": str(self.asset.icon),
-            "network": self.network,
-            "device_id": self.device_id,
-            "wallet_uuid": self.wallet_uuid,
-            "wallet_name": self.wallet_name,
+            "index": self.index,
             "address": self.address,
-            "contract_addr": self.contract_addr,
-            "usdt_price": format(usd_price, ".2f"),
-            "cny_price": format(cny_price, ".2f"),
-            "balance": format(Decimal(self.balance) / Decimal(10 ** int(self.asset.unit)), ".4f"),
+            "balance": format(balance, ".4f"),
+            "asset_usd": format(asset_usd, ".2f"),
+            "asset_cny": format(asset_cny, ".2f"),
+        }
+
+
+class AddressAsset(BaseModel):
+    wallet = models.ForeignKey(
+        Wallet, on_delete=models.CASCADE,
+        related_name="address_asset_wallet",
+        null=True, blank=True,
+        verbose_name='wallet'
+    )
+    asset = models.ForeignKey(
+        Asset, on_delete=models.CASCADE,
+        related_name="address_asset_asset",
+        null=True, blank=True,
+        verbose_name='asset'
+    )
+    address = models.ForeignKey(
+        Address, on_delete=models.CASCADE,
+        related_name="address_asset_address",
+        null=True, blank=True,
+        verbose_name='address'
+    )
+    asset_usd = DecField(default=d0, verbose_name="address usd")
+    asset_cny = DecField(default=d0, verbose_name="address cny")
+    balance = DecField(default=d0, verbose_name="address balance")
+
+    class Meta:
+        verbose_name = 'AddressAsset'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.address.address
+
+    def to_dict(self):
+        return {
+            "balance": format(self.balance, ".4f"),
+            "asset_usd": format(self.asset_usd, ".2f"),
+            "asset_cny": format(self.asset_cny, ".2f"),
         }
 
 
@@ -148,10 +255,10 @@ class TokenConfig(BaseModel):
             "id": self.id,
             "asset_id": self.asset.id,
             "token_name": self.token_name,
-            "icon": str(self.icon),
+            "logo": str(self.icon),
             "token_symbol": self.token_symbol,
             "contract_addr": self.contract_addr,
-            "decimal": self.decimal,
+            "unit": self.decimal,
         }
 
 
@@ -217,4 +324,32 @@ class AddresNote(BaseModel):
             "device_id": self.device_id,
             "memo": self.memo,
             "address": self.address
+        }
+
+
+class WalletHead(BaseModel):
+    wallet = models.ForeignKey(
+        Wallet, on_delete=models.CASCADE,
+        null=True, blank=True,
+        verbose_name='wallet'
+    )
+    wallet_head = models.CharField("wallethead", max_length=512)
+    rsa_public_key = models.TextField("rsa public key")
+    rsa_private_key = models.TextField("rsa private key")
+    ipfs_cid = models.CharField("ipfs cid", max_length=128)
+
+    class Meta:
+        verbose_name = 'WalletHead'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.wallet_head
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "wallet_head": self.wallet_head,
+            "rsa_public_key": self.rsa_public_key,
+            "rsa_private_key": self.rsa_private_key,
+            "ipfs_cid": self.ipfs_cid,
         }

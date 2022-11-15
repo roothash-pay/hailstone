@@ -6,24 +6,37 @@ from common.helpers import (
     error_json
 )
 from common.api_auth import check_api_token
-from wallet.models import Chain, Asset, Address, AddresNote, TokenConfig, AddressAmountStat
+from wallet.models import (
+    Chain,
+    Asset,
+    Wallet,
+    WalletAsset,
+    Address,
+    AddressAsset,
+    AddresNote,
+    TokenConfig,
+    AddressAmountStat
+)
 from common.helpers import d0, dec
 from services.wallet_client import WalletClient
 from services.savour_rpc import common_pb2
 from market.models import StablePrice, MarketPrice
 from decimal import Decimal
 from api.wallet.types import AddressTransaction
-
+from django.db import transaction
 
 
 # @check_api_token
 def get_balance(request):
     params = json.loads(request.body.decode())
+    device_id = params.get('device_id', "")
+    wallet_uuid = params.get('wallet_uuid', "")
     network = params.get('network', "mainnet")
     chain = params.get('chain', "Ethereum")
     symbol = params.get('symbol', "ETH")
     address = params.get('address', "")
-    contract_address = params.get('contract_address', "")
+    index = params.get('index', "0")
+    contract_addr = params.get('contract_addr', "")
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
         return error_json("Do not support chain", 4000)
@@ -40,7 +53,7 @@ def get_balance(request):
         coin=symbol,
         network=network,
         address=address,
-        contract_address=contract_address
+        contract_address=contract_addr
     )
     if symbol not in ["USDT", "USDC", "DAI"]:
         market_price = MarketPrice.objects.filter(
@@ -61,34 +74,44 @@ def get_balance(request):
             cny_price = stable_price.cny_price
         else:
             usd_price, cny_price = 1, 7
+    wallet = Wallet.objects.filter(device_id=device_id, wallet_uuid=wallet_uuid).first()
+    if wallet is None:
+        return error_json("no this wallet", 4000)
+    data_stat = []
     if result.code == common_pb2.SUCCESS:
-        address_db = Address.objects.filter(chain=db_chain, address=address, asset=db_asset).first()
-        if address_db is not None:
-            address_db.balance = Decimal(result.balance)
-            address_db.save()
-        address_datastats = AddressAmountStat.objects.filter(address=address_db).order_by("-id")
         data_stat = []
-        for item in address_datastats:
-            data_stat.append(item.to_dict())
         balance = Decimal(result.balance) / Decimal(10 ** int(db_asset.unit))
+        address = Address.objects.filter(wallet=wallet, index=index, address=address).first()
+        if address is not None:
+            address_asset = AddressAsset.objects.filter(wallet=wallet, asset=db_asset, address=address).first()
+            if address_asset is not None:
+                address_asset.asset_usd = usd_price * balance
+                address_asset.asset_cny = cny_price * balance
+                address_asset.balance = Decimal(result.balance)
+                address_asset.save()
+            address_datastats = AddressAmountStat.objects.filter(address=address).order_by("-id")
+            for item in address_datastats:
+                data_stat.append(item.to_dict())
         data = {
             "balance": format(balance, ".4f"),
-            "usdt_price": format(usd_price * balance, ".4f"),
-            "cny_price": format(cny_price * balance, ".4f"),
+            "asset_usd": format(usd_price * balance, ".4f"),
+            "asset_cny": format(cny_price * balance, ".4f"),
             "data_stat": data_stat,
         }
         return ok_json(data)
     else:
-        address_db = Address.objects.filter(chain=db_chain, address=address, asset=db_asset).first()
-        balance = Decimal(address_db.balance) / Decimal(10 ** int(db_asset.unit))
-        address_datastats = AddressAmountStat.objects.filter(address=address_db).order_by("-id")
-        data_stat = []
-        for item in address_datastats:
-            data_stat.append(item.to_dict())
+        address = Address.objects.filter(wallet=wallet, index=index, address=address).first()
+        balance = d0
+        if address is not None:
+            address_asset = AddressAsset.objects.filter(wallet=wallet, assset=db_asset, address=address).first()
+            balance = Decimal(address_asset.balance) / Decimal(10 ** int(db_asset.unit))
+            address_datastats = AddressAmountStat.objects.filter(address=address).order_by("-id")
+            for item in address_datastats:
+                data_stat.append(item.to_dict())
         data = {
             "balance": format(balance, ".4f"),
-            "usdt_price": format(usd_price * balance, ".4f"),
-            "cny_price": format(cny_price * balance, ".4f"),
+            "asset_usd": format(usd_price * balance, ".4f"),
+            "asset_cny": format(cny_price * balance, ".4f"),
             "data_stat": data_stat
         }
         return ok_json(data)
@@ -103,23 +126,22 @@ def get_wallet_balance(request):
     db_chain = Chain.objects.filter(name=chain).first()
     if db_chain is None:
         return error_json("Do not support chain", 4000)
-    address_list = Address.objects.filter(
-        chain__id=db_chain.id,
-        device_id=device_id,
-        wallet_uuid=wallet_uuid
-    ).order_by("id")
-    wallet_balance_return = []
-    total_asset_usd = d0
-    total_asset_cny = d0
-    for address in address_list:
-        usd_total, cyn_total = address.get_symbol_price(chain)
-        total_asset_usd += usd_total
-        total_asset_cny += cyn_total
-        wallet_balance_return.append(address.list_to_dict(chain))
+    wallet = Wallet.objects.filter(device_id=device_id, wallet_uuid=wallet_uuid, chain=db_chain).first()
+    if wallet is None:
+        return error_json("no this wallet", 4000)
+    token_list = []
+    wallet_asset_list = WalletAsset.objects.filter(wallet=wallet).order_by("id")
+    for wallet_asset in wallet_asset_list:
+        token_list.append(wallet_asset.to_dict())
     data = {
-        "total_asset_usd": format(total_asset_usd, ".4f"),
-        "total_asset_cny": format(total_asset_cny, ".4f"),
-        "token_list": wallet_balance_return,
+        "chain": wallet.chain.name,
+        "network": "mainnet",
+        "device_id": device_id,
+        "wallet_uuid": wallet_uuid,
+        "wallet_name": wallet.wallet_name,
+        "asset_usd": format(wallet.asset_usd, ".4f"),
+        "asset_cny": format(wallet.asset_cny, ".4f"),
+        "token_list": token_list,
     }
     return ok_json(data)
 
@@ -388,6 +410,7 @@ def get_hash_transaction(request):
 
 
 # @check_api_token
+@transaction.atomic()
 def submit_wallet_info(request):
     params = json.loads(request.body.decode())
     chain = params.get('chain', "Ethereum")
@@ -396,6 +419,7 @@ def submit_wallet_info(request):
     device_id = params.get('device_id', "")
     wallet_uuid = params.get('wallet_uuid', "")
     wallet_name = params.get('wallet_name', "")
+    index = params.get('index', "0")
     address = params.get('address', "")
     contract_addr = params.get('contract_addr', "")
     if chain in ["", None]:
@@ -418,21 +442,44 @@ def submit_wallet_info(request):
     db_asset = Asset.objects.filter(name=symbol, chain=db_chain).first()
     if db_asset is None:
         return error_json("Do not support symbol", 4000)
-    db_address = Address.objects.filter(device_id=device_id, wallet_uuid=wallet_uuid).first()
-    # if db_address is not None:
-    #     return error_json("this wallet is exist", 4000)
-    # else:
-    Address.objects.create(
+    wallet_exist = Wallet.objects.filter(
         chain=db_chain,
-        asset=db_asset,
-        network=network,
         device_id=device_id,
         wallet_uuid=wallet_uuid,
-        wallet_name=wallet_name,
+        wallet_name=wallet_name
+    ).first()
+    if wallet_exist is None:
+        wallet = Wallet.objects.create(
+            chain=db_chain,
+            device_id=device_id,
+            wallet_uuid=wallet_uuid,
+            wallet_name=wallet_name,
+            asset_usd=d0,
+            asset_cny=d0
+        )
+    else:
+        wallet = wallet_exist
+    wallet_asset_exist = WalletAsset.objects.filter(
+        asset=db_asset,
+        contract_addr=contract_addr
+    ).first()
+    if wallet_asset_exist is None:
+        wallet.create_wallet_asset(
+            asset=db_asset,
+            contract_addr=contract_addr
+        )
+    address_exist = Address.objects.filter(
+        index=index,
         address=address,
-        contract_addr=contract_addr,
-        balance=d0,
-    )
+    ).first()
+    if address_exist is None:
+        create_addr = wallet.create_address(
+            index=index,
+            address=address,
+        )
+        create_addr.create_address_asset(
+            asset=db_asset
+        )
     return ok_json("submit wallet success")
 
 
@@ -443,26 +490,26 @@ def batch_submit_wallet(request):
     if batch_wallet is None:
         return error_json("batch_wallet is empty", 4000)
     for wallet in batch_wallet:
-        db_address = Address.objects.filter(device_id=wallet.get("device_id", "0"), wallet_uuid=wallet.get("wallet_uuid", "0")).first()
-        if db_address is None:
-            db_chain = Chain.objects.filter(name=wallet.get("chain")).first()
-            if db_chain is None:
-                return error_json("Do not support chain", 4000)
-            db_asset = Asset.objects.filter(name=wallet.get("symbol"), chain=db_chain).first()
-            if db_chain and db_asset is not None:
-                Address.objects.create(
-                    chain=db_chain,
-                    asset=db_asset,
-                    network=wallet.get("network"),
-                    device_id=wallet.get("device_id"),
-                    wallet_uuid=wallet.get("wallet_uuid"),
-                    wallet_name=wallet.get("wallet_name"),
-                    address=wallet.get("address"),
-                    contract_addr=wallet.get("contract_addr"),
-                    balance=d0,
-                )
-            else:
-                return error_json("db_chain or db_asset is npne", 4000)
+        db_chain = Chain.objects.filter(name=wallet.get("chain")).first()
+        db_asset = Asset.objects.filter(name=wallet.get("symbol"), chain=db_chain).first()
+        if db_chain is not None and  db_asset is not None:
+            wallet = Wallet.objects.create(
+                chain=db_chain,
+                device_id=wallet.get("device_id"),
+                wallet_uuid=wallet.get("wallet_uuid"),
+                wallet_name=wallet.get("wallet_name"),
+                asset_usd=d0,
+                asset_cny=d0,
+                balance=d0
+            )
+            wallet.create_wallet_asset(
+                asset=db_asset,
+                contract_addr=wallet.get("contract_addr")
+            )
+            wallet.create_address(
+                index=wallet.get("index"),
+                address=wallet.get("address"),
+            )
     return ok_json("batch submit wallet success")
 
 
@@ -599,33 +646,31 @@ def sourch_add_token(request):
 def get_wallet_asset(request):
     params = json.loads(request.body.decode())
     device_id = params.get('device_id')
-    address_list = Address.objects.filter(
+    wallet_list = Wallet.objects.filter(
         device_id=device_id,
     ).order_by("id")
-    coin_asset_return = []
+    total_asset_usd_stat = d0
+    total_asset_cny_stat = d0
+    token_list_return = []
     wallet_name_list = []
-    total_asset_stat = d0
-    for address in address_list:
-        usd_total, _ = address.get_symbol_price()
-        total_asset_stat += usd_total
-        if address.wallet_name not in wallet_name_list:
-            wallet_name_list.append(address.wallet_name)
-    for wallet_name in wallet_name_list:
-        address_lists = Address.objects.filter(
-            wallet_name=wallet_name,
-            device_id=device_id,
+    for wallet in wallet_list:
+        total_asset_usd_stat += wallet.asset_usd
+        total_asset_cny_stat += wallet.asset_cny
+        wallet_asset_list = WalletAsset.objects.filter(
+            wallet=wallet,
         ).order_by("id")
-        wallet_balance_list = []
-        for item in address_lists:
-            wallet_balance_list.append(item.list_to_dict())
+        wallet_balance_list= []
+        for wallet_asset in wallet_asset_list:
+            wallet_balance_list.append(wallet_asset.to_dict())
         wallet_balance_data = {
-            "wallet_name": wallet_name,
+            "wallet_name": wallet.wallet_name,
             "wallet_balance": wallet_balance_list
         }
-        coin_asset_return.append(wallet_balance_data)
+        token_list_return.append(wallet_balance_data)
     data = {
-        "total_asset": format(total_asset_stat, ".4f"),
-        "coin_asset": coin_asset_return,
+        "total_asset_usd": format(total_asset_usd_stat, ".4f"),
+        "total_asset_cny": format(total_asset_cny_stat, ".4f"),
+        "token_list": token_list_return,
     }
     return ok_json(data)
 

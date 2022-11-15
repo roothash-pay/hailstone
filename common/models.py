@@ -97,7 +97,8 @@ class ApiAuth(BaseModel):
 class Chain(BaseModel):
     name = models.CharField(max_length=70, verbose_name='链名称', db_index=True)
     mark = models.CharField(max_length=70, verbose_name='链名标识')
-    icon = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
+    logo = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
+    active_logo = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
 
     class Meta:
         verbose_name = '链表'
@@ -112,14 +113,16 @@ class Chain(BaseModel):
             "id": self.id,
             "name": self.name,
             "mark": self.user.mark,
-            "icon": str(self.icon),
+            "logo": str(self.logo),
+            "active_logo": str(self.active_logo),
         }
 
 
 class Asset(BaseModel):
     name = models.CharField(max_length=70, verbose_name='资产名称', db_index=True)
     mark = models.CharField(max_length=70, verbose_name='资产标识')
-    icon = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
+    logo = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
+    active_logo = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
     unit = models.CharField(max_length=10, verbose_name='资产精度', db_index=True)
     chain = models.ForeignKey(
         Chain, on_delete=models.CASCADE,
@@ -139,7 +142,8 @@ class Asset(BaseModel):
             "id": self.id,
             "name": self.name,
             "mark": self.user.mark,
-            "icon": str(self.icon),
+            "logo": str(self.logo),
+            "active_logo": str(self.active_logo),
             "unit": self.user.unit,
             "chain": self.chain
         }

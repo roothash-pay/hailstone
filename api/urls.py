@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from api.wallethead.api_v1 import get_head, save_head
+from api.wallet.social_wallet_api_v1 import get_head, save_head
 from api.wallet.hd_api_v1 import (
     get_balance,
     get_wallet_balance,
