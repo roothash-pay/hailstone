@@ -652,7 +652,6 @@ def get_wallet_asset(request):
     total_asset_usd_stat = d0
     total_asset_cny_stat = d0
     token_list_return = []
-    wallet_name_list = []
     for wallet in wallet_list:
         total_asset_usd_stat += wallet.asset_usd
         total_asset_cny_stat += wallet.asset_cny
