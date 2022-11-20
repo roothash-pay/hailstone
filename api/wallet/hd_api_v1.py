@@ -460,6 +460,7 @@ def submit_wallet_info(request):
     else:
         wallet = wallet_exist
     wallet_asset_exist = WalletAsset.objects.filter(
+        wallet=wallet,
         asset=db_asset,
         contract_addr=contract_addr
     ).first()
@@ -469,6 +470,7 @@ def submit_wallet_info(request):
             contract_addr=contract_addr
         )
     address_exist = Address.objects.filter(
+        wallet=wallet,
         index=index,
         address=address,
     ).first()
