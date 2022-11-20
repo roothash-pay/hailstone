@@ -255,8 +255,9 @@ class TokenConfig(BaseModel):
         return {
             "id": self.id,
             "asset_id": self.asset.id,
-            "token_name": self.token_name,
-            "logo": str(self.icon),
+            "token_name": self.asset.name,
+            "logo": str(self.asset.logo),
+            "active_logo": str(self.asset.active_logo),
             "token_symbol": self.token_symbol,
             "contract_addr": self.contract_addr,
             "unit": self.decimal,
