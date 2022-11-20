@@ -84,7 +84,7 @@ class WalletAsset(BaseModel):
     balance = DecField(default=d0, verbose_name="wallet balance")
 
     class Meta:
-        verbose_name = 'wallet_asset'
+        verbose_name = 'WalletAsset'
         verbose_name_plural = verbose_name
 
     def __str__(self):

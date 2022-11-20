@@ -675,3 +675,22 @@ def get_wallet_asset(request):
     }
     return ok_json(data)
 
+
+# @check_api_token
+def update_wallet_name(request):
+    params = json.loads(request.body.decode())
+    device_id = params.get('device_id', "")
+    wallet_uuid = params.get('wallet_uuid', "")
+    wallet_name = params.get('wallet_name', "")
+    if wallet_name in ["", None]:
+        return error_json("wallet name is null", 4000)
+    wallet = Wallet.objects.filter(
+        device_id=device_id,
+        wallet_uuid=wallet_uuid,
+    ).first()
+    if wallet is None:
+        return error_json("No this wallet", 4000)
+    else:
+        wallet.wallet_name = wallet_name
+        wallet.save()
+    return ok_json("update wallet name success")
