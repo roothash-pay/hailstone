@@ -2,7 +2,12 @@
 
 from django.urls import path
 
-from api.wallet.social_wallet_api_v1 import get_head, save_head
+from api.wallet.social_wallet_api_v1 import (
+    get_head,
+    save_head,
+    get_recovery_key,
+    set_recovery_key,
+)
 from api.wallet.hd_api_v1 import (
     get_balance,
     get_wallet_balance,
@@ -88,4 +93,6 @@ urlpatterns = [
     # wallethead module
     path(r'get_head', get_head, name='get_head'),
     path(r'save_head', save_head, name='save_head'),
+    path(r'get_recovery_key', get_recovery_key, name='get_recovery_key'),
+    path(r'set_recovery_key', set_recovery_key, name='set_recovery_key'),
 ]

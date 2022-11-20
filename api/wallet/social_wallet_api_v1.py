@@ -20,8 +20,11 @@ EMPTY = [None, "None", 0, ""]
 def get_head(request):
     params = json.loads(request.body.decode())
     wallet_uuid = params.get("wallet_uuid", None)
-    if wallet_uuid in EMPTY:
-        return error_json("Invalid Params")
+    social_code = params.get('social_code', None)
+    contract_addr = params.get('contract_addr', None)
+    file_cid = params.get('file_cid',  None)
+    if wallet_uuid in EMPTY or social_code in EMPTY or contract_addr in EMPTY or file_cid in EMPTY:
+        return error_json("Invalid Params", 4000)
     wallet = Wallet.objects.filter(wallet_uuid=wallet_uuid).first()
     if wallet is None:
         return error_json("No this wallet", 4000)
@@ -36,8 +39,10 @@ def save_head(request):
     params = json.loads(request.body.decode())
     wallet_head = params.get("wallet_head", None)
     wallet_uuid = params.get("wallet_uuid", None)
-    if wallet_head in EMPTY or wallet_uuid in EMPTY:
-        return error_json("Invalid Params")
+    social_code = params.get('social_code', None)
+    password = params.get('password', None)
+    if wallet_head in EMPTY or wallet_uuid in EMPTY or social_code in EMPTY or password in EMPTY:
+        return error_json("Invalid Params", 4000)
     wallet = Wallet.objects.filter(wallet_uuid=wallet_uuid).first()
     if wallet is None:
         return error_json("No this wallet", 4000)
@@ -62,15 +67,17 @@ def save_head(request):
 # @check_api_token
 def get_recovery_key(request):
     params = json.loads(request.body.decode())
-    file_cid = params.get('network', "mainnet")
-    chain = params.get('chain', "Ethereum")
-    uuid = params.get('uuid', )
-    social_code = params.get('social_code', "")
-    contract_addr = params.get('contract_addr', "")
+    file_cid = params.get('network', None)
+    chain = params.get('chain', None)
+    wallet_uuid = params.get('uuid', None)
+    social_code = params.get('social_code', None)
+    contract_addr = params.get('contract_addr', None)
+    if file_cid in EMPTY or chain in EMPTY or wallet_uuid in EMPTY or social_code in EMPTY or contract_addr in EMPTY:
+        return error_json("Invalid Params", 4000)
     klclient = KeyLockerClient()
     gskey = klclient.get_social_key(
         chain=chain,
-        uuid=uuid,
+        wallet_uuid=wallet_uuid,
         social_code=social_code,
         file_cid=file_cid,
         contract=contract_addr
@@ -82,15 +89,17 @@ def get_recovery_key(request):
 # @check_api_token
 def set_recovery_key(request):
     params = json.loads(request.body.decode())
-    chain = params.get('chain', "Ethereum")
-    uuid = params.get('uuid', "")
-    key = params.get('key', "")
-    password = params.get('password', "")
-    social_code = params.get('social_code', "")
+    chain = params.get('chain', None)
+    wallet_uuid = params.get('wallet_uuid', None)
+    key = params.get('key', None)
+    password = params.get('password', None)
+    social_code = params.get('social_code', None)
+    if key in EMPTY or chain in EMPTY or wallet_uuid in EMPTY or social_code in EMPTY or password in EMPTY:
+        return error_json("Invalid Params", 4000)
     klclient = KeyLockerClient()
     klclient.set_social_key(
         chain=chain,
-        uuid=uuid,
+        wallet_uuid=wallet_uuid,
         key=key,
         password=password,
         social_code=social_code,
