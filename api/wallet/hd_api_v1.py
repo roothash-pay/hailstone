@@ -290,12 +290,18 @@ def get_sign_tx_info(request):
             qoute_asset__id=db_asset.id,
             exchange__name="binance"
         ).order_by("-id").first()
-        usd_price = market_price.usd_price
+        if market_price is not None:
+            usd_price = market_price.usd_price
+        else:
+            usd_price = 0
     else:
         stable_price = StablePrice.objects.filter(
             asset__id=db_asset.id,
         ).order_by("-id").first()
-        usd_price = stable_price.usd_price
+        if stable_price is not None:
+            usd_price = stable_price.usd_price
+        else:
+            usd_price = 1
     data = {
         "usdt_pirce": usd_price,
         "nonce": result.nonce,
@@ -664,6 +670,7 @@ def del_note_book(request):
     addr_note_id = int(params.get('addr_note_id'))
     AddresNote.objects.filter(id=addr_note_id).delete()
     return ok_json("delete note book success")
+
 
 # @check_api_token
 def hot_token_list(request):
