@@ -178,7 +178,7 @@ response example
 ```
 
 
-### 4=5. get wallet asset
+### 5. get wallet asset
 - request way: post
 - api name: api/get_wallet_asset
 - request example
@@ -262,5 +262,30 @@ response example
     }
 }
 ```
+
+### 6. update wallet name
+- request way: post
+- api name: api/update_wallet_name
+- request example
+
+```
+{
+    "device_id": "1111111221",
+    "wallet_uuid": "222222111",
+    "wallet_name": "yueyue"
+}
+```
+
+response example
+
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": "update wallet name success"
+}
+```
+
+
 
 
