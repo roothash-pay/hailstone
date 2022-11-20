@@ -10,7 +10,7 @@
     "symbol": "eth",
     "network": "mainnet",
     "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0",
-    "contract_address": ""
+    "contract_addr": ""
 }
 ```
 
