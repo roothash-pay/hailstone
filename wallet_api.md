@@ -287,5 +287,56 @@ response example
 ```
 
 
+### 7. delete wallet
+- request way: post
+- api name: api/delete_wallet
+- request example
+
+```
+{
+    "device_id": "test111111111",
+    "wallet_uuid": "test222222",
+    "chain": "Arbitrum"
+}
+```
+
+response example
+
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": "delete wallet success"
+}
+```
+
+
+### 8. delete wallet token
+- request way: post
+- api name: api/delete_wallet_token
+- request example
+
+```
+{
+    "device_id": "test111111111",
+    "wallet_uuid": "test222222",
+    "chain": "Arbitrum",
+    "symbol": "USDT",
+    "contract_addr": "0x000"
+}
+```
+
+response example
+
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": "delete wallet token success"
+}
+```
+
+
+
 
 

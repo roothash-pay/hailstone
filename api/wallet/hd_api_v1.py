@@ -25,6 +25,8 @@ from decimal import Decimal
 from api.wallet.types import AddressTransaction
 from django.db import transaction
 
+EMPTY = [None, "None", 0, ""]
+
 
 # @check_api_token
 def get_balance(request):
@@ -518,26 +520,69 @@ def batch_submit_wallet(request):
 #  @check_api_token
 def delete_wallet(request):
     params = json.loads(request.body.decode())
-    device_id = params.get('device_id')
-    wallet_uuid = params.get('wallet_uuid')
-    Address.objects.filter(
+    device_id = params.get('device_id', None)
+    wallet_uuid = params.get('wallet_uuid', None)
+    chain = params.get('chain', None)
+    if device_id in EMPTY or wallet_uuid in EMPTY or chain in EMPTY:
+        return error_json("invalid Params", 4000)
+    db_chain = Chain.objects.filter(name=chain).first()
+    if db_chain is None:
+        return error_json("Do not support chain", 4000)
+    wallet_d = Wallet.objects.filter(
+        chain=db_chain,
         device_id=device_id,
-        wallet_uuid=wallet_uuid).delete()
+        wallet_uuid=wallet_uuid,
+    )
+    wallet = wallet_d.first()
+    WalletAsset.objects.filter(
+        wallet=wallet
+    ).delete()
+    AddressAsset.objects.filter(
+        wallet=wallet
+    ).delete()
+    Address.objects.filter(
+        wallet=wallet
+    ).delete()
+    wallet_d.delete()
     return ok_json("delete wallet success")
 
 
 # @check_api_token
 def delete_wallet_token(request):
     params = json.loads(request.body.decode())
-    device_id = params.get('device_id')
-    wallet_uuid = params.get('wallet_uuid')
-    contract_addr = params.get('contract_addr')
-    Address.objects.filter(
+    device_id = params.get('device_id', None)
+    wallet_uuid = params.get('wallet_uuid', None)
+    symbol = params.get('symbol', None)
+    contract_addr = params.get('contract_addr', None)
+    chain = params.get('chain', None)
+    if device_id in EMPTY or wallet_uuid in EMPTY or symbol in EMPTY or contract_addr in EMPTY or chain in EMPTY:
+        return error_json("Invalid Params", 4000)
+    db_chain = Chain.objects.filter(name=chain).first()
+    if db_chain is None:
+        return error_json("Do not support chain", 4000)
+    db_asset = Asset.objects.filter(name=symbol, chain=db_chain).first()
+    if db_asset is None:
+        return error_json("Do not support symbol", 4000)
+    wallet = Wallet.objects.filter(
+        chain=db_chain,
         device_id=device_id,
         wallet_uuid=wallet_uuid,
-        contract_addr=contract_addr
+    ).first()
+    WalletAsset.objects.filter(
+        wallet=wallet,
+        asset=db_asset,
+        contract_addr=contract_addr,
     ).delete()
-    return ok_json("delete wallet success")
+    address_list = Address.objects.filter(
+        wallet=wallet,
+    )
+    for address in address_list:
+        AddressAsset.objects.filter(
+            wallet=wallet,
+            asset=db_asset,
+            address=address
+        ).delete()
+    return ok_json("delete wallet token success")
 
 
 #  @check_api_token
