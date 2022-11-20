@@ -97,8 +97,9 @@ class WalletAsset(BaseModel):
             address_list_dict.append(address.to_dict(self.asset))
         return {
             "id": self.id,
+            "chain": self.wallet.chain.name,
             "symbol": self.asset.name,
-            "logo": str(self.asset.logo),
+            "logo": str(self.asset.active_logo),
             "contract_addr": self.contract_addr,
             "balance": format(self.balance, ".4f"),
             "asset_usd": format(self.asset_usd, ".2f"),

@@ -10,6 +10,8 @@ from wallet.models import (
     WalletHead
 )
 from common.helpers import gen_rsa_crypto_key
+from services.keylocker_client import KeyLockerClient
+
 
 EMPTY = [None, "None", 0, ""]
 
@@ -60,23 +62,39 @@ def save_head(request):
 # @check_api_token
 def get_recovery_key(request):
     params = json.loads(request.body.decode())
-    network = params.get('network', "mainnet")
+    file_cid = params.get('network', "mainnet")
     chain = params.get('chain', "Ethereum")
-    symbol = params.get('symbol', "ETH")
-    address = params.get('address', "")
-    contract_address = params.get('contract_address', "")
-    return ok_json("")
+    uuid = params.get('uuid', )
+    social_code = params.get('social_code', "")
+    contract_addr = params.get('contract_addr', "")
+    klclient = KeyLockerClient()
+    gskey = klclient.get_social_key(
+        chain=chain,
+        uuid=uuid,
+        social_code=social_code,
+        file_cid=file_cid,
+        contract=contract_addr
+    )
+    return ok_json(gskey)
 
 
 
 # @check_api_token
 def set_recovery_key(request):
     params = json.loads(request.body.decode())
-    network = params.get('network', "mainnet")
     chain = params.get('chain', "Ethereum")
-    symbol = params.get('symbol', "ETH")
-    address = params.get('address', "")
-    contract_address = params.get('contract_address', "")
-    return ok_json("")
+    uuid = params.get('uuid', "")
+    key = params.get('key', "")
+    password = params.get('password', "")
+    social_code = params.get('social_code', "")
+    klclient = KeyLockerClient()
+    klclient.set_social_key(
+        chain=chain,
+        uuid=uuid,
+        key=key,
+        password=password,
+        social_code=social_code,
+    )
+    return ok_json("set recovery key success")
 
 
