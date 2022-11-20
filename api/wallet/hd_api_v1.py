@@ -345,7 +345,7 @@ def get_address_transaction(request):
     chain = params.get('chain', "Ethereum")
     symbol = params.get('symbol', "ETH")
     address = params.get('address', "")
-    contract_address = params.get('contract_address', "")
+    contract_addr = params.get('contract_addr', "")
     page = params.get('page', "")
     page_size = params.get('page_size', "")
     db_chain = Chain.objects.filter(name=chain).first()
@@ -364,7 +364,7 @@ def get_address_transaction(request):
             chain=chain,
             coin=symbol,
             address=address,
-            contract_address=contract_address,
+            contract_address=contract_addr,
             page=int(page),
             pagesize=int(page_size),
         )
@@ -373,7 +373,7 @@ def get_address_transaction(request):
             tx_data_return = []
             for item in result.tx:
                 addr_tx = AddressTransaction(item)
-                tx_data_return.append(addr_tx.as_json(symbol, address, contract_address))
+                tx_data_return.append(addr_tx.as_json(symbol, address, contract_addr))
             return ok_json(tx_data_return)
         else:
             return error_json("rpc server fail")
