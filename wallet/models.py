@@ -4,9 +4,7 @@ import pytz
 from django.db import models
 from common.models import DecField, BaseModel, BoolYesOrNoSelect, Chain, Asset
 from django.conf import settings
-from common.helpers import d0, dec, d1
-from market.models import MarketPrice, StablePrice
-from decimal import Decimal
+from common.helpers import d0
 
 
 tz = pytz.timezone(settings.TIME_ZONE)
@@ -225,27 +223,26 @@ class TokenConfig(BaseModel):
     chain = models.ForeignKey(
         Chain, on_delete=models.CASCADE,
         null=True, blank=True,
-        verbose_name='链名称'
+        verbose_name='chain name'
     )
     asset = models.ForeignKey(
         Asset, on_delete=models.CASCADE,
         null=True, blank=True,
-        verbose_name='资产名称'
+        verbose_name='asset name'
     )
-    token_name = models.CharField(max_length=70, verbose_name='token 名称')
-    icon = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
-    token_symbol = models.CharField(max_length=70, verbose_name='Token符号')
-    contract_addr = models.CharField(max_length=70, verbose_name='合约地址')
-    decimal = models.CharField(max_length=10, verbose_name='token 精度', db_index=True)
+    token_name = models.CharField(max_length=70, verbose_name='token name')
+    token_symbol = models.CharField(max_length=70, verbose_name='Token symbol')
+    contract_addr = models.CharField(max_length=70, verbose_name='contract address')
+    decimal = models.CharField(max_length=10, verbose_name='token decimal', db_index=True)
     is_hot = models.CharField(
         max_length=32,
         choices=BoolYesOrNoSelect,
         default='no',
-        verbose_name="是不是热门资产"
+        verbose_name="is_hot asset"
     )
 
     class Meta:
-        verbose_name = '资产配置表'
+        verbose_name = 'TokenConfig'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -268,23 +265,23 @@ class TxRecord(BaseModel):
     chain = models.ForeignKey(
         Chain, on_delete=models.CASCADE,
         null=True, blank=True,
-        verbose_name='链名称'
+        verbose_name='chain name'
     )
     asset = models.ForeignKey(
         Asset, on_delete=models.CASCADE,
         null=True, blank=True,
-        verbose_name='资产名称'
+        verbose_name='asset name'
     )
-    from_addr = models.CharField(max_length=70, verbose_name='发送方')
-    to_addr = models.CharField(max_length=70, verbose_name='接收方')
-    amount = DecField(default=d0, verbose_name="转账金额")
-    memo = models.CharField(max_length=70, verbose_name='备注')
-    hash = models.CharField(max_length=70, verbose_name='交易Hash')
-    block_height = models.CharField(max_length=70, verbose_name='所在区块')
-    tx_time = models.CharField(max_length=70, verbose_name='交易时间')
+    from_addr = models.CharField(max_length=70, verbose_name='sender')
+    to_addr = models.CharField(max_length=70, verbose_name='reviver')
+    amount = DecField(default=d0, verbose_name="amount")
+    memo = models.CharField(max_length=70, verbose_name='memo')
+    hash = models.CharField(max_length=70, verbose_name='hash')
+    block_height = models.CharField(max_length=70, verbose_name='block_height')
+    tx_time = models.CharField(max_length=70, verbose_name='tx_time')
 
     class Meta:
-        verbose_name = '交易记录表'
+        verbose_name = 'TxRecord'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -300,19 +297,19 @@ class AddresNote(BaseModel):
     chain = models.ForeignKey(
         Chain, on_delete=models.CASCADE,
         null=True, blank=True,
-        verbose_name='链名称'
+        verbose_name='chain name'
     )
     asset = models.ForeignKey(
         Asset, on_delete=models.CASCADE,
         null=True, blank=True,
-        verbose_name='资产名称'
+        verbose_name='asset name'
     )
-    device_id = models.CharField(max_length=70, verbose_name='设备ID')
-    memo = models.CharField(max_length=70, verbose_name='地址备注')
-    address = models.CharField(max_length=70, verbose_name='地址')
+    device_id = models.CharField(max_length=70, verbose_name='device id')
+    memo = models.CharField(max_length=70, verbose_name='memo')
+    address = models.CharField(max_length=70, verbose_name='address')
 
     class Meta:
-        verbose_name = '地址薄表'
+        verbose_name = 'AddresNote'
         verbose_name_plural = verbose_name
 
     def __str__(self):
