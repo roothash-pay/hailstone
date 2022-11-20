@@ -622,7 +622,13 @@ def del_note_book(request):
 
 # @check_api_token
 def hot_token_list(request):
+    params = json.loads(request.body.decode())
+    chain = params.get('chain', "Ethereum")
+    db_chain = Chain.objects.filter(name=chain).first()
+    if db_chain is None:
+        return error_json("Do not support chain", 4000)
     token_config_list = TokenConfig.objects.filter(
+        chain=db_chain,
         is_hot="yes"
     ).order_by("id")
     token_config_data = []
@@ -634,8 +640,13 @@ def hot_token_list(request):
 # @check_api_token
 def sourch_add_token(request):
     params = json.loads(request.body.decode())
+    chain = params.get('chain', "Ethereum")
     token_name = params.get('token_name')
+    db_chain = Chain.objects.filter(name=chain).first()
+    if db_chain is None:
+        return error_json("Do not support chain", 4000)
     token_config_list = TokenConfig.objects.filter(
+        chain=db_chain,
         token_name__icontains=token_name,
     ).order_by("id")
     token_config_data = []
