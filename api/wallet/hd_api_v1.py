@@ -602,8 +602,8 @@ def get_note_book(request):
     params = json.loads(request.body.decode())
     device_id = params.get('device_id')
     page = params.get('page')
-    page_size = params.get('page')
-    start = page * page_size
+    page_size = params.get('page_size')
+    start = (page - 1) * page_size
     end = start + page_size
     address_list = AddresNote.objects.filter(device_id=device_id).order_by("-id")[start:end]
     total = AddresNote.objects.filter(device_id=device_id).order_by("-id").count()
@@ -631,7 +631,7 @@ def add_note_book(request):
     db_asset = Asset.objects.filter(name=asset).first()
     if db_asset is None:
         return error_json("Do not support symbol", 4000)
-    address_db = AddresNote.object.filter(
+    address_db = AddresNote.objects.filter(
         chain=db_chain,
         asset=db_asset,
         device_id=device_id,
@@ -654,10 +654,10 @@ def add_note_book(request):
 # @check_api_token
 def upd_note_book(request):
     params = json.loads(request.body.decode())
-    addr_note_id = int(params.get('addr_note_id'))
+    address_id = int(params.get('address_id'))
     memo = params.get('memo')
     address = params.get('address')
-    AddresNote.object.filter(id=addr_note_id).update(
+    AddresNote.objects.filter(id=address_id).update(
         memo=memo,
         address=address
     )
@@ -667,8 +667,8 @@ def upd_note_book(request):
 # @check_api_token
 def del_note_book(request):
     params = json.loads(request.body.decode())
-    addr_note_id = int(params.get('addr_note_id'))
-    AddresNote.objects.filter(id=addr_note_id).delete()
+    address_id = int(params.get('address_id'))
+    AddresNote.objects.filter(id=address_id).delete()
     return ok_json("delete note book success")
 
 
