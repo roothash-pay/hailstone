@@ -333,9 +333,6 @@ class WalletHead(BaseModel):
         verbose_name='wallet'
     )
     wallet_head = models.CharField("wallethead", max_length=512)
-    rsa_public_key = models.TextField("rsa public key")
-    rsa_private_key = models.TextField("rsa private key")
-    ipfs_cid = models.CharField("ipfs cid", max_length=128)
 
     class Meta:
         verbose_name = 'WalletHead'
@@ -347,8 +344,5 @@ class WalletHead(BaseModel):
     def to_dict(self):
         return {
             "id": self.id,
-            "wallet_head": self.wallet_head,
-            "rsa_public_key": self.rsa_public_key,
-            "rsa_private_key": self.rsa_private_key,
-            "ipfs_cid": self.ipfs_cid,
+            "wallet_head": self.wallet_head
         }

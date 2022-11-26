@@ -37,11 +37,12 @@ def get_head(request):
 
 def save_head(request):
     params = json.loads(request.body.decode())
+    chain = params.get('chain', None)
     wallet_head = params.get("wallet_head", None)
     wallet_uuid = params.get("wallet_uuid", None)
     social_code = params.get('social_code', None)
     password = params.get('password', None)
-    if wallet_head in EMPTY or wallet_uuid in EMPTY or social_code in EMPTY or password in EMPTY:
+    if chain in EMPTY or wallet_head in EMPTY or wallet_uuid in EMPTY or social_code in EMPTY or password in EMPTY:
         return error_json("Invalid Params", 4000)
     wallet = Wallet.objects.filter(wallet_uuid=wallet_uuid).first()
     if wallet is None:
@@ -50,16 +51,17 @@ def save_head(request):
     if target is not None:
         return ok_json(target.to_dict())
     else:
-        private_key, public_key = gen_rsa_crypto_key()
-        # TODO upload encrypt_head ipfs
-        # encrypt_head = encrypt_data(wallet_head, public_key)
-        head_ipfs_addr = "ipfs://ip.addr"
+        klclient = KeyLockerClient()
+        klclient.set_social_key(
+            chain=chain,
+            wallet_uuid=wallet_uuid,
+            key=wallet_head,
+            password=password,
+            social_code=social_code,
+        )
         s = WalletHead.objects.create(
             wallet=wallet,
             wallet_head=wallet_head,
-            head_public_key=public_key,
-            head_private_key=private_key,
-            head_ipfs_addr=head_ipfs_addr,
         )
         return ok_json(s.to_dict())
 
@@ -83,7 +85,6 @@ def get_recovery_key(request):
         contract=contract_addr
     )
     return ok_json(gskey)
-
 
 
 # @check_api_token

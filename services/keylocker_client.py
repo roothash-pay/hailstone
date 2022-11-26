@@ -34,7 +34,7 @@ class KeyLockerClient:
             )
         )
 
-    def get_social_key(self, chain: str, wallet_uuid:str, social_code: str,  file_cid:str = None, contract: str = None, consumer_token: str = None) -> keylocker_pb2.GetSocialKeyRep:
+    def get_social_key(self, chain: str, wallet_uuid:str, file_cid:str = None, contract: str = None, consumer_token: str = None) -> keylocker_pb2.GetSocialKeyRep:
         return self.stub.getSocialKey(
             keylocker_pb2.GetSocialKeyReq(
                 consumer_token=consumer_token,
@@ -42,30 +42,5 @@ class KeyLockerClient:
                 wallet_uuid=wallet_uuid,
                 file_cid=file_cid,
                 contract=contract,
-                social_code=social_code,
-            )
-        )
-
-    def get_wallet_head(self, chain: str, wallet_uuid: str, social_code: str, file_cid: str = None, contract: str = None, consumer_token: str = None) -> keylocker_pb2.GetWalletHeadRep:
-        return self.stub.getWalletHead(
-            keylocker_pb2.GetWalletHeadReq(
-                consumer_token=consumer_token,
-                chain=chain,
-                wallet_uuid=wallet_uuid,
-                file_cid=file_cid,
-                contract=contract,
-                social_code=social_code,
-            )
-        )
-
-    def set_wallet_head(self, chain: str, wallet_uuid: str, wallet_head: str, social_code: str, password: str = None, consumer_token: str = None) -> keylocker_pb2.SetWalletHeadRep:
-        return self.stub.setWalletHead(
-            keylocker_pb2.SetWalletHeadReq(
-                consumer_token=consumer_token,
-                chain=chain,
-                wallet_uuid=wallet_uuid,
-                wallet_head=wallet_head,
-                password=password,
-                social_code=social_code,
             )
         )
