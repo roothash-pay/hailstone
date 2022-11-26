@@ -6,11 +6,14 @@
 - request example
 ```
 {
-    "chain": "eth",
-    "symbol": "eth",
+    "device_id": "1111111221",
+    "wallet_uuid": "222222111",
+    "index":"0",
+    "chain": "Arbitrum",
+    "symbol": "ETH",
     "network": "mainnet",
     "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0",
-    "contract_addr": ""
+    "contract_address": ""
 }
 ```
 
