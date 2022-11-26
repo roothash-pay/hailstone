@@ -6,11 +6,14 @@
 - request example
 ```
 {
-    "chain": "eth",
-    "symbol": "eth",
+    "device_id": "1111111221",
+    "wallet_uuid": "222222111",
+    "index":"0",
+    "chain": "Arbitrum",
+    "symbol": "ETH",
     "network": "mainnet",
     "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0",
-    "contract_addr": ""
+    "contract_address": ""
 }
 ```
 
@@ -21,9 +24,10 @@ response example
     "ok": true,
     "code": 200,
     "result": {
-        "balance": "3.943168895484885777",
-        "usdt_price": "5216.911027948891005115425000",
-        "cny_price": "36414.03897508326143810720135"
+        "balance": "6.1126",
+        "asset_usd": "6.1126",
+        "asset_cny": "42.7879",
+        "data_stat": []
     }
 }
 ```
