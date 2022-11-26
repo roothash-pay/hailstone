@@ -82,7 +82,10 @@ def get_balance(request):
     data_stat = []
     if result.code == common_pb2.SUCCESS:
         data_stat = []
-        balance = Decimal(result.balance) / Decimal(10 ** int(db_asset.unit))
+        if result.balance is not None:
+            balance = Decimal(result.balance) / Decimal(10 ** int(db_asset.unit))
+        else:
+            balance = d0
         address = Address.objects.filter(wallet=wallet, index=index, address=address).first()
         if address is not None:
             address_asset = AddressAsset.objects.filter(wallet=wallet, asset=db_asset, address=address).first()
