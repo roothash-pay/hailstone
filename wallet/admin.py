@@ -79,7 +79,7 @@ class AddresNoteAdmin(admin.ModelAdmin):
 
 @admin.register(WalletHead)
 class WalletHeadAdmin(admin.ModelAdmin):
-    list_display = ('id', 'wallet_head', 'ipfs_cid')
+    list_display = ('id', 'wallet_head')
     list_per_page = 50
     ordering = ('-created_at',)
     list_display_links = ('id', 'wallet_head')
