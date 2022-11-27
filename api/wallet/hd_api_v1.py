@@ -513,7 +513,6 @@ def batch_submit_wallet(request):
                 wallet_name=wallet.get("wallet_name"),
                 asset_usd=d0,
                 asset_cny=d0,
-                balance=d0
             )
             wallet.create_wallet_asset(
                 asset=db_asset,
