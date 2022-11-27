@@ -505,23 +505,42 @@ def batch_submit_wallet(request):
     for wallet in batch_wallet:
         db_chain = Chain.objects.filter(name=wallet.get("chain")).first()
         db_asset = Asset.objects.filter(name=wallet.get("symbol"), chain=db_chain).first()
-        if db_chain is not None and  db_asset is not None:
-            wallet_db = Wallet.objects.create(
+        if db_chain is not None and db_asset is not None:
+            wallet_db_exist = Wallet.objects.filter(
                 chain=db_chain,
                 device_id=wallet.get("device_id"),
                 wallet_uuid=wallet.get("wallet_uuid"),
                 wallet_name=wallet.get("wallet_name"),
-                asset_usd=d0,
-                asset_cny=d0,
-            )
-            wallet_db.create_wallet_asset(
+            ).first()
+            if wallet_db_exist is None:
+                wallet_db = Wallet.objects.create(
+                    chain=db_chain,
+                    device_id=wallet.get("device_id"),
+                    wallet_uuid=wallet.get("wallet_uuid"),
+                    wallet_name=wallet.get("wallet_name"),
+                    asset_usd=d0,
+                    asset_cny=d0,
+                )
+            else:
+                wallet_db = wallet_db_exist
+            w_asset_exist = WalletAsset.objects.filter(
                 asset=db_asset,
                 contract_addr=wallet.get("contract_addr", "")
-            )
-            wallet_db.create_address(
+            ).first()
+            if w_asset_exist is None:
+                wallet_db.create_wallet_asset(
+                    asset=db_asset,
+                    contract_addr=wallet.get("contract_addr", "")
+                )
+            address_exist = Address.objects.filter(
                 index=wallet.get("index"),
                 address=wallet.get("address"),
-            )
+            ).first()
+            if address_exist is None:
+                wallet_db.create_address(
+                    index=wallet.get("index"),
+                    address=wallet.get("address"),
+                )
     return ok_json("batch submit wallet success")
 
 
