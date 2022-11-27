@@ -506,7 +506,7 @@ def batch_submit_wallet(request):
         db_chain = Chain.objects.filter(name=wallet.get("chain")).first()
         db_asset = Asset.objects.filter(name=wallet.get("symbol"), chain=db_chain).first()
         if db_chain is not None and  db_asset is not None:
-            wallet = Wallet.objects.create(
+            wallet_db = Wallet.objects.create(
                 chain=db_chain,
                 device_id=wallet.get("device_id"),
                 wallet_uuid=wallet.get("wallet_uuid"),
@@ -514,11 +514,11 @@ def batch_submit_wallet(request):
                 asset_usd=d0,
                 asset_cny=d0,
             )
-            wallet.create_wallet_asset(
+            wallet_db.create_wallet_asset(
                 asset=db_asset,
                 contract_addr=wallet.get("contract_addr", "")
             )
-            wallet.create_address(
+            wallet_db.create_address(
                 index=wallet.get("index"),
                 address=wallet.get("address"),
             )
