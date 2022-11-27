@@ -516,7 +516,7 @@ def batch_submit_wallet(request):
             )
             wallet.create_wallet_asset(
                 asset=db_asset,
-                contract_addr=wallet.get("contract_addr")
+                contract_addr=wallet.get("contract_addr", "")
             )
             wallet.create_address(
                 index=wallet.get("index"),
