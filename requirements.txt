@@ -39,6 +39,8 @@ hyperlink==21.0.0
 icalendar==4.1.0
 idna==2.8
 importlib-metadata==0.23
+beautifulsoup4==4.10.0
+lxml==4.9.0
 incremental==21.3.0
 jmespath==0.9.4
 JSON-log-formatter==0.5.1
