@@ -2,7 +2,9 @@ from services.token_discover.scan import *
 
 token_discover_list = [
     EthScan,
-    PolygonScan
+    PolygonScan,
+    Optimism,
+    Arbi,
 ]
 
 token_discover_container = {}
