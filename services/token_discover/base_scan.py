@@ -36,7 +36,7 @@ class EtherScan:
             for key in self.header.keys():
                 headers[key] = self.header[key]
 
-        url = self.scan_url + address
+        url = self.scan_url + '/address/' + address
         return requests.get(url, headers=headers)
 
     def parse_body(self, chain, html):
@@ -84,16 +84,22 @@ class EtherScan:
                     token_info['amount'] = amount
                 link = soup.select('li a')
                 if len(link) > 0:
-                    token_info['url'] = 'https://etherscan.io' + link[0].attrs['href']
+                    token_info['url'] = self.scan_url + link[0].attrs['href']
                 token_dict[current_token].append(token_info)
             else:
+                token_info = {
+                    'token': ''
+                }
                 span = soup.select('li  div div span')
                 if (len(span) > 0):
-                    token_info = {
-                        'token': span[0].text
-                    }
-                    token_dict[current_token].append(token_info)
-
+                    token_info['token'] = span[0].text
+                span = soup.select('li  div span.list-amount')
+                if (len(span) > 0):
+                    token_info['amount'] = span[0].text
+                link = soup.select('li a')
+                if len(link) > 0:
+                    token_info['url'] = self.scan_url + link[0].attrs['href']
+                token_dict[current_token].append(token_info)
         token_list = []
         for key in token_dict.keys():
             token_list.append({
