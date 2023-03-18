@@ -39,7 +39,7 @@ class AddressTransaction:
             tx_in_out = "from"
         else:
             tx_in_out = "to"
-        if contract_address == "":
+        if contract_address == "" or symbol != self.get_main_chain_coin(chain):
             return {
                 "block_number": self.tx_address.height,
                 "asset_name": symbol,
