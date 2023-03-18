@@ -20,7 +20,7 @@ from wallet.models import (
 from common.helpers import d0, dec
 from services.wallet_client import WalletClient
 from services.savour_rpc import common_pb2
-from market.models import StablePrice, MarketPrice
+from market.models import StablePrice, MarketPrice, Symbol
 from decimal import Decimal
 from api.wallet.types import AddressTransaction
 from django.db import transaction
@@ -59,7 +59,7 @@ def get_balance(request):
     )
     if symbol not in ["USDT", "USDC", "DAI"]:
         market_price = MarketPrice.objects.filter(
-            qoute_asset=db_asset,
+            symbol=Symbol.objects.filter(name=symbol + "/" + "USDT"),
             exchange__name="binance"
         ).order_by("-id").first()
         if market_price is not None:
@@ -69,7 +69,7 @@ def get_balance(request):
             usd_price, cny_price = 1, 7
     else:
         stable_price = StablePrice.objects.filter(
-            asset=db_asset,
+            asset__name='USDT',
         ).order_by("-id").first()
         if stable_price is not None:
             usd_price = stable_price.usd_price
