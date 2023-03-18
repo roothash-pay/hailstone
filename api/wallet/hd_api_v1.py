@@ -94,6 +94,15 @@ def get_balance(request):
                 address_asset.asset_cny = cny_price * balance
                 address_asset.balance = Decimal(result.balance)
                 address_asset.save()
+            else:
+                AddressAsset.objects.create(
+                    wallet=wallet,
+                    asset=db_asset,
+                    address=address,
+                    balance=Decimal(result.balance),
+                    asset_usd=usd_price * balance,
+                    asset_cny=cny_price * balance
+                )
             address_datastats = AddressAmountStat.objects.filter(address=address).order_by("-id")
             for item in address_datastats:
                 data_stat.append(item.to_dict())
