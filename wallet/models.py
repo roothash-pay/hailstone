@@ -5,6 +5,7 @@ from django.db import models
 from common.models import DecField, BaseModel, BoolYesOrNoSelect, Chain, Asset
 from django.conf import settings
 from common.helpers import d0
+from decimal import Decimal
 
 
 tz = pytz.timezone(settings.TIME_ZONE)
@@ -141,7 +142,7 @@ class Address(BaseModel):
             asset=asset,
             address=self).first()
         if address_asset is not None:
-            balance = address_asset.balance
+            balance = Decimal(address_asset.balance) / Decimal(10 ** int(asset.unit))
             asset_usd = address_asset.asset_usd
             asset_cny = address_asset.asset_cny
         else:

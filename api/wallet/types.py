@@ -3,7 +3,7 @@
 import json
 from typing import Any, Dict, List, Optional, Union
 from services.savour_rpc import wallet_pb2
-from market.models import Asset
+from common.models import Asset, Chain
 from decimal import Decimal
 
 
@@ -19,7 +19,13 @@ class AddressTransaction:
         ).order_by("-id").first()
         return asset.unit
 
-    def as_json(self, symbol, address, contract_address) -> Dict[str, Any]:
+    def get_main_chain_coin(self, chain):
+        asset = Chain.objects.filter(
+            name=chain
+        ).order_by("-id").first()
+        return asset.mark
+
+    def as_json(self, symbol, address, contract_address, chain) -> Dict[str, Any]:
         address_to_list = []
         address_from_list = []
         value_list = []
@@ -33,16 +39,31 @@ class AddressTransaction:
             tx_in_out = "from"
         else:
             tx_in_out = "to"
-        return {
-            "block_number": self.tx_address.height,
-            "asset_name": symbol,
-            "hash": self.tx_address.hash,
-            "from": address_from_list[0],
-            "to": address_to_list[0],
-            "value":format((Decimal(value_list[0]) / Decimal(10 ** int(self.get_asset_unit(symbol)))), ".4f"),
-            "contract_address": contract_address,
-            "fee": format((Decimal(self.tx_address.fee) / Decimal(10 ** int(self.get_asset_unit(symbol)))), ".4f"),
-            "txreceipt_status": self.tx_address.status,
-            "tx_in_out": tx_in_out,
-            "date_time": self.tx_address.datetime,
-        }
+        if contract_address == "":
+            return {
+                "block_number": self.tx_address.height,
+                "asset_name": symbol,
+                "hash": self.tx_address.hash,
+                "from": address_from_list[0],
+                "to": address_to_list[0],
+                "value": format((Decimal(value_list[0]) / Decimal(10 ** int(self.get_asset_unit(self.get_main_chain_coin(chain))))), ".4f"),
+                "contract_address": contract_address,
+                "fee": format((Decimal(self.tx_address.fee) / Decimal(10 ** int(self.get_asset_unit(self.get_main_chain_coin(chain))))), ".4f"),
+                "txreceipt_status": self.tx_address.status,
+                "tx_in_out": tx_in_out,
+                "date_time": self.tx_address.datetime,
+            }
+        else:
+            return {
+                "block_number": self.tx_address.height,
+                "asset_name": symbol,
+                "hash": self.tx_address.hash,
+                "from": address_from_list[0],
+                "to": address_to_list[0],
+                "value": format((Decimal(value_list[0]) / Decimal(10 ** int(self.get_asset_unit(symbol)))), ".4f"),
+                "contract_address": contract_address,
+                "fee": format((Decimal(self.tx_address.fee) / Decimal(10 ** int(self.get_asset_unit(self.get_main_chain_coin(chain))))), ".4f"),
+                "txreceipt_status": self.tx_address.status,
+                "tx_in_out": tx_in_out,
+                "date_time": self.tx_address.datetime,
+            }

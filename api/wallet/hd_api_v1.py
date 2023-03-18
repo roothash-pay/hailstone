@@ -382,7 +382,7 @@ def get_address_transaction(request):
             tx_data_return = []
             for item in result.tx:
                 addr_tx = AddressTransaction(item)
-                tx_data_return.append(addr_tx.as_json(symbol, address, contract_addr))
+                tx_data_return.append(addr_tx.as_json(symbol, address, contract_addr, chain))
             return ok_json(tx_data_return)
         else:
             return error_json("rpc server fail")
