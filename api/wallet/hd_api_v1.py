@@ -58,8 +58,9 @@ def get_balance(request):
         contract_address=contract_addr
     )
     if symbol not in ["USDT", "USDC", "DAI"]:
+        symbol_name = symbol + "/" + "USDT"
         market_price = MarketPrice.objects.filter(
-            symbol=Symbol.objects.filter(name=symbol + "/" + "USDT"),
+            symbol=Symbol.objects.filter(name=symbol_name),
             exchange__name="binance"
         ).order_by("-id").first()
         if market_price is not None:
