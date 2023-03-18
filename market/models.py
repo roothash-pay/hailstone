@@ -108,12 +108,12 @@ class MarketPrice(BaseModel):
         on_delete=models.CASCADE
     )
     base_asset = models.ForeignKey(
-        Asset, related_name='base_asset',
+        Asset, related_name='base_relate_asset',
         null=True, blank=True,
         on_delete=models.CASCADE
     )
     qoute_asset = models.ForeignKey(
-        Asset, related_name='qoute_asset',
+        Asset, related_name='qoute_relate_asset',
         null=True, blank=True,
         on_delete=models.CASCADE
     )
