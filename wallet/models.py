@@ -92,17 +92,23 @@ class WalletAsset(BaseModel):
     def to_dict(self):
         address_list_dict = []
         address_list = Address.objects.filter(wallet=self.wallet).order_by("id")
+        total_balance = d0
+        total_asset_usd = d0
+        total_asset_cny = d0
         for address in address_list:
             address_list_dict.append(address.to_dict(self.asset))
+            total_balance += Decimal(address.to_dict(self.asset).get("balance"))
+            total_asset_usd += Decimal(address.to_dict(self.asset).get("asset_usd"))
+            total_asset_cny += Decimal(address.to_dict(self.asset).get("asset_cny"))
         return {
             "id": self.id,
             "chain": self.wallet.chain.name,
             "symbol": self.asset.name,
             "logo": str(self.asset.active_logo),
             "contract_addr": self.contract_addr,
-            "balance": format(self.balance, ".4f"),
-            "asset_usd": format(self.asset_usd, ".2f"),
-            "asset_cny": format(self.asset_cny, ".2f"),
+            "balance": format(total_balance, ".4f"),
+            "asset_usd": format(total_asset_usd, ".2f"),
+            "asset_cny": format(total_asset_cny, ".2f"),
             "address_list": address_list_dict,
         }
 
