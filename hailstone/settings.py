@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     "wallet",
     "services",
     "channels",
+    'airdrop',
 ]
 
 MIDDLEWARE = [
