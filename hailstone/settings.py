@@ -56,14 +56,12 @@ ASGI_APPLICATION = 'hailstone.asgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": "hailstone",
-        "USER": "root",
-        "PASSWORD": "123456",
-        "HOST": "localhost",
-        "PORT": "3306",
-        "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
-    }
+        "USER": "guoshijiang",
+        "PASSWORD": "",
+        "HOST": "127.0.0.1",
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = [

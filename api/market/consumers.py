@@ -100,7 +100,7 @@ def market_fetch_job():
     dispatch_market_data()
 
 
-market_scheduler.start()
+# market_scheduler.start()
 
 
 class MarketConsumers(WebsocketConsumer):
