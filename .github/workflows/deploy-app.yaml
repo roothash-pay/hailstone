@@ -1,4 +1,4 @@
-name: Acorus Image Build And Deploy
+name: App Image Build And Deploy
 on:
   workflow_dispatch:
     inputs:
