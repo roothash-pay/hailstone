@@ -52,6 +52,10 @@ from api.circle.api_v1 import (
     get_arcticle_detail,
     like_article
 )
+from api.airdrop.api_v1 import (
+    get_points_by_address,
+    get_points_record_by_address,
+)
 
 urlpatterns = [
     # Hd wallet module
@@ -100,4 +104,7 @@ urlpatterns = [
     path(r'set_recovery_key', set_recovery_key, name='set_recovery_key'),
     path(r'get_tokens', get_tokens, name='get_tokens'),
 
+    # airdrop
+    path(r'get_points_by_address', get_points_by_address, name='get_points_by_address'),
+    path(r'get_points_record_by_address', get_points_record_by_address, name='get_points_record_by_address'),
 ]
