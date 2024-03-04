@@ -53,10 +53,8 @@ spec:
         - name: {{ .Release.Name }}-migrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: IfNotPresent
-          command:
-          - python
-          - manage.py
-          - migrations
+          args:
+          - python manage.py makemigrations; python manage.py migrate
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
