@@ -1,8 +1,11 @@
 from django.db import models
 from common.models import BaseModel, Asset
 
-
 TypeChoice = [(x, x) for x in ['Invite', 'BridgeTransfer', 'BridgeStaking']]
+
+LanguageChoice = [(x, x) for x in ['zh', 'en']]
+
+ProjectChoice = [(x, x) for x in ['Social', 'Project']]
 
 
 class AirdropUser(BaseModel):
@@ -102,16 +105,16 @@ class PointsRecord(BaseModel):
         null=True,
         verbose_name="收藏的商家",
     )
-    address = models.CharField(
-        max_length=100,
-        unique=False,
-        verbose_name='用户地址'
-    )
     type = models.CharField(
         max_length=100,
         choices=TypeChoice,
         default="BridgeTransfer",
-        verbose_name='交易类别'
+        verbose_name='积分类型'
+    )
+    address = models.CharField(
+        max_length=100,
+        unique=False,
+        verbose_name='用户地址'
     )
     points = models.PositiveIntegerField(
         default=0,
@@ -131,4 +134,84 @@ class PointsRecord(BaseModel):
             'name': self.address,
             'type': self.type,
             'points': self.points
+        }
+
+
+class ProjectInterAction(BaseModel):
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+        verbose_name='交互名称'
+    )
+    describe = models.CharField(
+        max_length=200,
+        unique=True,
+        verbose_name='交互描述'
+    )
+    language = models.CharField(
+        max_length=100,
+        choices=LanguageChoice,
+        default="en",
+        verbose_name='语言'
+    )
+    type = models.CharField(
+        max_length=100,
+        choices=ProjectChoice,
+        default="Project",
+        verbose_name='项目类型'
+    )
+    max_points = models.PositiveIntegerField(
+        default=0,
+        verbose_name="最大积分数"
+    )
+
+    class Meta:
+        verbose_name = 'ProjectInterAction'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'describe': self.describe,
+            'type': self.type,
+            'language': self.language,
+            'points': self.max_points,
+        }
+
+
+class Questions(BaseModel):
+    question = models.CharField(
+        max_length=200,
+        unique=True,
+        verbose_name='交互名称'
+    )
+    answer = models.CharField(
+        max_length=500,
+        unique=True,
+        verbose_name='交互名称'
+    )
+    language = models.CharField(
+        max_length=100,
+        choices=LanguageChoice,
+        default="en",
+        verbose_name='语言'
+    )
+
+    class Meta:
+        verbose_name = 'Questions'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.question
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'question': self.question,
+            'answer': self.answer,
+            'language': self.language
         }
