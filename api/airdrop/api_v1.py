@@ -3,6 +3,7 @@
 import json
 import uuid
 
+
 from common.helpers import (
     ok_json,
     error_json
@@ -56,6 +57,7 @@ def submit_invite_info(request):
         )
     return ok_json({})
 
+
 # @check_api_token
 def get_points_by_address(request):
     params = json.loads(request.body.decode())
@@ -89,3 +91,4 @@ def get_points_record_by_address(request):
         "points": point_list,
     }
     return ok_json(data)
+
