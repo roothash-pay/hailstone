@@ -1,14 +1,60 @@
-#encoding=utf-8
+# encoding=utf-8
 
 import json
+import uuid
+
 from common.helpers import (
     ok_json,
     error_json
 )
 from airdrop.models import (
-   AirdropUser,
-   PointsRecord
+    AirdropUser,
+    PointsRecord
 )
+
+
+# @check_api_token
+def get_invite_code_by_address(request):
+    params = json.loads(request.body.decode())
+    address = params.get("address", None)
+    if address is not None:
+        airdrop_user = AirdropUser.objects.filter(address=address).first()
+        if airdrop_user is not None:
+            data = {
+                "invite_code": airdrop_user.invite_code,
+            }
+            return ok_json(data)
+        else:
+            return error_json("address is not exist", 4000)
+    else:
+        return error_json("address is none", 4000)
+
+
+# @check_api_token
+def submit_invite_info(request):
+    params = json.loads(request.body.decode())
+    address = params.get("address", None)
+    invite_code = params.get("invite_code", None)
+    if address is None or invite_code is None:
+        return error_json("address or invite_code params is empty", 4000)
+    invite_user = AirdropUser.objects.filter(invite_code=invite_code).first()
+    if invite_user is None:
+        return error_json("This user is not exist", 4000)
+    AirdropUser.objects.create(
+        invite_code=uuid.uuid4(),
+        invite_me_uuid=invite_user.uuid,
+        address=address
+    )
+    if invite_user.points < 10:
+        invite_user.points = invite_user.points + 2
+        invite_user.save()
+        PointsRecord.objects.create(
+            user=invite_user,
+            address=invite_user.address,
+            type='Invite',
+            points=2
+        )
+    return ok_json({})
 
 # @check_api_token
 def get_points_by_address(request):
@@ -21,6 +67,7 @@ def get_points_by_address(request):
         return ok_json(airdrop_user.as_dict())
     else:
         return error_json("No this user address points", 4000)
+
 
 # @check_api_token
 def get_points_record_by_address(request):
@@ -42,5 +89,3 @@ def get_points_record_by_address(request):
         "points": point_list,
     }
     return ok_json(data)
-
-
