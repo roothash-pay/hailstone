@@ -55,6 +55,8 @@ from api.circle.api_v1 import (
 from api.airdrop.api_v1 import (
     get_points_by_address,
     get_points_record_by_address,
+    get_invite_code_by_address,
+    submit_invite_info
 )
 
 urlpatterns = [
@@ -105,6 +107,8 @@ urlpatterns = [
     path(r'get_tokens', get_tokens, name='get_tokens'),
 
     # airdrop
+    path(r'get_invite_code_by_address', get_invite_code_by_address, name='get_invite_code_by_address'),
+    path(r'submit_invite_info', submit_invite_info, name='submit_invite_info'),
     path(r'get_points_by_address', get_points_by_address, name='get_points_by_address'),
     path(r'get_points_record_by_address', get_points_record_by_address, name='get_points_record_by_address'),
 ]

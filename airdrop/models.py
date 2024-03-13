@@ -2,15 +2,27 @@ from django.db import models
 from common.models import BaseModel, Asset
 
 
-TypeChoice = [(x, x) for x in ['BridgeTransfer', 'BridgeStaking']]
+TypeChoice = [(x, x) for x in ['Invite', 'BridgeTransfer', 'BridgeStaking']]
 
 
 class AirdropUser(BaseModel):
     name = models.CharField(
         default="unknown",
         max_length=100,
-        unique=True,
+        unique=False,
         verbose_name='用户名'
+    )
+    invite_code = models.CharField(
+        default="0000-0000-0000",
+        max_length=100,
+        unique=True,
+        verbose_name='邀请码'
+    )
+    invite_me_uuid = models.CharField(
+        default="0000-0000-0000",
+        max_length=100,
+        unique=False,
+        verbose_name='邀请人'
     )
     photo = models.ImageField(
         upload_to='symbol/%Y/%m/%d/',
@@ -92,7 +104,7 @@ class PointsRecord(BaseModel):
     )
     address = models.CharField(
         max_length=100,
-        unique=True,
+        unique=False,
         verbose_name='用户地址'
     )
     type = models.CharField(
