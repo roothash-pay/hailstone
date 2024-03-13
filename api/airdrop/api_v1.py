@@ -3,15 +3,34 @@
 import json
 import uuid
 
-
 from common.helpers import (
     ok_json,
     error_json
 )
 from airdrop.models import (
     AirdropUser,
-    PointsRecord
+    PointsRecord,
+    ProjectInterAction,
+    Questions
 )
+
+
+# @check_api_token
+def get_project_interactions(request):
+    pi_lists = ProjectInterAction.objects.all()
+    pi_ret_lists = []
+    for pl in pi_lists:
+        pi_ret_lists.append(pl.as_dict())
+    return ok_json(pi_ret_lists)
+
+
+# @check_api_token
+def get_questions(request):
+    question_lists = Questions.objects.all()
+    question_ret_lists = []
+    for ql in question_lists:
+        question_ret_lists.append(ql.as_dict())
+    return ok_json(question_ret_lists)
 
 
 # @check_api_token
@@ -91,4 +110,3 @@ def get_points_record_by_address(request):
         "points": point_list,
     }
     return ok_json(data)
-

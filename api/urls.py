@@ -56,7 +56,9 @@ from api.airdrop.api_v1 import (
     get_points_by_address,
     get_points_record_by_address,
     get_invite_code_by_address,
-    submit_invite_info
+    submit_invite_info,
+    get_project_interactions,
+    get_questions
 )
 
 urlpatterns = [
@@ -99,7 +101,7 @@ urlpatterns = [
     path(r'get_arcticle_detail', get_arcticle_detail, name='get_arcticle_detail'),
     path(r'like_article', like_article, name='like_article'),
 
-    # wallethead module
+    # wallet head module
     path(r'get_head', get_head, name='get_head'),
     path(r'save_head', save_head, name='save_head'),
     path(r'get_recovery_key', get_recovery_key, name='get_recovery_key'),
@@ -107,6 +109,8 @@ urlpatterns = [
     path(r'get_tokens', get_tokens, name='get_tokens'),
 
     # airdrop
+    path(r'get_project_interactions', get_project_interactions, name='get_project_interactions'),
+    path(r'get_questions', get_questions, name='get_questions'),
     path(r'get_invite_code_by_address', get_invite_code_by_address, name='get_invite_code_by_address'),
     path(r'submit_invite_info', submit_invite_info, name='submit_invite_info'),
     path(r'get_points_by_address', get_points_by_address, name='get_points_by_address'),
