@@ -107,5 +107,53 @@ curl --location 'http://127.0.0.1:8000/api/get_points_record_by_address' \
 }
 ```
 
+## 5. 获取项目信息
 
+接口请求
+```
+curl --location --request POST 'http://127.0.0.1:8000/api/get_project_interactions' \
+--data ''
+```
+返回值
+
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": [
+        {
+            "id": 1,
+            "name": "SavourLabs",
+            "describe": "SavourLabsSavourLabsSavourLabsSavourLabs",
+            "type": "Project",
+            "language": "en",
+            "points": 0
+        }
+    ]
+}
+```
+
+## 6. 获取问答
+
+接口请求
+```
+curl --location --request POST 'http://127.0.0.1:8000/api/get_questions' \
+--data ''
+```
+返回值
+
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": [
+        {
+            "id": 1,
+            "question": "啊啊啊",
+            "answer": "a a a",
+            "language": "en"
+        }
+    ]
+}
+```
 
