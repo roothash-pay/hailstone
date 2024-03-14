@@ -157,3 +157,43 @@ curl --location --request POST 'http://127.0.0.1:8000/api/get_questions' \
 }
 ```
 
+## 7. 查看一个地址是否有空投
+
+接口请求
+```
+curl --location 'http://127.0.0.1:8000/api/get_reward_info' \
+--header 'Content-Type: application/json' \
+--data '{
+    "address": "0xe3b4ECd2EC88026F84cF17fef8bABfD9184C94e3"
+}'
+```
+返回值
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": {
+        "is_reward": false
+    }
+}
+```
+
+或者
+
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": {
+        "is_reward": true,
+        "rewards": [
+            {
+                "id": 1,
+                "address": "0xe3b4ECd2EC88026F84cF17fef8bABfD9184C94F0",
+                "amount": "100",
+                "is_send": true
+            }
+        ]
+    }
+}
+```

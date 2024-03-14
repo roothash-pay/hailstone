@@ -58,7 +58,8 @@ from api.airdrop.api_v1 import (
     get_invite_code_by_address,
     submit_invite_info,
     get_project_interactions,
-    get_questions
+    get_questions,
+    get_reward_info
 )
 
 urlpatterns = [
@@ -109,6 +110,7 @@ urlpatterns = [
     path(r'get_tokens', get_tokens, name='get_tokens'),
 
     # airdrop
+    path(r'get_reward_info', get_reward_info, name='get_reward_info'),
     path(r'get_project_interactions', get_project_interactions, name='get_project_interactions'),
     path(r'get_questions', get_questions, name='get_questions'),
     path(r'get_invite_code_by_address', get_invite_code_by_address, name='get_invite_code_by_address'),

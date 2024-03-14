@@ -11,8 +11,31 @@ from airdrop.models import (
     AirdropUser,
     PointsRecord,
     ProjectInterAction,
-    Questions
+    Questions,
+    PeriodReward
 )
+
+
+# @check_api_token
+def get_reward_info(request):
+    params = json.loads(request.body.decode())
+    address = params.get("address", None)
+    if address is None:
+        return error_json("address params is empty", 4000)
+    pr_list = PeriodReward.objects.filter(address=address).all()
+    if len(pr_list) == 0:
+        data = {
+            "is_reward": False
+        }
+        return ok_json(data)
+    pr_response = []
+    for pr in pr_list:
+        pr_response.append(pr.as_dict())
+    data = {
+        "is_reward": True,
+        "rewards": pr_response
+    }
+    return ok_json(data)
 
 
 # @check_api_token

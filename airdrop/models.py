@@ -259,3 +259,39 @@ class Questions(BaseModel):
             'answer': self.answer,
             'language': self.language
         }
+
+
+class PeriodReward(BaseModel):
+    name = models.CharField(
+        max_length=200,
+        unique=False,
+        verbose_name='中奖期数'
+    )
+    address = models.CharField(
+        max_length=200,
+        unique=False,
+        verbose_name='地址'
+    )
+    amount = models.CharField(
+        max_length=100,
+        unique=False,
+        verbose_name='中奖金额'
+    )
+    is_send = models.BooleanField(
+        default=False
+    )
+
+    class Meta:
+        verbose_name = 'PeriodReward'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.address
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'address': self.address,
+            'amount': self.amount,
+            'is_send': self.is_send,
+        }
