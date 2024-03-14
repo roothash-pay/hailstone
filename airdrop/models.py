@@ -81,6 +81,9 @@ class AirdropUser(BaseModel):
     def __str__(self):
         return self.name
 
+    def get_invite_member_numbers(self):
+        return AirdropUser.objects.filter(uuid=self.uuid).count()
+
     def as_dict(self):
         return {
             'id': self.id,
@@ -92,6 +95,7 @@ class AirdropUser(BaseModel):
             'x_twitter': self.x_twitter,
             'discord': self.discord,
             'telegram': self.telegram,
+            'invite_total': self.get_invite_member_numbers(),
             'info': self.info
         }
 
@@ -138,15 +142,34 @@ class PointsRecord(BaseModel):
 
 
 class ProjectInterAction(BaseModel):
+    step = models.CharField(
+        max_length=100,
+        unique=True,
+        blank=True,
+        verbose_name='交互步骤'
+    )
+    icon = models.ImageField(
+        upload_to='projects/%Y/%m/%d/',
+        blank=True,
+        null=True,
+        verbose_name='交互Icon'
+    )
     name = models.CharField(
         max_length=100,
         unique=True,
+        blank=True,
         verbose_name='交互名称'
     )
     describe = models.CharField(
         max_length=200,
         unique=True,
         verbose_name='交互描述'
+    )
+    link_url = models.CharField(
+        max_length=200,
+        unique=False,
+        blank=True,
+        verbose_name='交互链接'
     )
     language = models.CharField(
         max_length=100,
@@ -175,9 +198,12 @@ class ProjectInterAction(BaseModel):
     def as_dict(self):
         return {
             'id': self.id,
+            'step': self.step,
             'name': self.name,
+            'icon': str(self.icon),
             'describe': self.describe,
             'type': self.type,
+            'link_url': self.link_url,
             'language': self.language,
             'points': self.max_points,
         }
@@ -187,12 +213,12 @@ class Questions(BaseModel):
     question = models.CharField(
         max_length=200,
         unique=True,
-        verbose_name='交互名称'
+        verbose_name='问题名称'
     )
     answer = models.CharField(
         max_length=500,
         unique=True,
-        verbose_name='交互名称'
+        verbose_name='问题答案'
     )
     language = models.CharField(
         max_length=100,
