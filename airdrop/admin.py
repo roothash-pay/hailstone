@@ -21,7 +21,7 @@ class ChainAdmin(admin.ModelAdmin):
 
 @admin.register(ProjectInterAction)
 class ChainAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'describe', 'language', 'type', 'max_points')
+    list_display = ('id', 'name', 'describe', 'language', 'points_type', 'project_type', 'once_points', 'daily_max_points', 'max_points')
 
 
 @admin.register(Questions)

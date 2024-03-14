@@ -1,7 +1,7 @@
 from django.db import models
 from common.models import BaseModel, Asset
 
-TypeChoice = [(x, x) for x in ['Invite', 'BridgeTransfer', 'BridgeStaking']]
+TypeChoice = [(x, x) for x in ['Invite', 'BridgeTransfer', 'BridgeStaking', 'BridgeWithdraw', 'bridgeGrants']]
 
 LanguageChoice = [(x, x) for x in ['zh', 'en']]
 
@@ -177,11 +177,26 @@ class ProjectInterAction(BaseModel):
         default="en",
         verbose_name='语言'
     )
-    type = models.CharField(
+    points_type = models.CharField(
+        max_length=100,
+        choices=TypeChoice,
+        unique=True,
+        default="BridgeTransfer",
+        verbose_name='积分类型'
+    )
+    project_type = models.CharField(
         max_length=100,
         choices=ProjectChoice,
         default="Project",
         verbose_name='项目类型'
+    )
+    once_points = models.PositiveIntegerField(
+        default=0,
+        verbose_name="每次交互获得的积分数量"
+    )
+    daily_max_points = models.PositiveIntegerField(
+        default=0,
+        verbose_name="每天交互的最大积分数"
     )
     max_points = models.PositiveIntegerField(
         default=0,
@@ -202,10 +217,13 @@ class ProjectInterAction(BaseModel):
             'name': self.name,
             'icon': str(self.icon),
             'describe': self.describe,
-            'type': self.type,
+            'points_type': self.points_type,
+            'project_type': self.project_type,
+            'once_points': self.once_points,
+            'daily_max_points': self.daily_max_points,
             'link_url': self.link_url,
             'language': self.language,
-            'points': self.max_points,
+            'max_points': self.max_points,
         }
 
 
