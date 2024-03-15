@@ -15,7 +15,7 @@ from services.savour_rpc import airdrop_pb2
 class AirdropServiceBase(abc.ABC):
 
     @abc.abstractmethod
-    async def submitDppLinkPoints(self, stream: 'grpclib.server.Stream[savour_rpc.airdrop_pb2.DppLinkPointsReq, savour_rpc.airdrop_pb2.DppLinkPointsRep]') -> None:
+    async def submitDppLinkPoints(self, stream: 'grpclib.server.Stream[airdrop_pb2.DppLinkPointsReq,airdrop_pb2.DppLinkPointsRep]') -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:

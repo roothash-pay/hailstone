@@ -51,7 +51,7 @@ class AirdropServer(airdrop_pb2_grpc.AirdropServiceServicer):
                     airdrop_user = airdrop_tmp_user
                 else:
                     return airdrop_pb2.DppLinkPointsRep(
-                        code=200,
+                        code="200",
                         msg="already arrive to daily or max points",
                     )
             else:
@@ -67,6 +67,6 @@ class AirdropServer(airdrop_pb2_grpc.AirdropServiceServicer):
                 points=projectInteraction.once_points
             )
             return airdrop_pb2.DppLinkPointsRep(
-                code=200,
+                code="200",
                 msg="submit dapplink points success",
             )
