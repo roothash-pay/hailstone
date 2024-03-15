@@ -34,12 +34,12 @@ class AirdropServer(airdrop_pb2_grpc.AirdropServiceServicer):
         address = str(request.address)
         projectInteraction = ProjectInterAction.objects.filter(points_type=bridge_type).first()
         if projectInteraction is not None:
-            airdrop_tmp_user = AirdropUser.objects.filter(address=address).first()
+            airdrop_tmp_user = AirdropUser.objects.filter(address__icontains=address).first()
             if airdrop_tmp_user is not None:
                 today = datetime.datetime.now().date()
                 todayUserPointList = PointsRecord.objects.filter(
                     type=bridge_type,
-                    address=address,
+                    address__icontains=address,
                     created_at__gte=str(today) + ' 00:00:00'
                 ).all()
                 todayUserMaxPoints = 0
