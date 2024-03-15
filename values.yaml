@@ -42,6 +42,8 @@ service:
 ports:
  - name: http
    portNumber: 8000
+ - name: rpc
+   portNumber: 50251
  # - name: metrics
  #   portNumber: 8081
 ingress:
