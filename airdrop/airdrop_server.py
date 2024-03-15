@@ -70,3 +70,8 @@ class AirdropServer(airdrop_pb2_grpc.AirdropServiceServicer):
                 code="200",
                 msg="submit dapplink points success",
             )
+        else:
+            return airdrop_pb2.DppLinkPointsRep(
+                code="400",
+                msg="This project type is not exist",
+            )
