@@ -82,7 +82,7 @@ class AirdropUser(BaseModel):
         return self.name
 
     def get_invite_member_numbers(self):
-        return AirdropUser.objects.filter(uuid=self.uuid).count()
+        return AirdropUser.objects.filter(invite_me_uuid=self.uuid).count()
 
     def as_dict(self):
         return {
