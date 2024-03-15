@@ -8,7 +8,7 @@ from airdrop.models import (
     PointsRecord,
     ProjectInterAction
 )
-from services.savour_rpc import airdrop_pb2_grpc, common_pb2, airdrop_pb2
+from services.savour_rpc import airdrop_pb2_grpc, airdrop_pb2
 from django.conf import settings
 
 tz = pytz.timezone(settings.TIME_ZONE)
@@ -51,7 +51,7 @@ class AirdropServer(airdrop_pb2_grpc.AirdropServiceServicer):
                     airdrop_user = airdrop_tmp_user
                 else:
                     return airdrop_pb2.DppLinkPointsRep(
-                        code=common_pb2.SUCCESS,
+                        code=200,
                         msg="already arrive to daily or max points",
                     )
             else:
@@ -67,6 +67,6 @@ class AirdropServer(airdrop_pb2_grpc.AirdropServiceServicer):
                 points=projectInteraction.once_points
             )
             return airdrop_pb2.DppLinkPointsRep(
-                code=common_pb2.SUCCESS,
+                code=200,
                 msg="submit dapplink points success",
             )
