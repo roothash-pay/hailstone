@@ -83,6 +83,9 @@ def submit_invite_info(request):
     invite_user = AirdropUser.objects.filter(invite_code=invite_code).first()
     if invite_user is None:
         return error_json("This user is not exist", 4000)
+    address_user = AirdropUser.objects.filter(address__icontains=address).first()
+    if address_user is not None:
+        return error_json("address exist in system", 4000)
     AirdropUser.objects.create(
         invite_code=uuid.uuid4(),
         invite_me_uuid=invite_user.uuid,
