@@ -22,7 +22,7 @@ def get_reward_info(request):
     address = params.get("address", None)
     if address is None:
         return error_json("address params is empty", 4000)
-    pr_list = Period.objects.all().order_by("id")
+    pr_list = Period.objects.all().order_by("-id")
     pr_response = []
     for pr in pr_list:
         pr_response.append(pr.as_dict(address=address))
@@ -52,7 +52,7 @@ def get_project_interactions(request):
 def get_questions(request):
     params = json.loads(request.body.decode())
     language = params.get("language", "en")
-    question_lists = Questions.objects.filter(language=language).order_by("-id").all()
+    question_lists = Questions.objects.filter(language=language).order_by("id").all()
     question_ret_lists = []
     for ql in question_lists:
         question_ret_lists.append(ql.as_dict())
