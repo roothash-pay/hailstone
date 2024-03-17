@@ -148,7 +148,7 @@ class PointsRecord(BaseModel):
 class ProjectInterAction(BaseModel):
     step = models.CharField(
         max_length=100,
-        unique=True,
+        unique=False,
         blank=True,
         verbose_name='交互步骤'
     )
@@ -160,13 +160,13 @@ class ProjectInterAction(BaseModel):
     )
     name = models.CharField(
         max_length=100,
-        unique=True,
+        unique=False,
         blank=True,
         verbose_name='交互名称'
     )
     describe = models.CharField(
         max_length=200,
-        unique=True,
+        unique=False,
         verbose_name='交互描述'
     )
     link_url = models.CharField(
@@ -184,7 +184,7 @@ class ProjectInterAction(BaseModel):
     points_type = models.CharField(
         max_length=100,
         choices=TypeChoice,
-        unique=True,
+        unique=False,
         default="BridgeTransfer",
         verbose_name='积分类型'
     )
