@@ -61,6 +61,12 @@ from api.airdrop.api_v1 import (
     get_questions,
     get_reward_info
 )
+from api.website.api_v1 import (
+    get_blog_list,
+    get_event_list,
+    get_forum_list,
+    get_blog_cat_list
+)
 
 urlpatterns = [
     # Hd wallet module
@@ -117,4 +123,10 @@ urlpatterns = [
     path(r'submit_invite_info', submit_invite_info, name='submit_invite_info'),
     path(r'get_points_by_address', get_points_by_address, name='get_points_by_address'),
     path(r'get_points_record_by_address', get_points_record_by_address, name='get_points_record_by_address'),
+
+    # official website
+    path(r'get_blog_cat_list', get_blog_cat_list, name='get_blog_cat_list'),
+    path(r'get_blog_list', get_blog_list, name='get_blog_list'),
+    path(r'get_event_list', get_event_list, name='get_event_list'),
+    path(r'get_forum_list', get_forum_list, name='get_forum_list'),
 ]

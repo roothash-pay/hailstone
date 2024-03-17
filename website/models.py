@@ -90,6 +90,14 @@ class Blog(BaseModel):
         unique=False,
         verbose_name='博客链接'
     )
+    cat = models.ForeignKey(
+        BlogCat,
+        blank=True,
+        related_name='blog_cat',
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name='博客分类'
+    )
     tags = models.CharField(
         default="",
         max_length=200,
@@ -109,6 +117,7 @@ class Blog(BaseModel):
         return {
             'id': self.id,
             'title': self.title,
+            'cat_name': self.cat.name,
             'image': str(self.image),
             'describe': self.describe,
             'link_url': self.link_url,
