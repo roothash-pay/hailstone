@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models
 from common.models import BaseModel, Asset
 
-TypeChoice = [(x, x) for x in ['Invite', 'BridgeTransfer', 'BridgeStaking', 'BridgeWithdraw', 'bridgeGrants']]
+TypeChoice = [(x, x) for x in ['Invite', 'Social', 'BridgeTransfer', 'BridgeStaking', 'BridgeWithdraw', 'bridgeGrants', 'Layer3Staking', 'Layer3Unstaking', 'Layer3Withdraw', 'Layer3Grants', 'LayerAppChainInterAction', 'SubmitProject']]
 
 LanguageChoice = [(x, x) for x in ['zh', 'en']]
 
