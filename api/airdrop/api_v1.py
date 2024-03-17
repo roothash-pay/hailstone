@@ -22,7 +22,7 @@ def get_reward_info(request):
     address = params.get("address", None)
     if address is None:
         return error_json("address params is empty", 4000)
-    pr_list = Period.objects.all().order_by("-id")
+    pr_list = Period.objects.all().order_by("id")
     pr_response = []
     for pr in pr_list:
         pr_response.append(pr.as_dict(address=address))
