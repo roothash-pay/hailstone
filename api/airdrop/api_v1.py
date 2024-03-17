@@ -40,16 +40,28 @@ def get_reward_info(request):
 
 # @check_api_token
 def get_project_interactions(request):
-    pi_lists = ProjectInterAction.objects.all()
-    pi_ret_lists = []
+    params = json.loads(request.body.decode())
+    language = params.get("language", "en")
+    pi_lists = ProjectInterAction.objects.filter(language=language).all()
+    projects_ret_lists = []
+    social_ret_list = []
     for pl in pi_lists:
-        pi_ret_lists.append(pl.as_dict())
-    return ok_json(pi_ret_lists)
+        if pl.project_type in ["Project"]:
+            projects_ret_lists.append(pl.as_dict())
+        else:
+            social_ret_list.append(pl.as_dict())
+    data = {
+        "project": projects_ret_lists,
+        "social": social_ret_list
+    }
+    return ok_json(data)
 
 
 # @check_api_token
 def get_questions(request):
-    question_lists = Questions.objects.all()
+    params = json.loads(request.body.decode())
+    language = params.get("language", "en")
+    question_lists = Questions.objects.filter(language=language).all()
     question_ret_lists = []
     for ql in question_lists:
         question_ret_lists.append(ql.as_dict())
