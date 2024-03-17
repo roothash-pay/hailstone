@@ -32,4 +32,4 @@ class ChainAdmin(admin.ModelAdmin):
 
 @admin.register(PeriodReward)
 class ChainAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'address', 'amount', 'is_send')
+    list_display = ('id', 'title', 'address', 'amount', 'is_send')

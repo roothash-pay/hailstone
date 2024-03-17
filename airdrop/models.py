@@ -137,7 +137,8 @@ class PointsRecord(BaseModel):
             'id': self.id,
             'name': self.address,
             'type': self.type,
-            'points': self.points
+            'points': self.points,
+            'created_at': self.created_at
         }
 
 
@@ -262,10 +263,19 @@ class Questions(BaseModel):
 
 
 class PeriodReward(BaseModel):
-    name = models.CharField(
+    title = models.CharField(
         max_length=200,
         unique=False,
-        verbose_name='中奖期数'
+        blank=False,
+        default="",
+        verbose_name='活动主题'
+    )
+    sub_title = models.CharField(
+        max_length=200,
+        unique=False,
+        blank=False,
+        default="",
+        verbose_name='活动副标题'
     )
     address = models.CharField(
         max_length=200,
@@ -276,6 +286,12 @@ class PeriodReward(BaseModel):
         max_length=100,
         unique=False,
         verbose_name='中奖金额'
+    )
+    period = models.CharField(
+        max_length=300,
+        unique=False,
+        blank=True,
+        verbose_name='活动周期'
     )
     is_send = models.BooleanField(
         default=False
@@ -291,7 +307,10 @@ class PeriodReward(BaseModel):
     def as_dict(self):
         return {
             'id': self.id,
+            'title': self.title,
+            'sub_title': self.sub_title,
             'address': self.address,
+            'period': self.period,
             'amount': self.amount,
             'is_send': self.is_send,
         }
