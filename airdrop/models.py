@@ -1,3 +1,5 @@
+import pytz
+from django.conf import settings
 from django.db import models
 from common.models import BaseModel, Asset
 
@@ -133,12 +135,13 @@ class PointsRecord(BaseModel):
         return self.address
 
     def as_dict(self):
+        tz = pytz.timezone(settings.TIME_ZONE)
         return {
             'id': self.id,
             'name': self.address,
             'type': self.type,
             'points': self.points,
-            'created_at': self.created_at
+            'created_at': self.created_at.astimezone(tz).strftime("%Y-%m-%d %H:%M:%S")
         }
 
 

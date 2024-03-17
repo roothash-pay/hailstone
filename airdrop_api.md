@@ -94,13 +94,42 @@ curl --location 'http://127.0.0.1:8000/api/get_points_record_by_address' \
     "ok": true,
     "code": 200,
     "result": {
-        "total": 1,
+        "total": 5,
         "points": [
+            {
+                "id": 31,
+                "name": "0xe3b4ECd2EC88026F84cF17fef8bABfD9184C94F0",
+                "type": "Invite",
+                "points": 2,
+                "created_at": "2024-03-15 19:58:21"
+            },
+            {
+                "id": 30,
+                "name": "0xe3b4ECd2EC88026F84cF17fef8bABfD9184C94F0",
+                "type": "Invite",
+                "points": 2,
+                "created_at": "2024-03-15 19:57:46"
+            },
+            {
+                "id": 29,
+                "name": "0xe3b4ECd2EC88026F84cF17fef8bABfD9184C94F0",
+                "type": "Invite",
+                "points": 2,
+                "created_at": "2024-03-15 19:56:47"
+            },
+            {
+                "id": 2,
+                "name": "0xe3b4ECd2EC88026F84cF17fef8bABfD9184C94F0",
+                "type": "Invite",
+                "points": 2,
+                "created_at": "2024-03-13 13:41:32"
+            },
             {
                 "id": 1,
                 "name": "0xe3b4ECd2EC88026F84cF17fef8bABfD9184C94F0",
-                "type": "BridgeTransfer",
-                "points": 1
+                "type": "Invite",
+                "points": 2,
+                "created_at": "2024-03-13 13:41:13"
             }
         ]
     }
@@ -111,8 +140,11 @@ curl --location 'http://127.0.0.1:8000/api/get_points_record_by_address' \
 
 接口请求
 ```
-curl --location --request POST 'http://127.0.0.1:8000/api/get_project_interactions' \
---data ''
+curl --location 'http://127.0.0.1:8000/api/get_project_interactions' \
+--header 'Content-Type: application/json' \
+--data '{
+    "language": "en"
+}'
 ```
 返回值
 
@@ -137,8 +169,11 @@ curl --location --request POST 'http://127.0.0.1:8000/api/get_project_interactio
 
 接口请求
 ```
-curl --location --request POST 'http://127.0.0.1:8000/api/get_questions' \
---data ''
+curl --location 'http://127.0.0.1:8000/api/get_questions' \
+--header 'Content-Type: application/json' \
+--data '{
+    "language": "en"
+}'
 ```
 返回值
 
@@ -189,7 +224,10 @@ curl --location 'http://127.0.0.1:8000/api/get_reward_info' \
         "rewards": [
             {
                 "id": 1,
+                "title": "",
+                "sub_title": "",
                 "address": "0xe3b4ECd2EC88026F84cF17fef8bABfD9184C94F0",
+                "period": "",
                 "amount": "100",
                 "is_send": true
             }
