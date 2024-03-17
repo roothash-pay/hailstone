@@ -265,7 +265,7 @@ class Questions(BaseModel):
         }
 
 
-class PeriodReward(BaseModel):
+class Period(BaseModel):
     title = models.CharField(
         max_length=200,
         unique=False,
@@ -280,6 +280,50 @@ class PeriodReward(BaseModel):
         default="",
         verbose_name='活动副标题'
     )
+    image = models.ImageField(
+        upload_to='period/%Y/%m/%d/',
+        blank=True,
+        null=True,
+        verbose_name='活动图片'
+    )
+    link_url = models.CharField(
+        default="",
+        max_length=100,
+        unique=False,
+        verbose_name='活动链接'
+    )
+    period = models.CharField(
+        max_length=300,
+        unique=False,
+        blank=True,
+        verbose_name='活动周期'
+    )
+
+    class Meta:
+        verbose_name = 'Period'
+        verbose_name_plural = verbose_name
+
+    def as_dict(self, address):
+        is_reward = True
+        reward = {}
+        p_reward = PeriodReward.objects.filter(address=address).first()
+        if p_reward is None:
+            is_reward = False
+        else:
+            reward = p_reward.as_dict()
+        return {
+            'id': self.id,
+            'title': self.title,
+            'sub_title': self.sub_title,
+            'image': str(self.image),
+            'link_url': self.link_url,
+            'period': self.period,
+            'is_reward': is_reward,
+            "reward": reward,
+        }
+
+
+class PeriodReward(BaseModel):
     address = models.CharField(
         max_length=200,
         unique=False,
@@ -290,12 +334,7 @@ class PeriodReward(BaseModel):
         unique=False,
         verbose_name='中奖金额'
     )
-    period = models.CharField(
-        max_length=300,
-        unique=False,
-        blank=True,
-        verbose_name='活动周期'
-    )
+
     is_send = models.BooleanField(
         default=False
     )
@@ -308,12 +347,11 @@ class PeriodReward(BaseModel):
         return self.address
 
     def as_dict(self):
+        tz = pytz.timezone(settings.TIME_ZONE)
         return {
             'id': self.id,
-            'title': self.title,
-            'sub_title': self.sub_title,
             'address': self.address,
-            'period': self.period,
             'amount': self.amount,
             'is_send': self.is_send,
+            'created_at': self.created_at.astimezone(tz).strftime("%Y-%m-%d %H:%M:%S")
         }

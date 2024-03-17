@@ -6,6 +6,7 @@ from airdrop.models import (
     PointsRecord,
     ProjectInterAction,
     Questions,
+    Period,
     PeriodReward
 )
 
@@ -30,6 +31,11 @@ class ChainAdmin(admin.ModelAdmin):
     list_display = ('id', 'question', 'answer', 'language')
 
 
+@admin.register(Period)
+class ChainAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'sub_title', 'link_url', 'period')
+
+
 @admin.register(PeriodReward)
 class ChainAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'address', 'amount', 'is_send')
+    list_display = ('id', 'address', 'amount', 'is_send')

@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "services",
     "channels",
     'airdrop',
+    'website',
 ]
 
 MIDDLEWARE = [

@@ -12,7 +12,7 @@ from airdrop.models import (
     PointsRecord,
     ProjectInterAction,
     Questions,
-    PeriodReward
+    Period
 )
 
 
@@ -22,20 +22,11 @@ def get_reward_info(request):
     address = params.get("address", None)
     if address is None:
         return error_json("address params is empty", 4000)
-    pr_list = PeriodReward.objects.filter(address__icontains=address).all()
-    if len(pr_list) == 0:
-        data = {
-            "is_reward": False
-        }
-        return ok_json(data)
+    pr_list = Period.objects.all()
     pr_response = []
     for pr in pr_list:
-        pr_response.append(pr.as_dict())
-    data = {
-        "is_reward": True,
-        "rewards": pr_response
-    }
-    return ok_json(data)
+        pr_response.append(pr.as_dict(address=address))
+    return ok_json(pr_response)
 
 
 # @check_api_token
