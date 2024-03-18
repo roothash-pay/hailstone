@@ -33,7 +33,7 @@ def get_reward_info(request):
 def get_project_interactions(request):
     params = json.loads(request.body.decode())
     language = params.get("language", "en")
-    pi_lists = ProjectInterAction.objects.filter(language=language).all()
+    pi_lists = ProjectInterAction.objects.filter(language=language).order_by("id").all()
     projects_ret_lists = []
     social_ret_list = []
     for pl in pi_lists:

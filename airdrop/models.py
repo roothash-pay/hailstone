@@ -306,7 +306,7 @@ class Period(BaseModel):
     def as_dict(self, address):
         is_reward = True
         reward = {}
-        p_reward = PeriodReward.objects.filter(address=address).first()
+        p_reward = PeriodReward.objects.filter(address__icontains=address).first()
         if p_reward is None:
             is_reward = False
         else:
