@@ -133,6 +133,11 @@ class Event(BaseModel):
         unique=False,
         verbose_name='事件名称'
     )
+    image = models.ImageField(
+        upload_to='event/%Y/%m/%d/',
+        blank=True,
+        null=True
+    )
     link_url = models.CharField(
         default="",
         max_length=100,
@@ -159,6 +164,7 @@ class Event(BaseModel):
         return {
             'id': self.id,
             'name': self.name,
+            'image': str(self.image),
             'link': self.link_url,
             'describe': str(self.describe),
             'created_at': self.created_at.astimezone(tz).strftime("%Y-%m-%d %H:%M:%S")
