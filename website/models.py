@@ -118,7 +118,7 @@ class Blog(BaseModel):
             'id': self.id,
             'title': self.title,
             'cat_name': self.cat.name,
-            'image': str(settings.IMG_URL + self.image),
+            'image': settings.IMG_URL + str(self.image),
             'describe': self.describe,
             'link_url': self.link_url,
             'tags': self.tags,
@@ -164,7 +164,7 @@ class Event(BaseModel):
         return {
             'id': self.id,
             'name': self.name,
-            'image': str(settings.IMG_URL + self.image),
+            'image': settings.IMG_URL + str(self.image),
             'link': self.link_url,
             'describe': str(self.describe),
             'created_at': self.created_at.astimezone(tz).strftime("%Y-%m-%d %H:%M:%S")
