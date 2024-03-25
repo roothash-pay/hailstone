@@ -107,6 +107,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "common/static")]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+IMG_URL = 'https://hailstone.testnet.dapplink.xyz/media/'
 
 try:
     from .local_settings import *
