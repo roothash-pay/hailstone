@@ -114,6 +114,7 @@ class Blog(BaseModel):
 
     def as_dict(self):
         tz = pytz.timezone(settings.TIME_ZONE)
+        tags_list = self.tags.split(",")
         return {
             'id': self.id,
             'title': self.title,
@@ -121,7 +122,7 @@ class Blog(BaseModel):
             'image': settings.IMG_URL + str(self.image),
             'describe': self.describe,
             'link_url': self.link_url,
-            'tags': self.tags,
+            'tags': tags_list,
             'created_at': self.created_at.astimezone(tz).strftime("%Y-%m-%d %H:%M:%S")
         }
 
