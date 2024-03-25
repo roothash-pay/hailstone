@@ -13,7 +13,7 @@ class Forum(BaseModel):
     )
     link_url = models.CharField(
         default="",
-        max_length=100,
+        max_length=500,
         unique=False,
         verbose_name='form 链接'
     )
@@ -86,7 +86,7 @@ class Blog(BaseModel):
     )
     link_url = models.CharField(
         default="",
-        max_length=100,
+        max_length=500,
         unique=False,
         verbose_name='博客链接'
     )
@@ -141,7 +141,7 @@ class Event(BaseModel):
     )
     link_url = models.CharField(
         default="",
-        max_length=100,
+        max_length=500,
         unique=False,
         verbose_name='事件链接'
     )
