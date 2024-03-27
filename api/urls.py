@@ -68,6 +68,12 @@ from api.website.api_v1 import (
     get_blog_cat_list
 )
 
+from api.l3staking.api_v1 import (
+    get_staking_chains,
+    get_staking_node_list
+)
+
+
 urlpatterns = [
     # Hd wallet module
     path(r'get_balance', get_balance, name='get_balance'),
@@ -129,4 +135,8 @@ urlpatterns = [
     path(r'get_blog_list', get_blog_list, name='get_blog_list'),
     path(r'get_event_list', get_event_list, name='get_event_list'),
     path(r'get_forum_list', get_forum_list, name='get_forum_list'),
+
+    # l3staking
+    path(r'get_staking_chains', get_staking_chains, name='get_staking_chains'),
+    path(r'get_staking_node_list', get_staking_node_list, name='get_staking_node_list'),
 ]

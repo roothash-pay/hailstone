@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "channels",
     'airdrop',
     'website',
+    'l3staking',
 ]
 
 MIDDLEWARE = [
