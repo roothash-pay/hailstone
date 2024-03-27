@@ -60,6 +60,12 @@ class StakingStrategy(BaseModel):
         unique=False,
         verbose_name='质押模块名称'
     )
+    address = models.CharField(
+        default="",
+        max_length=100,
+        unique=False,
+        verbose_name='策略地址'
+    )
 
     class Meta:
         verbose_name = 'StakingStrategy'
