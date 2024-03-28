@@ -26,6 +26,11 @@ class StakingChain(BaseModel):
         null=True,
         verbose_name="节点 rpc",
     )
+    icon = models.ImageField(
+        upload_to='blog/%Y/%m/%d/',
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = 'StakingChain'
@@ -38,7 +43,8 @@ class StakingChain(BaseModel):
         tz = pytz.timezone(settings.TIME_ZONE)
         return {
             'id': self.id,
-            'title': self.name,
+            'name': self.name,
+            'icon': settings.IMG_URL + str(self.icon),
             'chain_id': self.chain_id,
             'rpc_url': str(self.rpc_url),
             'created_at': self.created_at.astimezone(tz).strftime("%Y-%m-%d %H:%M:%S")
