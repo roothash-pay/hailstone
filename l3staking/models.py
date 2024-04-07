@@ -110,6 +110,12 @@ class Node(BaseModel):
         unique=False,
         verbose_name='节点名称'
     )
+    detail = models.CharField(
+        default="unknown",
+        max_length=500,
+        unique=False,
+        verbose_name='节点详情'
+    )
     eth_income = models.CharField(
         default="0",
         max_length=500,
@@ -179,6 +185,7 @@ class Node(BaseModel):
             'chain': self.chain.name,
             'strategy': self.strategy.name,
             'name': self.name,
+            'detail': self.detail,
             'eth_income': self.eth_income,
             'eth_income_rate': self.eth_income_rate,
             'dp_income': self.dp_income,

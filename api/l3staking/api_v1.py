@@ -7,6 +7,9 @@ from l3staking.models import (
     StakingStrategy,
     Node,
 )
+from services.appchain_client import (
+    AppChainClient
+)
 
 
 # @check_api_token
@@ -37,3 +40,32 @@ def get_staking_node_list(request):
             "node_list": staking_node_list
         })
     return ok_json(staking_strategies_node_list)
+
+
+# @check_api_token
+def get_node_detail(request):
+    params = json.loads(request.body.decode())
+    node_id = params.get('node_id', 0)
+    chain_id = params.get('chain_id', "0")
+    staker_address = params.get('staker_address', "0x")
+    strategies = params.get('strategies', "0x")
+    type = params.get('type', "L1")
+    appChainClient = AppChainClient()
+    if type in ["L1", "l1"]:
+        l1_stakers_rewards = appChainClient.l1_staker_reward_amount(
+            chain_id=chain_id,
+            staker_address=staker_address,
+            strategies=strategies,
+        )
+        print(l1_stakers_rewards)
+    else:
+        l2_stakers_rewards = appChainClient.l2_staker_reward_amount(
+            chain_id=chain_id,
+            staker_address=staker_address,
+            strategy=strategies,
+        )
+        print(l2_stakers_rewards)
+    staking_node = Node.objects.filter(id=node_id).first()
+    if staking_node is None:
+        return error_json("Do not exist node", 4000)
+    return ok_json(staking_node.as_dict())
