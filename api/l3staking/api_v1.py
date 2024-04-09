@@ -90,7 +90,8 @@ def get_l2_stake_record(request):
     )
     logger.debug(l2_stake_record)
     serialized = MessageToJson(l2_stake_record)
-    return ok_json(serialized.page)
+    jb = json.loads(serialized)
+    return ok_json(jb.page)
 
 
 # @check_api_token
@@ -109,4 +110,5 @@ def get_l2_unstake_record(request):
     )
     logger.debug(l2_unstake_record)
     serialized = MessageToJson(l2_unstake_record)
-    return ok_json(serialized.page)
+    jb = json.loads(serialized)
+    return ok_json(jb.page)
