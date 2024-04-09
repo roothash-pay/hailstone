@@ -2,6 +2,7 @@
 
 import json
 import logging
+from google.protobuf.json_format import MessageToJson
 
 from common.helpers import ok_json, error_json
 from l3staking.models import (
@@ -88,7 +89,8 @@ def get_l2_stake_record(request):
         page_size=page_size
     )
     logger.debug(l2_stake_record)
-    return ok_json(l2_stake_record.page)
+    serialized = MessageToJson(l2_stake_record)
+    return ok_json(serialized.page)
 
 
 # @check_api_token
@@ -106,4 +108,5 @@ def get_l2_unstake_record(request):
         page_size=page_size
     )
     logger.debug(l2_unstake_record)
-    return ok_json(l2_unstake_record.page)
+    serialized = MessageToJson(l2_unstake_record)
+    return ok_json(serialized.page)
