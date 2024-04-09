@@ -9,8 +9,19 @@ class AppChainClient:
     def __init__(self):
         options = [
             ('grpc.max_receive_message_length', settings.GRPC_MAX_MESSAGE_LENGTH),
+            ('grpc.enable_http_proxy', 0)
         ]
-        channel = grpc.insecure_channel("acorus-rpc.testnet.dapplink.xyz:443", options=options)
+        # options = [('grpc.max_send_message_length', settings.GRPC_MAX_MESSAGE_LENGTH),
+        #            ('grpc.max_receive_message_length', 100 * 1024 * 1024),
+        #            ('grpc.enable_retries', 1),
+        #            ('grpc.service_config',
+        #             '{ "retryPolicy":{ "maxAttempts": 4, "initialBackoff": "0.1s", "maxBackoff": "1s", "backoffMutiplier": 2, "retryableStatusCodes": [ "UNAVAILABLE" ] } }')]
+        # channel = grpc.insecure_channel("{}:{}".format('localhost', 50051),
+        #                                 options=options)
+        # grpc.ssl_channel_credentials()
+        # url = "acorus-rpc.testnet.dapplink.xyz:443"
+        url = "acorus-app:50051"
+        channel = grpc.insecure_channel(url, options=options)
         self.stub = appchain_pb2_grpc.AppChainServiceStub(channel)
 
     def l1_staker_reward_amount(self, chain_id: str, staker_address: str, strategies: str, consumer_token: str = None) -> appchain_pb2.L1StakerRewardsAmountResponse:
