@@ -88,7 +88,8 @@ def get_l2_stake_record(request):
         page_size=page_size
     )
     logger.debug(l2_stake_record)
-    return ok_json(l2_stake_record)
+    json_object = json.loads(l2_stake_record)
+    return ok_json(json_object.page)
 
 
 # @check_api_token
@@ -106,4 +107,5 @@ def get_l2_unstake_record(request):
         page_size=page_size
     )
     logger.debug(l2_unstake_record)
-    return ok_json(l2_unstake_record)
+    json_object = json.loads(l2_unstake_record)
+    return ok_json(json_object.page)
