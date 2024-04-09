@@ -1,6 +1,8 @@
 # encoding=utf-8
 
 import json
+import logging
+
 from common.helpers import ok_json, error_json
 from l3staking.models import (
     StakingChain,
@@ -11,7 +13,7 @@ from services.appchain_client import (
     AppChainClient
 )
 
-
+logger = logging.getLogger(__name__)
 # @check_api_token
 def get_staking_chains(request):
     staking_chains = StakingChain.objects.all()
@@ -85,7 +87,7 @@ def get_l2_stake_record(request):
         page=page,
         page_size=page_size
     )
-    print(l2_stake_record)
+    logger.debug(l2_stake_record)
     return ok_json(l2_stake_record)
 
 
@@ -103,5 +105,5 @@ def get_l2_unstake_record(request):
         page=page,
         page_size=page_size
     )
-    print(l2_unstake_record)
+    logger.debug(l2_unstake_record)
     return ok_json(l2_unstake_record)
