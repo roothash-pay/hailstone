@@ -69,3 +69,39 @@ def get_node_detail(request):
     if staking_node is None:
         return error_json("Do not exist node", 4000)
     return ok_json(staking_node.as_dict())
+
+
+# @check_api_token
+def get_l2_stake_record(request):
+    params = json.loads(request.body.decode())
+    staker_address = params.get('staker_address', "0x")
+    strategy = params.get('strategy', "0x")
+    page = params.get('page', 1)
+    page_size = params.get('page_size', 10)
+    appChainClient = AppChainClient()
+    l2_stake_record = appChainClient.l2_stake_record(
+        staker_address=staker_address,
+        strategy=strategy,
+        page=page,
+        page_size=page_size
+    )
+    print(l2_stake_record)
+    return ok_json(l2_stake_record)
+
+
+# @check_api_token
+def get_l2_unstake_record(request):
+    params = json.loads(request.body.decode())
+    staker_address = params.get('staker_address', "0x")
+    strategy = params.get('strategy', "0x")
+    page = params.get('page', 1)
+    page_size = params.get('page_size', 10)
+    appChainClient = AppChainClient()
+    l2_unstake_record = appChainClient.l2_unstake_record(
+        staker_address=staker_address,
+        strategy=strategy,
+        page=page,
+        page_size=page_size
+    )
+    print(l2_unstake_record)
+    return ok_json(l2_unstake_record)

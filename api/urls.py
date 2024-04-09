@@ -71,7 +71,9 @@ from api.website.api_v1 import (
 from api.l3staking.api_v1 import (
     get_staking_chains,
     get_staking_node_list,
-    get_node_detail
+    get_node_detail,
+    get_l2_stake_record,
+    get_l2_unstake_record
 )
 
 
@@ -141,4 +143,6 @@ urlpatterns = [
     path(r'get_staking_chains', get_staking_chains, name='get_staking_chains'),
     path(r'get_staking_node_list', get_staking_node_list, name='get_staking_node_list'),
     path(r'get_node_detail', get_node_detail, name='get_node_detail'),
+    path(r'get_l2_stake_record', get_l2_stake_record, name='get_l2_stake_record'),
+    path(r'get_l2_unstake_record', get_l2_unstake_record, name='get_l2_unstake_record'),
 ]
