@@ -3,8 +3,6 @@
 import grpc
 
 from services.savour_rpc import appchain_pb2 as appchain__pb2
-# from services.savour_rpc import appchain_pb2 as savour__rpc_dot_appchain__pb2
-
 
 
 class AppChainServiceStub(object):
@@ -39,6 +37,11 @@ class AppChainServiceStub(object):
                 request_serializer=appchain__pb2.L2StakeRecordRequest.SerializeToString,
                 response_deserializer=appchain__pb2.L2StakeRecordResponse.FromString,
                 )
+        self.L2WithdrawRecord = channel.unary_unary(
+                '/acorus.rpc.appchain.AppChainService/L2WithdrawRecord',
+                request_serializer=appchain__pb2.L2WithdrawRecordRequest.SerializeToString,
+                response_deserializer=appchain__pb2.L2WithdrawRecordResponse.FromString,
+                )
 
 
 class AppChainServiceServicer(object):
@@ -71,6 +74,12 @@ class AppChainServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def L2WithdrawRecord(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AppChainServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -93,6 +102,11 @@ def add_AppChainServiceServicer_to_server(servicer, server):
                     servicer.L2StakeRecord,
                     request_deserializer=appchain__pb2.L2StakeRecordRequest.FromString,
                     response_serializer=appchain__pb2.L2StakeRecordResponse.SerializeToString,
+            ),
+            'L2WithdrawRecord': grpc.unary_unary_rpc_method_handler(
+                    servicer.L2WithdrawRecord,
+                    request_deserializer=appchain__pb2.L2WithdrawRecordRequest.FromString,
+                    response_serializer=appchain__pb2.L2WithdrawRecordResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -172,5 +186,22 @@ class AppChainService(object):
         return grpc.experimental.unary_unary(request, target, '/acorus.rpc.appchain.AppChainService/L2StakeRecord',
             appchain__pb2.L2StakeRecordRequest.SerializeToString,
             appchain__pb2.L2StakeRecordResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def L2WithdrawRecord(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/acorus.rpc.appchain.AppChainService/L2WithdrawRecord',
+            appchain__pb2.L2WithdrawRecordRequest.SerializeToString,
+            appchain__pb2.L2WithdrawRecordResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
