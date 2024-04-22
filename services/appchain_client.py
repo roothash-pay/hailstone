@@ -24,7 +24,8 @@ class AppChainClient:
         channel = grpc.insecure_channel(url, options=options)
         self.stub = appchain_pb2_grpc.AppChainServiceStub(channel)
 
-    def l1_staker_reward_amount(self, chain_id: str, staker_address: str, strategies: str, consumer_token: str = None) -> appchain_pb2.L1StakerRewardsAmountResponse:
+    def l1_staker_reward_amount(self, chain_id: str, staker_address: str, strategies: str,
+                                consumer_token: str = None) -> appchain_pb2.L1StakerRewardsAmountResponse:
         return self.stub.L1StakerRewardsAmount(
             appchain_pb2.L1StakerRewardsAmountRequest(
                 chain_id=chain_id,
@@ -33,7 +34,8 @@ class AppChainClient:
             )
         )
 
-    def l2_staker_reward_amount(self, chain_id: str, staker_address: str, strategy: str, consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
+    def l2_staker_reward_amount(self, chain_id: str, staker_address: str, strategy: str,
+                                consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
         return self.stub.L2StakerRewardsAmount(
             appchain_pb2.L2StakerRewardsAmountRequest(
                 chain_id=chain_id,
@@ -41,7 +43,9 @@ class AppChainClient:
                 strategy=strategy
             )
         )
-    def l2_stake_record(self, staker_address: str, strategy: str,page: int,page_size: int, consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
+
+    def l2_stake_record(self, staker_address: str, strategy: str, page: int, page_size: int,
+                        consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
         return self.stub.L2StakeRecord(
             appchain_pb2.L2StakeRecordRequest(
                 staker_address=staker_address,
@@ -50,10 +54,23 @@ class AppChainClient:
                 page_size=page_size
             )
         )
-    def l2_unstake_record(self, staker_address: str, strategy: str,page: int,page_size: int, consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
+
+    def l2_unstake_record(self, staker_address: str, strategy: str, page: int, page_size: int,
+                          consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
         return self.stub.L2UnStakeRecord(
             appchain_pb2.L2UnStakeRecordRequest(
                 staker_address=staker_address,
+                strategy=strategy,
+                page=page,
+                page_size=page_size
+            )
+        )
+
+    def l2_withdraw_record(self, staker_address: str, strategy: str, page: int, page_size: int,
+                          consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
+        return self.stub.L2WithdrawRecord(
+            appchain_pb2.L2WithdrawRecord(
+                address=staker_address,
                 strategy=strategy,
                 page=page,
                 page_size=page_size
