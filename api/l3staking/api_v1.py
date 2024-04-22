@@ -121,7 +121,7 @@ def get_l2_withdraw_record(request):
     page_size = params.get('page_size', 10)
     appChainClient = AppChainClient()
     l2_withdraw_record = appChainClient.l2_withdraw_record(
-        staker_address=staker_address,
+        address=staker_address,
         strategy=strategy,
         page=page,
         page_size=page_size

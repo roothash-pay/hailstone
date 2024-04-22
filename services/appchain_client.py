@@ -45,7 +45,7 @@ class AppChainClient:
         )
 
     def l2_stake_record(self, staker_address: str, strategy: str, page: int, page_size: int,
-                        consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
+                        consumer_token: str = None) -> appchain_pb2.L2StakeRecordResponse:
         return self.stub.L2StakeRecord(
             appchain_pb2.L2StakeRecordRequest(
                 staker_address=staker_address,
@@ -56,7 +56,7 @@ class AppChainClient:
         )
 
     def l2_unstake_record(self, staker_address: str, strategy: str, page: int, page_size: int,
-                          consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
+                          consumer_token: str = None) -> appchain_pb2.L2UnStakeRecordResponse:
         return self.stub.L2UnStakeRecord(
             appchain_pb2.L2UnStakeRecordRequest(
                 staker_address=staker_address,
@@ -66,11 +66,11 @@ class AppChainClient:
             )
         )
 
-    def l2_withdraw_record(self, staker_address: str, strategy: str, page: int, page_size: int,
-                          consumer_token: str = None) -> appchain_pb2.L2StakerRewardsAmountResponse:
+    def l2_withdraw_record(self, address: str, strategy: str, page: int, page_size: int,
+                          consumer_token: str = None) -> appchain_pb2.L2WithdrawRecordResponse:
         return self.stub.L2WithdrawRecord(
-            appchain_pb2.L2WithdrawRecord(
-                address=staker_address,
+            appchain_pb2.L2WithdrawRecordRequest(
+                address=address,
                 strategy=strategy,
                 page=page,
                 page_size=page_size
