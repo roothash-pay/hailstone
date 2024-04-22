@@ -73,7 +73,8 @@ from api.l3staking.api_v1 import (
     get_staking_node_list,
     get_node_detail,
     get_l2_stake_record,
-    get_l2_unstake_record
+    get_l2_unstake_record,
+    get_l2_withdraw_record
 )
 
 
@@ -145,4 +146,5 @@ urlpatterns = [
     path(r'get_node_detail', get_node_detail, name='get_node_detail'),
     path(r'get_l2_stake_record', get_l2_stake_record, name='get_l2_stake_record'),
     path(r'get_l2_unstake_record', get_l2_unstake_record, name='get_l2_unstake_record'),
+    path(r'get_l2_withdraw_record', get_l2_withdraw_record, name='get_l2_withdraw_record'),
 ]

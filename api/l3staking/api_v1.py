@@ -112,3 +112,22 @@ def get_l2_unstake_record(request):
     jb = MessageToDict(l2_unstake_record)
     # jb = json.loads(serialized)
     return ok_json(jb)
+
+def get_l2_withdraw_record(request):
+    params = json.loads(request.body.decode())
+    staker_address = params.get('staker_address', "0x")
+    strategy = params.get('strategy', "0x")
+    page = params.get('page', 1)
+    page_size = params.get('page_size', 10)
+    appChainClient = AppChainClient()
+    l2_withdraw_record = appChainClient.l2_withdraw_record(
+        staker_address=staker_address,
+        strategy=strategy,
+        page=page,
+        page_size=page_size
+    )
+    logger.debug(l2_withdraw_record)
+    jb = MessageToDict(l2_withdraw_record)
+    # jb = json.loads(serialized)
+    return ok_json(jb)
+
