@@ -77,7 +77,9 @@ def get_node_detail(request):
 # @check_api_token
 def get_l2_stake_record(request):
     params = json.loads(request.body.decode())
-    staker_address = params.get('staker_address', "0x")
+    staker_address = params.get('staker_address', "")
+    if staker_address == "":
+        return error_json(msg="staker address cannot be empty");
     strategy = params.get('strategy', "0x")
     page = params.get('page', 1)
     page_size = params.get('page_size', 10)
@@ -97,7 +99,9 @@ def get_l2_stake_record(request):
 # @check_api_token
 def get_l2_unstake_record(request):
     params = json.loads(request.body.decode())
-    staker_address = params.get('staker_address', "0x")
+    staker_address = params.get('staker_address', "")
+    if staker_address == "":
+        return error_json(msg="staker address cannot be empty");
     strategy = params.get('strategy', "0x")
     page = params.get('page', 1)
     page_size = params.get('page_size', 10)
@@ -115,7 +119,9 @@ def get_l2_unstake_record(request):
 
 def get_l2_withdraw_record(request):
     params = json.loads(request.body.decode())
-    staker_address = params.get('staker_address', "0x")
+    staker_address = params.get('staker_address', "")
+    if staker_address == "":
+        return error_json(msg="staker address cannot be empty");
     strategy = params.get('strategy', "0x")
     page = params.get('page', 1)
     page_size = params.get('page_size', 10)
