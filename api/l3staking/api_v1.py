@@ -89,7 +89,7 @@ def get_l2_stake_record(request):
         page_size=page_size
     )
     logger.debug(l2_stake_record)
-    jb = MessageToDict(l2_stake_record)
+    jb = MessageToDict(l2_stake_record, including_default_value_fields=True)
     # jb = json.loads(serialized)
     return ok_json(jb)
 
@@ -109,7 +109,7 @@ def get_l2_unstake_record(request):
         page_size=page_size
     )
     logger.debug(l2_unstake_record)
-    jb = MessageToDict(l2_unstake_record)
+    jb = MessageToDict(l2_unstake_record, including_default_value_fields=True)
     # jb = json.loads(serialized)
     return ok_json(jb)
 
@@ -127,7 +127,7 @@ def get_l2_withdraw_record(request):
         page_size=page_size
     )
     logger.debug(l2_withdraw_record)
-    jb = MessageToDict(l2_withdraw_record)
+    jb = MessageToDict(l2_withdraw_record, including_default_value_fields=True)
     # jb = json.loads(serialized)
     return ok_json(jb)
 
