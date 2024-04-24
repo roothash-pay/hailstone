@@ -39,8 +39,8 @@ def get_staking_node_list(request):
         for node in staking_nodes:
             staking_node_list.append(node.as_dict())
         staking_strategies_node_list.append({
-            "strategy_name": ss.name,
-            "strategy_address": ss.address,
+            "stategy_name": ss.name,
+            "stategy_address": ss.address,
             "node_list": staking_node_list
         })
     return ok_json(staking_strategies_node_list)
