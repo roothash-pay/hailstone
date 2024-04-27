@@ -23,6 +23,10 @@ def get_bridge_type(bridge_type: str):
         return "BridgeWithdraw"
     elif bridge_type == "3":
         return "bridgeGrants"
+    elif bridge_type == "4":
+        return "Layer3Staking"
+    elif bridge_type == "5":
+        return "Layer3Unstaking"
     else:
         return "Invite"
 
