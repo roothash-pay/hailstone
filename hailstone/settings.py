@@ -59,10 +59,10 @@ ASGI_APPLICATION = 'hailstone.asgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "193.218.38.89",
         "NAME": "hailstone",
         "USER": "postgres",
-        "PASSWORD": "vVb9NhLYui",
+        "PASSWORD": "ayKrlI2U52LvyEFlPKXJ",
         "HOST": "postgresql",
     },
 }
