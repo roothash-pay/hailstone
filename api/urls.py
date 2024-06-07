@@ -77,6 +77,13 @@ from api.l3staking.api_v1 import (
     get_l2_withdraw_record
 )
 
+from api.solid.api_v1 import (
+    get_services_type,
+    get_core_members,
+    get_audit_projects,
+    get_leadboard_list
+)
+
 
 urlpatterns = [
     # Hd wallet module
@@ -147,4 +154,10 @@ urlpatterns = [
     path(r'get_l2_stake_record', get_l2_stake_record, name='get_l2_stake_record'),
     path(r'get_l2_unstake_record', get_l2_unstake_record, name='get_l2_unstake_record'),
     path(r'get_l2_withdraw_record', get_l2_withdraw_record, name='get_l2_withdraw_record'),
+
+    # solid
+    path(r'get_services_type', get_services_type, name='get_services_type'),
+    path(r'get_core_members', get_core_members, name='get_core_members'),
+    path(r'get_audit_projects', get_audit_projects, name='get_audit_projects'),
+    path(r'get_leadboard_list', get_leadboard_list, name='get_leadboard_list'),
 ]
