@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'airdrop',
     'website',
     'l3staking',
+    "solid",
 ]
 
 MIDDLEWARE = [
