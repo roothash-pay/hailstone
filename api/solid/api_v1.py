@@ -40,7 +40,7 @@ def get_audit_projects(request):
     for ap in audit_project_lists:
         projects_ret_lists.append(ap.as_dict())
     data = {
-        "service_type": service_type.as_dict(),
+        "service_type": None if service_type is None else service_type.as_dict(),
         "projects": projects_ret_lists
     }
     return ok_json(data)
