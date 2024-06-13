@@ -29,6 +29,7 @@ def get_audit_projects(request):
     params = json.loads(request.body.decode())
     service_type_id = params.get("service_type_id", 0)
     status = params.get("status", "all")
+    service_type = ServiceType.objects.filter(id=service_type_id).first()
     if service_type_id not in ["0", 0] and status in ["all", "All", "ALL"]:
         audit_project_lists = AuditProject.objects.filter(service_type__id=service_type_id).order_by("id").all()
     elif status in ["all", "All", "ALL"]:
@@ -38,7 +39,11 @@ def get_audit_projects(request):
     projects_ret_lists = []
     for ap in audit_project_lists:
         projects_ret_lists.append(ap.as_dict())
-    return ok_json(projects_ret_lists)
+    data = {
+        "service_type": service_type.as_dict(),
+        "projects": projects_ret_lists
+    }
+    return ok_json(data)
 
 
 # @check_api_token
