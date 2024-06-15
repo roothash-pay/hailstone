@@ -218,6 +218,7 @@ class LoadBoard(BaseModel):
             'id': self.id,
             'competitor': self.competitor,
             'payouts': self.payouts,
+            'total_findings': self.total_findings,
             'solo': self.solo,
             'high': self.high,
             'med': self.med,
