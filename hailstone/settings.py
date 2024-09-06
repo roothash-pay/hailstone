@@ -63,8 +63,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "hailstone",
         "USER": "postgres",
-        "PASSWORD": "ayKrlI2U52LvyEFlPKXJ",
-        "HOST": "193.218.38.89",
+        "PASSWORD": "DappLink2024!",
+        "HOST": "10.43.144.189",
     },
 }
 
