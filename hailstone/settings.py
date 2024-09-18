@@ -64,7 +64,7 @@ DATABASES = {
         "NAME": "hailstone",
         "USER": "postgres",
         "PASSWORD": "DappLink2024!",
-        "HOST": "my-postgres-postgresql:5432",
+        "HOST": "my-postgres-postgresql",
     },
 }
 
