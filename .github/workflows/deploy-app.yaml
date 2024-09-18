@@ -36,7 +36,7 @@ jobs:
             appname="hailstone"
             tag_name="${registry}/${namespace}/${appname}"
             docker login --username=100003588471 -p dapplink@go hkccr.ccs.tencentyun.com
-            docker build --pull  -t ${tag_name}:latest .
+            docker build --pull  -t ${tag_name}:v1.0.0 .
             docker push ${tag_name}:latest
             
             HELM_OPTS="${HELM_OPTS} --set image.repository=${tag_name}"
