@@ -25,15 +25,43 @@ This project is written in python Django, the dependency version is above python
 
 ## Project deployment
 
-### 1.install dependencies
+### 1.create virtual evn
+```
+git clone git@github.com:roothash-pay/hailstone.git
+cd hailstone
+python3 -m venv .env
+source venv/bin/activate
+```
 
-`pip3 install -r requirements.txt`
+### 2.install dependencies
 
-### 2.migrate database
+```
+pip3 install -r requirements.txt
+```
 
-`python3 manager migrations`
+### 3.config database
+```
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "hailstone",
+        "USER": "guoshijiang",
+        "PASSWORD": "",
+        "HOST": "127.0.0.1",
+    },
+}
+```
+Config it according to you environment
 
-### 3. run dev
+### 4.migrate database
 
-`python3 manager runserver`
+```
+python3 manager migrations
+python3 manager migrate
+```
+
+### 5. run dev
+```
+python3 manager runserver
+```
 
