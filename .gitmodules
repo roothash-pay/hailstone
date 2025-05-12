@@ -1,0 +1,3 @@
+[submodule "external/dapplink-proto"]
+	path = external/dapplink-proto
+	url = https://github.com/dapplink-labs/dapplink-proto.git

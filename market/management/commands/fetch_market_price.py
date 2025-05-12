@@ -19,7 +19,7 @@ class Command(BaseCommand):
         if len(symbol_result.symbol_prices) == 0:
             logging.warning(symbol_result)
             return
-        print(symbol_result)
+        logging.debug(f"symbol_result: {symbol_result}")
         symbol_list = []
         exchange_list = []
         asset_name_list = []
@@ -55,6 +55,15 @@ class Command(BaseCommand):
             if item.base in asset_dict:
                 base_asset = asset_dict[item.base]
 
+            # 安全地获取 symbol 和 exchange 对象
+            symbol_obj = symbol_dict.get(item.symbol)
+            exchange_obj = exchange_dict.get(item.exchange)
+
+            # 如果 Symbol 不存在，记录警告并跳过此条目
+            if not symbol_obj:
+                logging.warning(f"Symbol '{item.symbol}' not found in database. Skipping price entry for exchange '{item.exchange}'.")
+                continue
+
             price_list.append(
                 MarketPrice(
                     usd_price=item.usd_price,
@@ -63,9 +72,10 @@ class Command(BaseCommand):
                     buy_price=item.buy_price,
                     sell_price=item.sell_price,
                     margin=item.margin,
-                    symbol=symbol_dict[item.symbol],
-                    exchange=exchange_dict[item.exchange],
+                    symbol=symbol_obj, # 使用安全获取的对象
+                    exchange=exchange_obj, # 使用安全获取的对象 (可能为 None)
                     qoute_asset=quote_asset,
                     base_asset=base_asset,
                 ))
+        # TODO 不会自动创建uuid，绕过了BaseModel 中 save 的逻辑（检查 uuid 是否存在再生成）
         MarketPrice.objects.bulk_create(price_list)

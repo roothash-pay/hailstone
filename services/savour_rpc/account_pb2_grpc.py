@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from services.savour_rpc  import account_pb2 as dapplink_dot_account__pb2
+from services.savour_rpc import account_pb2 as dapplink_dot_account__pb2
 
 GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__
@@ -99,8 +99,8 @@ class WalletAccountServiceStub(object):
                 request_serializer=dapplink_dot_account__pb2.TxHashRequest.SerializeToString,
                 response_deserializer=dapplink_dot_account__pb2.TxHashResponse.FromString,
                 _registered_method=True)
-        self.createUnSignTransaction = channel.unary_unary(
-                '/dapplink.account.WalletAccountService/createUnSignTransaction',
+        self.buildUnSignTransaction = channel.unary_unary(
+                '/dapplink.account.WalletAccountService/buildUnSignTransaction',
                 request_serializer=dapplink_dot_account__pb2.UnSignTransactionRequest.SerializeToString,
                 response_deserializer=dapplink_dot_account__pb2.UnSignTransactionResponse.FromString,
                 _registered_method=True)
@@ -123,6 +123,36 @@ class WalletAccountServiceStub(object):
                 '/dapplink.account.WalletAccountService/getExtraData',
                 request_serializer=dapplink_dot_account__pb2.ExtraDataRequest.SerializeToString,
                 response_deserializer=dapplink_dot_account__pb2.ExtraDataResponse.FromString,
+                _registered_method=True)
+        self.getNftListByAddress = channel.unary_unary(
+                '/dapplink.account.WalletAccountService/getNftListByAddress',
+                request_serializer=dapplink_dot_account__pb2.NftAddressRequest.SerializeToString,
+                response_deserializer=dapplink_dot_account__pb2.NftAddressResponse.FromString,
+                _registered_method=True)
+        self.getNftCollection = channel.unary_unary(
+                '/dapplink.account.WalletAccountService/getNftCollection',
+                request_serializer=dapplink_dot_account__pb2.NftCollectionRequest.SerializeToString,
+                response_deserializer=dapplink_dot_account__pb2.NftCollectionResponse.FromString,
+                _registered_method=True)
+        self.getNftDetail = channel.unary_unary(
+                '/dapplink.account.WalletAccountService/getNftDetail',
+                request_serializer=dapplink_dot_account__pb2.NftDetailRequest.SerializeToString,
+                response_deserializer=dapplink_dot_account__pb2.NftDetailResponse.FromString,
+                _registered_method=True)
+        self.getNftHolderList = channel.unary_unary(
+                '/dapplink.account.WalletAccountService/getNftHolderList',
+                request_serializer=dapplink_dot_account__pb2.NftHolderListRequest.SerializeToString,
+                response_deserializer=dapplink_dot_account__pb2.NftHolderListResponse.FromString,
+                _registered_method=True)
+        self.getNftTradeHistory = channel.unary_unary(
+                '/dapplink.account.WalletAccountService/getNftTradeHistory',
+                request_serializer=dapplink_dot_account__pb2.NftTradeHistoryRequest.SerializeToString,
+                response_deserializer=dapplink_dot_account__pb2.NftTradeHistoryResponse.FromString,
+                _registered_method=True)
+        self.getAddressNftTradeHistory = channel.unary_unary(
+                '/dapplink.account.WalletAccountService/getAddressNftTradeHistory',
+                request_serializer=dapplink_dot_account__pb2.AddressNftTradeHistoryRequest.SerializeToString,
+                response_deserializer=dapplink_dot_account__pb2.AddressNftTradeHistoryResponse.FromString,
                 _registered_method=True)
 
 
@@ -207,7 +237,7 @@ class WalletAccountServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def createUnSignTransaction(self, request, context):
+    def buildUnSignTransaction(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -232,6 +262,42 @@ class WalletAccountServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def getExtraData(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getNftListByAddress(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getNftCollection(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getNftDetail(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getNftHolderList(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getNftTradeHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getAddressNftTradeHistory(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -305,8 +371,8 @@ def add_WalletAccountServiceServicer_to_server(servicer, server):
                     request_deserializer=dapplink_dot_account__pb2.TxHashRequest.FromString,
                     response_serializer=dapplink_dot_account__pb2.TxHashResponse.SerializeToString,
             ),
-            'createUnSignTransaction': grpc.unary_unary_rpc_method_handler(
-                    servicer.createUnSignTransaction,
+            'buildUnSignTransaction': grpc.unary_unary_rpc_method_handler(
+                    servicer.buildUnSignTransaction,
                     request_deserializer=dapplink_dot_account__pb2.UnSignTransactionRequest.FromString,
                     response_serializer=dapplink_dot_account__pb2.UnSignTransactionResponse.SerializeToString,
             ),
@@ -329,6 +395,36 @@ def add_WalletAccountServiceServicer_to_server(servicer, server):
                     servicer.getExtraData,
                     request_deserializer=dapplink_dot_account__pb2.ExtraDataRequest.FromString,
                     response_serializer=dapplink_dot_account__pb2.ExtraDataResponse.SerializeToString,
+            ),
+            'getNftListByAddress': grpc.unary_unary_rpc_method_handler(
+                    servicer.getNftListByAddress,
+                    request_deserializer=dapplink_dot_account__pb2.NftAddressRequest.FromString,
+                    response_serializer=dapplink_dot_account__pb2.NftAddressResponse.SerializeToString,
+            ),
+            'getNftCollection': grpc.unary_unary_rpc_method_handler(
+                    servicer.getNftCollection,
+                    request_deserializer=dapplink_dot_account__pb2.NftCollectionRequest.FromString,
+                    response_serializer=dapplink_dot_account__pb2.NftCollectionResponse.SerializeToString,
+            ),
+            'getNftDetail': grpc.unary_unary_rpc_method_handler(
+                    servicer.getNftDetail,
+                    request_deserializer=dapplink_dot_account__pb2.NftDetailRequest.FromString,
+                    response_serializer=dapplink_dot_account__pb2.NftDetailResponse.SerializeToString,
+            ),
+            'getNftHolderList': grpc.unary_unary_rpc_method_handler(
+                    servicer.getNftHolderList,
+                    request_deserializer=dapplink_dot_account__pb2.NftHolderListRequest.FromString,
+                    response_serializer=dapplink_dot_account__pb2.NftHolderListResponse.SerializeToString,
+            ),
+            'getNftTradeHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.getNftTradeHistory,
+                    request_deserializer=dapplink_dot_account__pb2.NftTradeHistoryRequest.FromString,
+                    response_serializer=dapplink_dot_account__pb2.NftTradeHistoryResponse.SerializeToString,
+            ),
+            'getAddressNftTradeHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.getAddressNftTradeHistory,
+                    request_deserializer=dapplink_dot_account__pb2.AddressNftTradeHistoryRequest.FromString,
+                    response_serializer=dapplink_dot_account__pb2.AddressNftTradeHistoryResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -693,7 +789,7 @@ class WalletAccountService(object):
             _registered_method=True)
 
     @staticmethod
-    def createUnSignTransaction(request,
+    def buildUnSignTransaction(request,
             target,
             options=(),
             channel_credentials=None,
@@ -706,7 +802,7 @@ class WalletAccountService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/dapplink.account.WalletAccountService/createUnSignTransaction',
+            '/dapplink.account.WalletAccountService/buildUnSignTransaction',
             dapplink_dot_account__pb2.UnSignTransactionRequest.SerializeToString,
             dapplink_dot_account__pb2.UnSignTransactionResponse.FromString,
             options,
@@ -817,6 +913,168 @@ class WalletAccountService(object):
             '/dapplink.account.WalletAccountService/getExtraData',
             dapplink_dot_account__pb2.ExtraDataRequest.SerializeToString,
             dapplink_dot_account__pb2.ExtraDataResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getNftListByAddress(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/dapplink.account.WalletAccountService/getNftListByAddress',
+            dapplink_dot_account__pb2.NftAddressRequest.SerializeToString,
+            dapplink_dot_account__pb2.NftAddressResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getNftCollection(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/dapplink.account.WalletAccountService/getNftCollection',
+            dapplink_dot_account__pb2.NftCollectionRequest.SerializeToString,
+            dapplink_dot_account__pb2.NftCollectionResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getNftDetail(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/dapplink.account.WalletAccountService/getNftDetail',
+            dapplink_dot_account__pb2.NftDetailRequest.SerializeToString,
+            dapplink_dot_account__pb2.NftDetailResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getNftHolderList(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/dapplink.account.WalletAccountService/getNftHolderList',
+            dapplink_dot_account__pb2.NftHolderListRequest.SerializeToString,
+            dapplink_dot_account__pb2.NftHolderListResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getNftTradeHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/dapplink.account.WalletAccountService/getNftTradeHistory',
+            dapplink_dot_account__pb2.NftTradeHistoryRequest.SerializeToString,
+            dapplink_dot_account__pb2.NftTradeHistoryResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getAddressNftTradeHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/dapplink.account.WalletAccountService/getAddressNftTradeHistory',
+            dapplink_dot_account__pb2.AddressNftTradeHistoryRequest.SerializeToString,
+            dapplink_dot_account__pb2.AddressNftTradeHistoryResponse.FromString,
             options,
             channel_credentials,
             insecure,

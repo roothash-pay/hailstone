@@ -1,23 +1,27 @@
-#encoding=utf-8
+# encoding=utf-8
 
 import json
+
 from common.helpers import (
     ok_json,
     error_json
 )
-from common.api_auth import check_api_token
-from common.helpers import d0, dec
 from market.models import Exchange, MarketPrice, FavoriteMarket
-
 
 
 # @check_api_token
 def get_exchanges(request):
     params = json.loads(request.body.decode())
-    type = params.get('type', "Cex")
-    if type not in ["Cex",  "Dex"]:
-        return error_json("Invalid exchange type", 4000)
-    exchange_list = Exchange.objects.filter(status='Active')
+    type = params.get('type', None)
+
+    queryset = Exchange.objects.filter(status='Active')
+
+    if type is not None:
+        if type not in ["Cex", "Dex"]:
+            return error_json("Invalid exchange type", 4000)
+        queryset = queryset.filter(market_type=type)
+
+    exchange_list = list(queryset)
     return_exchange_list = []
     for exchange in exchange_list:
         return_exchange_list.append(exchange.as_dict())

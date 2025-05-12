@@ -1,0 +1,124 @@
+###
+POST http://localhost:8000/api/get_support_chain
+Content-Type: application/json
+
+{
+    "chain": "ethereum",
+    "network": "mainnet"
+}
+
+###
+POST http://localhost:8000/api/get_balance
+Content-Type: application/json
+
+{
+    "device_id": "1111111221",
+    "wallet_uuid": "222222111",
+    "index":"0",
+    "chain": "ethereum",
+    "symbol": "ETH",
+    "network": "mainnet",
+    "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0",
+    "contract_address": ""
+}
+
+###
+POST http://localhost:8000/api/get_wallet_balance
+Content-Type: application/json
+
+{
+    "device_id": "1111111221",
+    "wallet_uuid": "222222111",
+    "chain": "ethereum"
+}
+
+###
+POST http://localhost:8000/api/get_nonce
+Content-Type: application/json
+
+{
+    "chain": "ethereum",
+    "network": "testnet",
+    "symbol": "ETH",
+    "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0"
+}
+
+###
+POST http://localhost:8000/api/get_account_info
+Content-Type: application/json
+
+{
+    "chain": "ethereum",
+    "network": "mainnet",
+    "symbol": "ETH",
+    "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0"
+}
+
+###
+POST http://localhost:8000/api/get_fee
+Content-Type: application/json
+
+{
+    "chain": "ethereum",
+    "network": "mainnet",
+    "symbol": "ETH",
+    "fee_way": "medium"
+}
+
+###
+POST http://localhost:8000/api/get_sign_tx_info
+Content-Type: application/json
+
+{
+    "chain": "ethereum",
+    "network": "mainnet",
+    "symbol": "ETH",
+    "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0"
+}
+
+###
+POST http://localhost:8000/api/send_transaction
+Content-Type: application/json
+
+{
+    "chain": "ethereum",
+    "network": "mainnet",
+    "symbol": "ETH",
+    "rawtx": "0x...raw_transaction_hex_string..."
+}
+
+###
+POST http://localhost:8000/api/get_address_transaction
+Content-Type: application/json
+
+{
+    "chain": "ethereum",
+    "network": "mainnet",
+    "symbol": "ETH",
+    "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0",
+    "page": 1,
+    "page_size": 2
+}
+
+###
+POST http://localhost:8000/api/get_hash_transaction
+Content-Type: application/json
+
+{
+    "chain": "ethereum",
+    "network": "mainnet",
+    "symbol": "ETH",
+    "hash": "0x7ead65088e31d94ef78ddc55a61870c31903f53b7b2a36808cec87dbc2a9d6ed"
+}
+
+### get_unspend_list (Error Case for Account)
+POST http://localhost:8000/api/get_unspend_list
+Content-Type: application/json
+
+# Note: This will return an error for Account chains
+{
+    "chain": "ethereum",
+    "network": "mainnet",
+    "address": "0x98E9D288743839e96A8005a6B51C770Bbf7788C0"
+}
+

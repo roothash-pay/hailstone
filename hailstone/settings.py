@@ -83,6 +83,40 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s %(name)s [%(module)s:%(levelname)s] %(message)s'
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            # 'level':'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            # 'stream': sys.stdout,
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO'
+    },
+}
+
 # CACHES = {
 #     "default": {
 #         "BACKEND": "django_redis.cache.RedisCache",
@@ -99,13 +133,17 @@ SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 GRPC_MAX_MESSAGE_LENGTH = 50 * 1024 * 1024
-WALLET_GRPC_CHANNEL_URL = '127.0.0.1:8089'
+# WALLET_GRPC_CHANNEL_URL = '127.0.0.1:8089'
+# ACCOUNT_WALLET_GRPC_CHANNEL_URL = '43.154.95.45:30008'
+# UTXO_WALLET_GRPC_CHANNEL_URL = '43.154.95.45:30009'
+ACCOUNT_WALLET_GRPC_CHANNEL_URL = 'localhost:8189'
+UTXO_WALLET_GRPC_CHANNEL_URL = 'localhost:8389'
 MARKET_GRPC_CHANNEL_URL = '127.0.0.1:50250'
 CHAINEYE_GRPC_CHANNEL_URL = '127.0.0.1:50252'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "common/static")]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "common/static")]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -116,4 +154,6 @@ try:
 except ImportError:
     pass
 
-# usSszPkH
+# Default primary key field type
+# https://docs.djangoproject.com/en/stable/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

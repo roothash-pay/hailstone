@@ -95,10 +95,22 @@ class ApiAuth(BaseModel):
 
 
 class Chain(BaseModel):
+    MODEL_CHOICES = [
+        ('ACCOUNT', 'Account'),
+        ('UTXO', 'UTXO')
+    ]
     name = models.CharField(max_length=70, verbose_name='链名称', db_index=True)
     mark = models.CharField(max_length=70, verbose_name='链名标识')
     logo = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
     active_logo = models.ImageField(upload_to='wallet/%Y/%m/%d/', blank=True, null=True)
+    model_type = models.CharField(
+        max_length=10,
+        choices=MODEL_CHOICES,
+        default='ACCOUNT',
+        verbose_name='链模型类型',
+        db_index=True,
+        help_text='区分链是 Account 模型还是 UTXO 模型'
+    )
 
     class Meta:
         verbose_name = '链表'
@@ -115,6 +127,7 @@ class Chain(BaseModel):
             "mark": self.user.mark,
             "logo": str(self.logo),
             "active_logo": str(self.active_logo),
+            "model_type": self.model_type,
         }
 
 

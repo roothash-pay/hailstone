@@ -12,6 +12,7 @@ from api.wallet.token_api_v1 import (
     get_tokens,
 )
 from api.wallet.hd_api_v1 import (
+    get_support_chain,
     get_balance,
     get_wallet_balance,
     get_nonce,
@@ -30,7 +31,7 @@ from api.wallet.hd_api_v1 import (
     del_note_book,
     upd_note_book,
     hot_token_list,
-    sourch_add_token,
+    search_add_token,
     get_wallet_asset,
     get_sign_tx_info,
     update_wallet_name,
@@ -87,6 +88,7 @@ from api.solid.api_v1 import (
 
 urlpatterns = [
     # Hd wallet module
+    path(r'get_support_chain', get_support_chain, name='get_support_chain'),
     path(r'get_balance', get_balance, name='get_balance'),
     path(r'get_wallet_balance', get_wallet_balance, name='get_wallet_balance'),
     path(r'get_nonce', get_nonce, name='get_nonce'),
@@ -105,7 +107,7 @@ urlpatterns = [
     path(r'upd_note_book', upd_note_book, name='upd_note_book'),
     path(r'del_note_book', del_note_book, name='del_note_book'),
     path(r'hot_token_list', hot_token_list, name='hot_token_list'),
-    path(r'sourch_add_token', sourch_add_token, name='sourch_add_token'),
+    path(r'search_add_token', search_add_token, name='search_add_token'),
     path(r'get_wallet_asset', get_wallet_asset, name='get_wallet_asset'),
     path(r'get_sign_tx_info', get_sign_tx_info, name='get_sign_tx_info'),
     path(r'update_wallet_name', update_wallet_name, name='update_wallet_name'),
