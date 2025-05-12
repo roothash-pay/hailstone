@@ -21,7 +21,7 @@ parent:
  
 </div>
 
-This project is written in python Django, the dependency version is above python3, python3.8.* is recommended
+This project is written in python Django, the dependency version is above python3, python3.12.* is recommended
 
 ## Project deployment
 

@@ -21,7 +21,7 @@ class Command(BaseCommand):
             logging.warning(stable_result)
             return
         for coin_price in stable_result.coin_prices:
-            print(coin_price.name)
+            logging.info(f"Processing stablecoin: name={coin_price.name}, usd_price={coin_price.usd_price}, cny_price={coin_price.cny_price}")
             asset = Asset.objects.filter(
                 name=coin_price.name
             ).first()

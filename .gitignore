@@ -130,3 +130,7 @@ dmypy.json
 .pyre/
 venv
 media
+
+.cursor
+.vscode
+docs
