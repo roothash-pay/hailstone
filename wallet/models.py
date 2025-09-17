@@ -89,9 +89,9 @@ class WalletAsset(BaseModel):
     def __str__(self):
         return self.contract_addr
 
-    def to_dict(self):
+    def to_dict(self, wallet):
         address_list_dict = []
-        address_list = Address.objects.filter(wallet=self.wallet).order_by("id")
+        address_list = Address.objects.filter(wallet=wallet).order_by("id")
         total_balance = d0
         total_asset_usd = d0
         total_asset_cny = d0

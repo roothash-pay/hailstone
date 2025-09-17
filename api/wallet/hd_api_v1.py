@@ -89,10 +89,10 @@ def get_balance(request):
     symbol = params.get('symbol', "ETH")
     address = params.get('address', "")
     index = params.get('index', GET_BALANCE_DEFAULT_INDEX)
-    # TODO 上游服务不支持"", 需要传入"0x00"
+    # TODO 上游服务不支持"", 需要传入"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     contract_address = params.get('contract_address', ADDRESS_CONTRACT_DEFAULT)
     if contract_address == "":
-        contract_address = "0x00"
+        contract_address = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     logger.info(f"contract_address: {contract_address}")
     client, error_msg = get_rpc_client_by_chain(chain)
     if client is None:
@@ -132,6 +132,9 @@ def get_balance(request):
         return error_json("Failed to fetch balance from RPC.", DEFAULT_SERVER_ERROR_CODE)
 
     usd_price, cny_price = get_asset_prices(symbol)
+
+
+    logger.info(f"usd_price {usd_price} with cny_price {cny_price}")
 
     wallet = Wallet.objects.filter(device_id=device_id, wallet_uuid=wallet_uuid).first()
     if wallet is None:
@@ -221,7 +224,7 @@ def get_wallet_balance(request):
     token_list = []
     wallet_asset_list = WalletAsset.objects.filter(wallet=wallet).order_by("id")
     for wallet_asset in wallet_asset_list:
-        token_list.append(wallet_asset.to_dict())
+        token_list.append(wallet_asset.to_dict(wallet))
     data = {
         "chain": wallet.chain.name,
         "network": "mainnet",
@@ -1163,7 +1166,7 @@ def get_wallet_asset(request):
 
         wallet_balance_list = []
         for wallet_asset in wallet_asset_list:
-            wallet_balance_list.append(wallet_asset.to_dict())
+            wallet_balance_list.append(wallet_asset.to_dict(wallet))
 
         wallet_balance_data = {
             "chain": wallet.chain.name,
