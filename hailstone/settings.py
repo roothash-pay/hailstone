@@ -62,9 +62,9 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "hailstone",
-        "USER": "postgres",
-        "PASSWORD": "DappLink2024!",
-        "HOST": "my-postgres-postgresql",
+        "USER": "bitadmin",
+        "PASSWORD": "wZa9wHac",
+        "HOST": "postgresql.mainnet",
     },
 }
 
