@@ -1,9 +1,9 @@
-# 1. 获取服务类别接口
+# 1.获取编程语言
  
 - 接口参数：无
 - 接口请求示范
 ```
-curl --location 'http://127.0.0.1:8089/api/get_services_type'
+curl --location 'http://127.0.0.1:8000/api/get_languages'
 ```
 - 接口返回值
 ```
@@ -13,24 +13,43 @@ curl --location 'http://127.0.0.1:8089/api/get_services_type'
     "result": [
         {
             "id": 1,
-            "name": "编辑用户资料",
-            "icon": "https://hailstone.testnet.dapplink.xyz/media/icon/2024/06/07/600x200.jpeg",
-            "detail": "编辑用户资料编辑用户资料编辑用户资料",
-            "created_at": "2024-06-07 14:49:28"
+            "name": "Solidity",
+            "created_at": "2025-11-11 15:10:07"
         }
     ]
 }
 ```
-- name: 服务名称
-- icon: 服务的图标
-- detail：服务描述
+- name: 编程语言名称
 
-# 2. 获取服务类别接口
+# 2. 获取项目类别
+- 接口参数：无
+- 接口请求示范
+```
+curl --location 'http://127.0.0.1:8000/api/get_project_type'
+```
+- 接口返回值
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": [
+        {
+            "id": 1,
+            "name": "Defi/infra",
+            "created_at": "2025-11-11 15:09:33"
+        }
+    ]
+}
+```
+
+- name: 名称
+
+# 3. 获取网络列表
 
 - 接口参数：无
 - 接口请求示范
 ```
-curl --location 'http://127.0.0.1:8089/api/get_core_members'
+curl --location 'http://127.0.0.1:8000/api/get_network_list'
 ```
 - 接口返回值
 ```
@@ -40,20 +59,22 @@ curl --location 'http://127.0.0.1:8089/api/get_core_members'
     "result": [
         {
             "id": 1,
-            "name": "seek",
-            "photo": "https://hailstone.testnet.dapplink.xyz/media/member/2024/06/07/20240605-144519.jpeg",
-            "detail": "Mantle DA 架构师",
-            "created_at": "2024-06-07 14:53:25"
+            "project_type": "Defi/infra",
+            "coding_language": "Solidity",
+            "name": "RootHash Chain",
+            "sub_name": "rhs",
+            "icon": "https://hailstone.testnet.dapplink.xyz/media/network/2025/11/11/e0d4d231-fef8-4496-ba17-c495b0b588be.jpeg",
+            "detail": "RootHash Chain RootHash Chain RootHash ChainRootHash ChainRootHash ChainRootHash ChainRootHash Chain",
+            "created_at": "2025-11-11 15:11:04"
         }
     ]
 }
 ```
 
-- name: 姓名
-- photo：头像
-- detail：详解介绍
+- name: 名称
 
-# 3. 获取项目信息
+
+# 4. 获取项目信息
 
 - 接口参数：
   - service_type_id 传 0 返回全部项目信息，传对应项目 id 返回项目信息
@@ -63,8 +84,10 @@ curl --location 'http://127.0.0.1:8089/api/get_core_members'
 curl --location 'http://127.0.0.1:8089/api/get_audit_projects' \
 --header 'Content-Type: application/json' \
 --data '{
-    "service_type_id": 1,
-    "status": "all"
+    "language_id": 1,
+    "project_type_id": 1,
+    "network_id": 1,
+    "status": "Ongoing"
 }'
 ```
 - 接口返回值
@@ -72,18 +95,34 @@ curl --location 'http://127.0.0.1:8089/api/get_audit_projects' \
 {
     "ok": true,
     "code": 200,
-    "result": [
-        {
-            "id": 1,
-            "name": "DappLink Bridge",
-            "photo": "https://hailstone.testnet.dapplink.xyz/media/audit/2024/06/07/20240531-180630.jpeg",
-            "status": "Ongoing",
-            "project_link": "http://127.0.0.1:8089/admin/solid/auditproject/add/",
-            "detail": "DappLink BridgeDappLink BridgeDappLink BridgeDappLink BridgeDappLink Bridge",
-            "report_link": "http://127.0.0.1:8089/admin/solid/auditproject/add/",
-            "created_at": "2024-06-07 14:57:22"
-        }
-    ]
+    "result": {
+        "total": 1,
+        "projects": [
+            {
+                "id": 1,
+                "project_type": "Defi/infra",
+                "coding_language": "Solidity",
+                "network": "RootHash Chain",
+                "name": "TheWeb3",
+                "start_time": "2025-10-11",
+                "end_time": "2025-10-21",
+                "cycle": "10 天",
+                "photo": "https://hailstone.testnet.dapplink.xyz/media/audit/2025/11/11/e0d4d231-fef8-4496-ba17-c495b0b588be.jpeg",
+                "bounty_fund": "unknown",
+                "status": "Ongoing",
+                "project_link": "https://web3-security-labs.vercel.app/community",
+                "detail": "unknown",
+                "report_link": "https://web3-security-labs.vercel.app/community",
+                "x_link": "https://web3-security-labs.vercel.app/community",
+                "telegram": "https://web3-security-labs.vercel.app/community",
+                "discord": "https://web3-security-labs.vercel.app/community",
+                "github": "https://web3-security-labs.vercel.app/community",
+                "community_link": "https://web3-security-labs.vercel.app/community",
+                "bounty_description": "101010101101010",
+                "created_at": "2025-11-11 15:15:43"
+            }
+        ]
+    }
 }
 ```
 - name: 项目名称
@@ -93,7 +132,7 @@ curl --location 'http://127.0.0.1:8089/api/get_audit_projects' \
 - detail：项目详解介绍
 - report_link：项目审计报告链接
 
-# 4. 获取排行榜
+# 5. 获取排行榜
 
 - 接口参数：无
 - 接口请求示范

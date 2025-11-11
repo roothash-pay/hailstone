@@ -79,10 +79,13 @@ from api.l3staking.api_v1 import (
 )
 
 from api.solid.api_v1 import (
-    get_services_type,
-    get_core_members,
+    get_languages,
+    get_project_type,
+    get_network_list,
     get_audit_projects,
-    get_leadboard_list
+    get_members_comment,
+    get_leadboard_list,
+    create_audit_project
 )
 
 
@@ -157,9 +160,12 @@ urlpatterns = [
     path(r'get_l2_unstake_record', get_l2_unstake_record, name='get_l2_unstake_record'),
     path(r'get_l2_withdraw_record', get_l2_withdraw_record, name='get_l2_withdraw_record'),
 
-    # solid
-    path(r'get_services_type', get_services_type, name='get_services_type'),
-    path(r'get_core_members', get_core_members, name='get_core_members'),
+    # The Web3 Security Labs
+    path(r'get_languages', get_languages, name='get_languages'),
+    path(r'get_project_type', get_project_type, name='get_project_type'),
+    path(r'get_network_list', get_network_list, name='get_network_list'),
+    path(r'get_members_comment', get_members_comment, name='get_members_comment'),
     path(r'get_audit_projects', get_audit_projects, name='get_audit_projects'),
     path(r'get_leadboard_list', get_leadboard_list, name='get_leadboard_list'),
+    path(r'create_audit_project', create_audit_project, name='create_audit_project'),
 ]

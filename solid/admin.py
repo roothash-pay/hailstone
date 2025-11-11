@@ -2,15 +2,34 @@
 
 from django.contrib import admin
 from solid.models import (
-    ServiceType,
+    User,
+    CodingLanguage,
+    ProjectType,
+    Network,
     AuditProject,
-    CoreMember,
+    ProjectPeopleComments,
     LoadBoard
 )
 
-@admin.register(ServiceType)
+
+@admin.register(User)
 class ServiceTypeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'icon', 'detail')
+    list_display = ('id', 'address')
+
+
+@admin.register(CodingLanguage)
+class ServiceTypeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+
+@admin.register(ProjectType)
+class ServiceTypeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+
+@admin.register(Network)
+class AuditProjectAdmin(admin.ModelAdmin):
+    list_display = ('id', 'coding_language', 'name')
 
 
 @admin.register(AuditProject)
@@ -18,12 +37,11 @@ class AuditProjectAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'status', 'report_link')
 
 
-@admin.register(CoreMember)
+@admin.register(ProjectPeopleComments)
 class CoreMemberAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'detail')
 
 
 @admin.register(LoadBoard)
 class LoadBoardAdmin(admin.ModelAdmin):
     list_display = ('id', 'competitor', 'payouts')
-
