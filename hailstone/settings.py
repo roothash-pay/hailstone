@@ -147,7 +147,7 @@ STATIC_URL = "/static/"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-IMG_URL = 'https://hailstone.testnet.dapplink.xyz/media/'
+IMG_URL = 'https://hailstone.roothashpay.com/media/'
 
 try:
     from .local_settings import *
