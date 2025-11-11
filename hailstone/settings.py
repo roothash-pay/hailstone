@@ -5,7 +5,7 @@ SECRET_KEY = "=m5dtfps#yt*)dn3d(jwda&of2g-f*x)_%=#hh!3bo^lz@_ju+"
 
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://hailstone.testnet.dapplink.xyz']
+CSRF_TRUSTED_ORIGINS = ['https://hailstone.roothashpay.com']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
