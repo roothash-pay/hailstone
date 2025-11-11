@@ -185,3 +185,63 @@ curl --location 'http://127.0.0.1:8089/api/get_leadboard_list' \
     ]
 }
 ```
+
+# 6.提交项目信息
+
+```
+http://127.0.0.1:8000/api/create_audit_project
+```
+- request
+```
+{
+    "name": "DappLink Smart Contract Audit",
+    "project_type_id": 1,
+    "coding_language_id": 1,
+    "network_id": 1,
+    "user_id": 2,
+    "start_time": "2025-11-11",
+    "end_time": "2025-11-20",
+    "cycle": "9 days",
+    "status": "Ongoing",
+    "detail": "Smart contract security audit for Layer2 bridge",
+    "bounty_fund": "5000 USDT",
+    "project_link": "https://dapplink.xyz",
+    "report_link": "https://dapplink.xyz/report.pdf",
+    "x_link": "https://x.com/dapplink",
+    "telegram": "https://t.me/dapplink",
+    "discord": "https://discord.gg/dapplink",
+    "github": "https://github.com/dapplink",
+    "community_link": "https://community.dapplink.xyz",
+    "bounty_description": "Top 3 auditors will share the reward pool"
+}
+```
+
+- response
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": {
+        "id": 2,
+        "project_type": "Defi/infra",
+        "coding_language": "Solidity",
+        "network": "RootHash Chain",
+        "name": "DappLink Smart Contract Audit",
+        "start_time": "2025-11-11",
+        "end_time": "2025-11-20",
+        "cycle": "9 days",
+        "photo": "https://hailstone.testnet.dapplink.xyz/media/",
+        "bounty_fund": "5000 USDT",
+        "status": "Ongoing",
+        "project_link": "https://dapplink.xyz",
+        "detail": "Smart contract security audit for Layer2 bridge",
+        "report_link": "https://dapplink.xyz/report.pdf",
+        "x_link": "https://x.com/dapplink",
+        "telegram": "https://t.me/dapplink",
+        "discord": "https://discord.gg/dapplink",
+        "github": "https://github.com/dapplink",
+        "community_link": "https://community.dapplink.xyz",
+        "bounty_description": "Top 3 auditors will share the reward pool",
+        "created_at": "2025-11-11 15:42:33"
+    }
+```
