@@ -365,6 +365,70 @@ class ProjectPeopleComments(BaseModel):
         }
 
 
+class AskAudit(BaseModel):
+    name = models.CharField(
+        default="0",
+        max_length=100,
+        unique=False,
+        verbose_name='咨询人姓名'
+    )
+    contact = models.CharField(
+        default="0",
+        max_length=100,
+        unique=False,
+        verbose_name='联系方式'
+    )
+    company = models.CharField(
+        default="0",
+        max_length=100,
+        unique=False,
+        verbose_name='审计公司'
+    )
+    completed_time = models.CharField(
+        default="0",
+        max_length=100,
+        unique=False,
+        verbose_name='预计审计完成时间'
+    )
+    repo_link = models.CharField(
+        default="0",
+        max_length=100,
+        unique=False,
+        verbose_name='github repo 链接'
+    )
+    detail = models.CharField(
+        default="unknown",
+        max_length=100,
+        unique=False,
+        verbose_name='详细描述'
+    )
+    ecosystem = models.CharField(
+        default="unknown",
+        max_length=100,
+        unique=False,
+        verbose_name='生态体系'
+    )
+    find_us_way = models.CharField(
+        default="unknown",
+        max_length=500,
+        unique=False,
+        verbose_name='生态体系'
+    )
+    images = models.CharField(
+        default="unknown",
+        max_length=200,
+        unique=False,
+        verbose_name='图片文件'
+    )
+
+    class Meta:
+        verbose_name = 'AskAudit'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+
 class LoadBoard(BaseModel):
     competitor = models.CharField(
         default="unknown",

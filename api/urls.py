@@ -85,7 +85,8 @@ from api.solid.api_v1 import (
     get_audit_projects,
     get_members_comment,
     get_leadboard_list,
-    create_audit_project
+    create_audit_project,
+    submit_ask_audit
 )
 
 
@@ -168,4 +169,5 @@ urlpatterns = [
     path(r'get_audit_projects', get_audit_projects, name='get_audit_projects'),
     path(r'get_leadboard_list', get_leadboard_list, name='get_leadboard_list'),
     path(r'create_audit_project', create_audit_project, name='create_audit_project'),
+    path(r'submit_ask_audit', submit_ask_audit, name='submit_ask_audit'),
 ]

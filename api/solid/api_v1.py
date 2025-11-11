@@ -13,7 +13,8 @@ from solid.models import (
     Network,
     AuditProject,
     ProjectPeopleComments,
-    LoadBoard
+    LoadBoard,
+    AskAudit
 )
 
 def get_languages(request):
@@ -173,3 +174,36 @@ def create_audit_project(request):
         return error_json("failed to create project")
 
     return ok_json(audit_project.as_dict())
+
+@csrf_exempt
+def submit_ask_audit(request):
+    if request.method != "POST":
+        return error_json("invalid request method")
+
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+    except json.JSONDecodeError:
+        return error_json("invalid JSON payload")
+
+    repo_link = data.get("repo_link", "").strip()
+
+    if AskAudit.objects.filter(repo_link=repo_link).exists():
+        return error_json("project have already submitted")
+
+    ask_audit = AskAudit.objects.create(
+        name=data.get("name", ""),
+        contact=data.get("contact", ""),
+        company=data.get("company", ""),
+        completed_time=data.get("completed_time", ""),
+        repo_link=repo_link,
+        detail=data.get("detail", ""),
+        ecosystem=data.get("ecosystem", ""),
+        find_us_way=data.get("find_us_way", ""),
+        images=data.get("images", ""),
+    )
+
+    return ok_json({
+        "id": ask_audit.id,
+        "name": ask_audit.name,
+        "repo_link": ask_audit.repo_link
+    })

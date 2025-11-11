@@ -8,7 +8,8 @@ from solid.models import (
     Network,
     AuditProject,
     ProjectPeopleComments,
-    LoadBoard
+    LoadBoard,
+    AskAudit
 )
 
 
@@ -45,3 +46,8 @@ class CoreMemberAdmin(admin.ModelAdmin):
 @admin.register(LoadBoard)
 class LoadBoardAdmin(admin.ModelAdmin):
     list_display = ('id', 'competitor', 'payouts')
+
+
+@admin.register(AskAudit)
+class LoadBoardAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')

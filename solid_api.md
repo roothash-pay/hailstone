@@ -245,3 +245,36 @@ http://127.0.0.1:8000/api/create_audit_project
         "created_at": "2025-11-11 15:42:33"
     }
 ```
+
+# 7.咨询项目
+
+- http://127.0.0.1:8000/api/submit_ask_audit
+
+- request
+```
+{
+  "name": "Alice",
+  "contact": "alice@example.com",
+  "company": "CertiK",
+  "completed_time": "2025-12-01",
+  "repo_link": "https://github.com/example/project",
+  "detail": "审计 ERC20 合约",
+  "ecosystem": "Ethereum",
+  "find_us_way": "通过朋友推荐",
+  "images": "audit1.png"
+}
+```
+
+- reponse 
+
+```
+{
+    "ok": true,
+    "code": 200,
+    "result": {
+        "id": 1,
+        "name": "Alice",
+        "repo_link": "https://github.com/example/project"
+    }
+}
+```
