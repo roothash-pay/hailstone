@@ -5,6 +5,7 @@ cffi==1.17.1
 channels==4.2.0
 charset-normalizer==3.4.1
 Django==5.1.6
+django-cors-headers==4.9.0
 django-redis==5.4.0
 grpcio==1.70.0
 grpcio-tools==1.70.0
