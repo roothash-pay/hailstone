@@ -110,10 +110,11 @@ class Network(BaseModel):
         unique=False,
         verbose_name='子名称'
     )
-    icon = models.ImageField(
-        upload_to='network/%Y/%m/%d/',
-        blank=True,
-        null=True
+    icon_url = models.CharField(
+        default="",
+        max_length=200,
+        unique=False,
+        verbose_name='icon地址'
     )
     detail = models.CharField(
         default="unknown",
@@ -137,7 +138,7 @@ class Network(BaseModel):
             'coding_language': self.coding_language.name,
             'name': self.name,
             'sub_name': self.sub_name,
-            'icon': settings.IMG_URL + str(self.icon),
+            'icon': self.icon_url,
             'detail': self.detail,
             'created_at': self.created_at.astimezone(tz).strftime("%Y-%m-%d %H:%M:%S")
         }
@@ -182,10 +183,11 @@ class AuditProject(BaseModel):
         unique=False,
         verbose_name='审计项目的名称'
     )
-    photo = models.ImageField(
-        upload_to='audit/%Y/%m/%d/',
-        blank=True,
-        null=True
+    photo_url = models.CharField(
+        default="",
+        max_length=200,
+        unique=False,
+        verbose_name='图片地址'
     )
     start_time = models.CharField(
         default="",
@@ -296,7 +298,7 @@ class AuditProject(BaseModel):
             'start_time': self.start_time,
             'end_time': self.end_time,
             'cycle': self.cycle,
-            'photo': settings.IMG_URL + str(self.photo),
+            'photo': self.photo_url,
             'bounty_fund': self.bounty_fund,
             'status': self.status,
             'project_link': self.project_link,
@@ -327,10 +329,11 @@ class ProjectPeopleComments(BaseModel):
         unique=False,
         verbose_name='成员姓名'
     )
-    photo = models.ImageField(
-        upload_to='member/%Y/%m/%d/',
-        blank=True,
-        null=True
+    photo_url = models.CharField(
+        default="Social",
+        max_length=200,
+        unique=False,
+        verbose_name='图片路径'
     )
     position = models.CharField(
         default="unknown",
@@ -356,10 +359,10 @@ class ProjectPeopleComments(BaseModel):
         return {
             'id': self.id,
             'project_name': self.project.name,
-            'project_icon': self.project.photo,
+            'project_icon': self.project.photo_url,
             'name': self.name,
             'position': self.position,
-            'photo': settings.IMG_URL + str(self.photo),
+            'photo': self.photo_url,
             'detail': self.detail,
             'created_at': self.created_at.astimezone(tz).strftime("%Y-%m-%d %H:%M:%S")
         }
@@ -414,7 +417,7 @@ class AskAudit(BaseModel):
         unique=False,
         verbose_name='生态体系'
     )
-    images = models.CharField(
+    image_url = models.CharField(
         default="unknown",
         max_length=200,
         unique=False,
