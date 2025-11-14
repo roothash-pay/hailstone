@@ -68,7 +68,7 @@ def get_audit_projects(request):
         AuditProject.objects
         .filter(filters)
         .select_related("project_type", "coding_language", "network")
-        .order_by("id")
+        .order_by("-id")
     )
     projects_ret_lists = [ap.as_dict() for ap in audit_project_lists]
     data = {
