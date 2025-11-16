@@ -233,7 +233,7 @@ class AuditProject(BaseModel):
         verbose_name="项目链接",
     )
     report_link = models.CharField(
-        max_length=100,
+        max_length=300,
         default="",
         blank=True,
         null=True,
