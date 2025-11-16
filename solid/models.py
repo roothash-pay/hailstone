@@ -272,7 +272,7 @@ class AuditProject(BaseModel):
         default="",
         blank=True,
         null=True,
-        verbose_name="Github 链接",
+        verbose_name="社区链接",
     )
     bounty_description = models.CharField(
         default="unknown",
